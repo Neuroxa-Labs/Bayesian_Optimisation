@@ -41,8 +41,11 @@ point. The goal is to **maximise** each function within a limited number of week
 | `BBO_Capstone_Optimized.ipynb` | Main pipeline notebook (GP + AF, per-function strategy, plots) |
 | `WEEK1_REFLECTION.md` | Reflection on Week 1 results (what worked, what didn't, why) |
 | `WEEK2_STRATEGY.md` | Refined Week 2 strategy, per function, with reasoning |
-| `function_1/ … function_8/` | Initial input/output data (`.npy`) for each function |
-| `progress_week1.png` | Visual summary of Week 1 progress |
+| `function_1/ … function_8/` | Input/output data (`.npy`) for each function (incl. Week 1 point) |
+| `make_progress_report.py` | Builds the per-function iteration diagnostics report image |
+| `progress_week2_report.png` / `.jpg` | Iteration tracking table (Current Best, acquisition, result, method, ν, κ/ξ, length scales) |
+| `progress_week1.png`, `progress_week2.png` | Best-observed-output progress charts |
+| `function_*_week2_analysis.png` | Per-function Week 2 observation / input plots |
 
 ## Progress
 
@@ -50,9 +53,16 @@ point. The goal is to **maximise** each function within a limited number of week
 - **F5** was the standout: 1089 → 2497 (+129%) after the explore→exploit switch.
 - **F1** still reads ~0 (sparse peak — exploration continues); **F2/F3** did not improve, but for
   explainable reasons (noise / expected exploration cost).
+- **Week 2 queries generated.** Refinements this iteration:
+  - **Per-function Matérn smoothness ν**: ν=0.5 for F1 (sharp/sparse peak), ν=1.5 for F3 and F8,
+    ν=2.5 for the rest. Sensitivity testing showed F1, F3 and F8 candidate locations change
+    meaningfully with ν — confirming the per-function choice.
+  - **Anti-duplicate guard**: if the optimiser proposes a point that coincides with an existing
+    observation (e.g. F5 sitting on its own best), it switches to a small local exploration around
+    the peak instead of wasting a query.
 
 See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md) and [`WEEK2_STRATEGY.md`](WEEK2_STRATEGY.md) for the
-full reasoning and the current plan.
+full reasoning, and `progress_week2_report.png` for the per-iteration diagnostics table.
 
 ## Requirements
 
