@@ -1,5 +1,9 @@
 # Black-Box Bayesian Optimisation — Capstone
 
+> **Main report:** open [`bbo_progress_report.html`](bbo_progress_report.html) for a single-page
+> overview of all 8 functions — Week 1 results, Week 2 queries, length scales, and links to each
+> per-function explanation and analysis figure.
+
 A Bayesian Optimisation (BO) pipeline for optimising **8 unknown black-box functions** (F1–F8,
 dimensions 2D–8D). The true functions are hidden: each week we submit **one query point `x` per
 function** and receive a single output `y`, which we add to our dataset and use to choose the next
@@ -45,6 +49,7 @@ comprehensive `analysis_F*.png` figure (data → GP → acquisition → Week 1 �
 
 | Path | Description |
 |------|-------------|
+| **`bbo_progress_report.html`** | **Main progress report** — single-page dashboard (Week 1/2 tables, visuals, per-function links) |
 | `BBO_Capstone_Optimized.ipynb` | Main pipeline notebook (GP + AF, per-function strategy, plots) |
 | `WEEK1_REFLECTION.md` | Reflection on Week 1 results (what worked, what didn't, why) |
 | `WEEK2_STRATEGY.md` | Refined Week 2 strategy, per function, with reasoning |
