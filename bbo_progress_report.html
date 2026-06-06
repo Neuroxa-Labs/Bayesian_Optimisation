@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BBO Main Progress Report</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;background:#f0f2f5;color:#2d3436;padding:20px;line-height:1.45;}
+.wrap{max-width:1100px;margin:0 auto;}
+.card{background:white;border-radius:10px;padding:20px;border:1px solid #e0e0e0;margin-bottom:16px;}
+.hdr{margin-bottom:16px;border-bottom:1px solid #eee;padding-bottom:12px;}
+.hdr h1{font-size:18px;font-weight:700;margin-bottom:4px;color:#1a1a2e;}
+.hdr p{font-size:11px;color:#636e72;}
+.hdr a{color:#2d6dc7;text-decoration:none;}
+.hdr a:hover{text-decoration:underline;}
+.sum{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.sc{background:#f8f9fa;border-radius:6px;padding:10px 16px;text-align:center;border:1px solid #eee;min-width:90px;}
+.sc-n{font-size:22px;font-weight:700;}
+.sc-n.g{color:#00b894;}.sc-n.r{color:#e17055;}.sc-n.m{color:#636e72;}.sc-n.b{color:#2d6dc7;}
+.sc-l{font-size:10px;color:#636e72;margin-top:2px;}
+.week-lbl{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#636e72;padding:8px 0 4px;border-bottom:1px solid #eee;margin-bottom:4px;}
+table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:11.5px;}
+th{background:#f8f9fa;font-weight:600;font-size:10px;color:#636e72;text-transform:uppercase;letter-spacing:.05em;padding:7px 8px;border-bottom:1px solid #e0e0e0;text-align:left;white-space:nowrap;}
+th.r{text-align:right;}
+td{padding:7px 8px;border-bottom:1px solid #f0f0f0;vertical-align:middle;}
+td.r{text-align:right;font-variant-numeric:tabular-nums;font-family:ui-monospace,monospace;font-size:11px;}
+tr.imp td{background:#f0faf0;}
+tr.wor td{background:#fff5f5;}
+tr.pend td{color:#636e72;}
+tr:hover td{filter:brightness(0.97);}
+.fn{font-weight:600;font-size:12px;color:#2d3436;}
+.sub{font-size:10px;color:#636e72;font-weight:400;display:block;margin-top:1px;}
+.badge{display:inline-block;font-size:9px;padding:2px 6px;border-radius:3px;font-weight:600;margin-right:2px;}
+.unc{background:#dfe6fb;color:#2d6dc7;}
+.ucb{background:#e8e4fb;color:#6c3fc7;}
+.ei{background:#d4f5e9;color:#0a7a50;}
+.up{color:#00b894;font-weight:600;}
+.dn{color:#e17055;font-weight:600;}
+.gray{color:#b2bec3;}
+.ls-wrap{display:flex;gap:2px;align-items:center;}
+.pip{width:7px;height:16px;border-radius:2px;}
+.pip.d{background:#e17055;}
+.pip.s{background:#fdcb6e;}
+.pip.n{background:#55efc4;}
+.legend{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:4px;font-size:10px;color:#636e72;}
+.li-dot{width:9px;height:9px;border-radius:2px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:8px;}
+.fcard{border:1px solid #eee;border-radius:8px;padding:12px;background:#fafbfc;}
+.fcard h3{font-size:12px;margin-bottom:4px;color:#1a1a2e;}
+.fcard p{font-size:10px;color:#636e72;margin-bottom:8px;}
+.fcard a{font-size:10px;color:#2d6dc7;text-decoration:none;margin-right:8px;}
+.fcard a:hover{text-decoration:underline;}
+.fcard img{width:100%;border-radius:4px;border:1px solid #eee;margin-top:6px;}
+.img-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+.img-row img{width:100%;border-radius:6px;border:1px solid #e0e0e0;}
+@media(max-width:700px){.img-row{grid-template-columns:1fr;}}
+.note{font-size:11px;color:#636e72;background:#f8f9fa;border-left:3px solid #2d6dc7;padding:10px 12px;border-radius:0 6px 6px 0;margin:12px 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="card hdr">
+  <h1>BBO Main Progress Report</h1>
+  <p>
+    Imperial College PCMLAI &nbsp;·&nbsp; Cohort IMP-PCMLAI-26-02 &nbsp;·&nbsp;
+    <a href="https://github.com/Neuroxa-Labs/Bayesian_Optimisation">GitHub repo</a> &nbsp;·&nbsp;
+    <a href="README.md">README</a> &nbsp;·&nbsp;
+    <a href="WEEK1_REFLECTION.md">Week 1 reflection</a> &nbsp;·&nbsp;
+    <a href="WEEK2_STRATEGY.md">Week 2 strategy</a>
+  </p>
+  <p style="margin-top:6px;">
+    Eight real-world black-box optimisation tasks (2D–8D). Each week we submit one query <code>x</code> per
+    function and receive a single output <code>y</code>. A Gaussian Process surrogate plus a per-function
+    acquisition function decides where to look next.
+  </p>
+</div>
+
+<div class="card">
+  <div class="sum">
+    <div class="sc"><div class="sc-n g">5</div><div class="sc-l">Week 1 improved</div></div>
+    <div class="sc"><div class="sc-n r">2</div><div class="sc-l">Week 1 worsened</div></div>
+    <div class="sc"><div class="sc-n m">1</div><div class="sc-l">No signal yet (F1)</div></div>
+    <div class="sc"><div class="sc-n b">8</div><div class="sc-l">Week 2 submitted</div></div>
+    <div class="sc"><div class="sc-n g">+129%</div><div class="sc-l">F5 best jump (W1)</div></div>
+  </div>
+  <div class="note">
+    <strong>Week 1 headline:</strong> 5 of 8 functions improved on the first query (F4, F5, F6, F7, F8).
+    F5 was the standout (1089 → 2497). F1 still reads ~0 (sparse peak — exploration continues).
+    F2/F3 did not improve, but for explainable reasons (noise / exploration cost).
+    <strong>Week 2 refinements:</strong> per-function Matérn ν (F1=0.5, F3/F8=1.5), anti-duplicate guard
+    (F5 now exploits locally with UCB instead of re-sending the same point).
+  </div>
+</div>
+
+<div class="card">
+  <div class="week-lbl">Iteration 1 — Week 1 (results received)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th>Method</th><th>ν</th>
+      <th class="r">Best before</th><th class="r">Acq. score</th>
+      <th class="r">Actual result</th><th class="r">Δ improvement</th>
+      <th>Length scales</th>
+    </tr></thead>
+    <tbody id="tb1"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="week-lbl">Iteration 2 — Week 2 (queries submitted, results pending)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th>Method</th><th>ν</th>
+      <th class="r">Best before</th><th class="r">Acq. score</th>
+      <th class="r">Query x</th>
+      <th class="r">Actual result</th><th class="r">Δ improvement</th>
+      <th>Length scales</th>
+    </tr></thead>
+    <tbody id="tb2"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="week-lbl">Visual summary</div>
+  <div class="img-row">
+    <div>
+      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
+      <a href="progress_week2_report.png"><img src="progress_week2_report.png" alt="Progress report table"></a>
+    </div>
+    <div>
+      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Best observed output by function</p>
+      <a href="progress_week2.png"><img src="progress_week2.png" alt="Best observed progress chart"></a>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="week-lbl">Per-function deep dives (real-world tasks)</div>
+  <div class="grid" id="fn-grid"></div>
+</div>
+
+<div class="card">
+  <div class="legend">
+    <div class="li"><div class="li-dot" style="background:#e17055"></div>Degenerate (ls ≥ 4.5)</div>
+    <div class="li"><div class="li-dot" style="background:#fdcb6e"></div>Sensitive (ls &lt; 0.2)</div>
+    <div class="li"><div class="li-dot" style="background:#55efc4"></div>Normal</div>
+    <div class="li"><div class="li-dot" style="background:#f0faf0;border:1px solid #00b894"></div>Improved row</div>
+    <div class="li"><div class="li-dot" style="background:#fff5f5;border:1px solid #e17055"></div>Worsened row</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const META = {
+  1:{name:"Radiation Detection",dim:2,world:"Locate a hidden radiation source on a 2-D map (Geiger counter)."},
+  2:{name:"Noisy ML Log-Likelihood",dim:2,world:"Tune a noisy ML model's log-likelihood."},
+  3:{name:"Drug Side-Effects",dim:3,world:"Minimise adverse drug reactions from 3 component ratios."},
+  4:{name:"Warehouse Placement",dim:4,world:"Optimise warehouse item placement (multimodal)."},
+  5:{name:"Chemical Yield",dim:4,world:"Maximise chemical reaction yield (single broad peak)."},
+  6:{name:"Cake Recipe",dim:5,world:"Find the best cake recipe (5 ingredients)."},
+  7:{name:"ML Hyperparameters",dim:6,world:"Tune 6 ML hyperparameters."},
+  8:{name:"8-Param ML Model",dim:8,world:"Optimise an 8-parameter ML model."},
+};
+
+const W1=[
+  {fn:1,m:'UNC',nu:'0.5',best:7.71e-16,acq:0.00109,actual:4.85e-214,ls:[0.0126,10]},
+  {fn:2,m:'EI', nu:'2.5',best:0.6112,  acq:0.0150,  actual:0.4898,  ls:[0.0717,10]},
+  {fn:3,m:'UCB',nu:'1.5',best:-0.0348, acq:0.1448, actual:-0.1685, ls:[10,2.58,0.0736]},
+  {fn:4,m:'UCB',nu:'2.5',best:-4.0255, acq:0.6343, actual:0.2575,  ls:[1.838,1.628,1.846,1.789]},
+  {fn:5,m:'UCB',nu:'2.5',best:1088.86, acq:1617.8, actual:2497.32, ls:[10,9.319,0.762,0.426]},
+  {fn:6,m:'EI', nu:'2.5',best:-0.7143, acq:0.4907, actual:-0.4775, ls:[0.601,1.091,1.317,1.506,1.131]},
+  {fn:7,m:'EI', nu:'2.5',best:1.3650,  acq:0.0296, actual:1.4506,  ls:[1.056,10,10,0.359,0.195,0.245]},
+  {fn:8,m:'UCB',nu:'1.5',best:9.5985,  acq:10.599, actual:9.7956,  ls:[3.573,5.687,2.643,9.045,10,7.201,3.709,10]},
+];
+
+const W2=[
+  {fn:1,m:'UNC',nu:'0.5',best:7.71e-16,acq:0.00104,
+   x:[0.980000,0.035116],actual:null,ls:[0.0123,10]},
+  {fn:2,m:'EI', nu:'2.5',best:0.6112,  acq:0.0126,
+   x:[0.734317,0.926564],actual:null,ls:[0.0691,10]},
+  {fn:3,m:'UCB',nu:'1.5',best:-0.0348, acq:0.133,
+   x:[0.492581,0.020000,0.020000],actual:null,ls:[10,2.54,0.0713]},
+  {fn:4,m:'UCB',nu:'2.5',best:0.2575,  acq:1.365,
+   x:[0.460385,0.434644,0.203056,0.431758],actual:null,ls:[1.600,1.458,1.634,1.462]},
+  {fn:5,m:'UCB',nu:'2.5',best:2497.32, acq:2530.8,
+   x:[0.074189,0.696480,0.980000,0.980000],actual:null,ls:[10,10,1.146,0.328]},
+  {fn:6,m:'EI', nu:'2.5',best:-0.4775, acq:0.0538,
+   x:[0.517086,0.282151,0.771390,0.980000,0.207535],actual:null,ls:[0.538,0.981,1.15,1.247,0.997]},
+  {fn:7,m:'EI', nu:'2.5',best:1.4506,  acq:0.0182,
+   x:[0.020000,0.491672,0.247422,0.214597,0.377195,0.806097],actual:null,ls:[1.06,10,10,0.378,0.22,0.251]},
+  {fn:8,m:'UCB',nu:'1.5',best:9.7956,  acq:10.316,
+   x:[0.020000,0.020000,0.020000,0.038786,0.403935,0.980000,0.020000,0.893085],actual:null,ls:[3.6,5.703,2.663,9.301,10,7.346,3.75,10]},
+];
+
+function fmt(v){
+  if(v===null||v===undefined) return '—';
+  const a=Math.abs(v);
+  if(a<1e-100) return '≈ 0';
+  if(a>=10000) return v.toFixed(0);
+  if(a>=10)    return v.toFixed(2);
+  if(a<0.001)  return v.toExponential(2);
+  return v.toFixed(4);
+}
+function pc(v){return v>=4.5?'d':v<0.2?'s':'n';}
+
+function fnCell(fn){
+  const m=META[fn];
+  return `<td><span class="fn">F${fn}</span><span class="sub">${m.name} (${m.dim}D)</span></td>`;
+}
+
+function renderW1(data,id){
+  const tb=document.getElementById(id);
+  data.forEach(d=>{
+    const imp=d.actual===null?null:d.actual-d.best;
+    const rc=d.actual===null?'pend':imp>0?'imp':'wor';
+    const bc=d.m==='UNC'?'unc':d.m==='EI'?'ei':'ucb';
+    const pips=d.ls.map((v,i)=>
+      `<div class="pip ${pc(v)}" title="x${i+1}=${v.toFixed(3)}"></div>`).join('');
+    const aCell=d.actual===null
+      ?'<span class="gray">pending</span>'
+      :`<span class="${imp>0?'up':'dn'}">${fmt(d.actual)}</span>`;
+    const iCell=d.actual===null
+      ?'<span class="gray">pending</span>'
+      :`<span class="${imp>0?'up':'dn'}">${imp>0?'+':''}${fmt(imp)}</span>`;
+    tb.innerHTML+=`<tr class="${rc}">
+      ${fnCell(d.fn)}
+      <td><span class="badge ${bc}">${d.m}</span></td>
+      <td class="gray">${d.nu}</td>
+      <td class="r">${fmt(d.best)}</td>
+      <td class="r">${fmt(d.acq)}</td>
+      <td class="r">${aCell}</td>
+      <td class="r">${iCell}</td>
+      <td><div class="ls-wrap">${pips}</div></td>
+    </tr>`;
+  });
+}
+
+function renderW2(data,id){
+  const tb=document.getElementById(id);
+  data.forEach(d=>{
+    const imp=d.actual===null?null:d.actual-d.best;
+    const rc=d.actual===null?'pend':imp>0?'imp':'wor';
+    const bc=d.m==='UNC'?'unc':d.m==='EI'?'ei':'ucb';
+    const pips=d.ls.map((v,i)=>
+      `<div class="pip ${pc(v)}" title="x${i+1}=${v.toFixed(3)}"></div>`).join('');
+    const xStr=d.x.map(v=>v.toFixed(4)).join(' · ');
+    const aCell=d.actual===null
+      ?'<span class="gray">pending</span>'
+      :`<span class="${imp>0?'up':'dn'}">${fmt(d.actual)}</span>`;
+    const iCell=d.actual===null
+      ?'<span class="gray">pending</span>'
+      :`<span class="${imp>0?'up':'dn'}">${imp>0?'+':''}${fmt(imp)}</span>`;
+    tb.innerHTML+=`<tr class="${rc}">
+      ${fnCell(d.fn)}
+      <td><span class="badge ${bc}">${d.m}</span></td>
+      <td class="gray">${d.nu}</td>
+      <td class="r">${fmt(d.best)}</td>
+      <td class="r">${fmt(d.acq)}</td>
+      <td class="r" style="font-size:10px;max-width:180px;word-break:break-all;">${xStr}</td>
+      <td class="r">${aCell}</td>
+      <td class="r">${iCell}</td>
+      <td><div class="ls-wrap">${pips}</div></td>
+    </tr>`;
+  });
+}
+
+function renderGrid(){
+  const g=document.getElementById('fn-grid');
+  Object.keys(META).forEach(k=>{
+    const fn=+k, m=META[fn];
+    g.innerHTML+=`<div class="fcard">
+      <h3>F${fn} — ${m.name}</h3>
+      <p>${m.world}</p>
+      <a href="function_${fn}/EXPLANATION_F${fn}.md">Explanation</a>
+      <a href="function_${fn}/analysis_F${fn}.png">Analysis figure</a>
+      <a href="BBO_Capstone_Optimized.ipynb">Notebook</a>
+      <a href="function_${fn}/analysis_F${fn}.png">
+        <img src="function_${fn}/analysis_F${fn}.png" alt="F${fn} analysis" loading="lazy">
+      </a>
+    </div>`;
+  });
+}
+
+renderW1(W1,'tb1');
+renderW2(W2,'tb2');
+renderGrid();
+</script>
+</body>
+</html>
