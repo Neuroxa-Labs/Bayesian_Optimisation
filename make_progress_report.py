@@ -60,7 +60,7 @@ WK2_X = {
     1: [0.980000, 0.035116], 2: [0.734317, 0.926564],
     3: [0.492581, 0.020000, 0.020000],
     4: [0.460385, 0.434644, 0.203056, 0.431758],
-    5: [0.074189, 0.980000, 0.980000, 0.830000],
+    5: [0.074189, 0.696480, 0.980000, 0.980000],
     6: [0.517086, 0.282151, 0.771390, 0.980000, 0.207535],
     7: [0.020000, 0.491672, 0.247422, 0.214597, 0.377195, 0.806097],
     8: [0.020000, 0.020000, 0.020000, 0.038786, 0.403935, 0.980000, 0.020000, 0.893085],
@@ -145,7 +145,10 @@ row_labels = (["Current Best", "Acquisition (next)", "Actual Result", "Improveme
                "Method", "kappa / xi", "Kernel amp"]
               + [f"length-scale X[{i+1}]" for i in range(8)])
 n_rows = len(row_labels)
-fn_cols = [f"Function {i}" for i in range(1, 9)]
+SHORT = {1: "Radiation\nDetection", 2: "Noisy ML\nLog-Lik", 3: "Drug\nSide-Effects",
+         4: "Warehouse\nPlacement", 5: "Chemical\nYield", 6: "Cake\nRecipe",
+         7: "ML Hyper-\nparameters", 8: "8-Param\nML Model"}
+fn_cols = [f"F{i}\n{SHORT[i]}" for i in range(1, 9)]
 
 fig, axes = plt.subplots(2, 1, figsize=(17, 13))
 fig.suptitle("BBO Progress Report — per-function GP / Bayesian Optimisation diagnostics",
@@ -207,6 +210,9 @@ for ax_idx, it in enumerate((1, 2)):
         if r == 0 or c == -1:
             cell.set_text_props(fontweight="bold")
             cell.set_facecolor("#d9e1f2")
+        if r == 0:
+            cell.set_height(cell.get_height() * 2.1)
+            cell.set_fontsize(8)
 
 plt.tight_layout(rect=[0, 0, 1, 0.97])
 png = ROOT / "progress_week2_report.png"

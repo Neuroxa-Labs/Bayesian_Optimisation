@@ -1,0 +1,72 @@
+# F3 - Drug Discovery - Adverse Reactions (3-D) - Learn from Scratch
+
+## 1. The big picture: what is the problem?
+
+**Real world:** A drug-development lab mixes 3 chemical components and measures a side-effect score.
+
+- **x** = the 3 component ratios (x1, x2, x3)
+- **y** = the negative side effect (y near 0 = safe, very negative = harmful)
+- **Goal:** minimise side effects, i.e. push y as close to 0 as possible (we maximise y = -(side effect)).
+- **Constraint:** every evaluation is expensive - only **one query per week**, ~13 weeks total. Choose wisely.
+
+This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
+Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
+
+## 2. What we were given (15 initial points + the Week 1 point = 16 observations)
+
+| # | x1 | x2 | x3 | y | note |
+|---|---|---|---|---|---|
+| 4 | 0.4926 | 0.6116 | 0.3402 | -0.0348 | BEST |
+| 14 | 0.6001 | 0.7251 | 0.0661 | -0.0364 |  |
+| 11 | 0.2205 | 0.2978 | 0.3436 | -0.0469 |  |
+| 16 | 0.4926 | 0.0200 | 0.6482 | -0.1685 |  |
+| 7 | 0.1518 | 0.4400 | 0.9909 | -0.3989 | WORST |
+
+- **Best so far:** y = -0.0348 at x = [0.4926, 0.6116, 0.3402]
+
+## 3. What the GP learned (reading the length scales)
+
+The Gaussian Process fits one **length scale** per dimension - how fast y changes along that axis.
+A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
+
+- `x1`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
+- `x2`: length-scale = 2.5377 -> moderate influence
+- `x3`: length-scale = 0.0713 -> **very sensitive** - small changes move y a lot (take small steps)
+
+The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
+dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain).
+
+## 4. Why this acquisition function: **UCB (k=2.576)**
+
+With only 15 points in 3-D, the space is sparse and the map is incomplete. **UCB with a high k=2.576** keeps exploration strong (the 99% confidence band) while still rewarding regions the model predicts are good, so we do not lock onto a local optimum too early.
+
+## 5. Week 1 - what we sent and what happened
+
+- **Sent:** x = [0.4926, 0.0200, 0.6482]
+- **Received:** y = -0.1685
+- **Outcome:** did **not** improve over the previous best (-0.0348) - but it is still information.
+
+## 6. Week 2 - the refined decision
+
+- **Plan:** x = [0.4926, 0.0200, 0.0200]
+- **GP expectation at this point:** mu = -0.0612, sigma = 0.0754
+- **Reasoning:** With only 15 points in 3-D, the space is sparse and the map is incomplete. **UCB with a high k=2.576** keeps exploration strong (the 99% confidence band) while still rewarding regions the model predicts are good, so we do not lock onto a local optimum too early.
+
+## 7. The lesson
+
+Small length-scale dimensions are sensitive - take small steps in them. Boundary values (0.02 / 0.98) are risky because the GP has little data there. When a big jump backfires, switch to careful local search.
+
+## 8. Summary
+
+| | Value |
+|---|---|
+| Real-world task | Drug Discovery - Adverse Reactions |
+| Dimensions | 3 |
+| Acquisition | UCB k=2.576 (Matern nu=1.5) |
+| Previous best | -0.0348 |
+| Week 1 result | -0.1685 (no improvement) |
+| Current best | -0.0348 |
+| Week 2 query | [0.4926, 0.0200, 0.0200] |
+| GP expects (W2) | mu = -0.0612 |
+
+*See `analysis_F3.png` in this folder for the full 9-panel visual analysis.*

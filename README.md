@@ -21,18 +21,25 @@ point. The goal is to **maximise** each function within a limited number of week
 - **Explore → exploit schedule:** weeks 1–4 explore, 5–9 balanced, 10–13 exploit. Two functions
   (F1, F5) additionally switch based on a **signal threshold** rather than the calendar.
 
-## Per-function configuration
+## The 8 functions — real-world meaning
 
-| Fn | Dim | Profile | Primary AF | Why |
-|----|-----|---------|-----------|-----|
-| F1 | 2 | Sparse, sharp peak (radiation source) | UNCERTAINTY → UCB | Mostly zeros; explore until any signal appears |
-| F2 | 2 | Noisy log-likelihood | EI (+ White kernel) | Noise-robust improvement |
-| F3 | 3 | All-negative (drug discovery) | UCB κ=2.576 | Steer toward least-negative region |
-| F4 | 4 | Multimodal (warehouse) | UCB κ=3.0 | High exploration to avoid local optima |
-| F5 | 4 | Single broad peak (chemical yield) | UCB (explore→exploit) | Find signal, then exploit hard |
-| F6 | 5 | Negative score (cake recipe) | EI | Balanced push toward 0 |
-| F7 | 6 | High-dim (hyperparameter tuning) | EI | Balanced search in 6D |
-| F8 | 8 | High-dim (8-param ML) | UCB κ=2.576 | Broad exploration of a large space |
+Each black box stands in for a real optimisation problem. Naming them by their real-world task
+(rather than "Function 1…8") makes the contribution concrete: every weekly query is like running
+one expensive real experiment.
+
+| Fn | Real-world task | Dim | What `x` / `y` mean | Primary AF | Why this AF |
+|----|-----------------|-----|---------------------|-----------|-------------|
+| **F1** | **Radiation Source Detection** | 2 | position → counter reading (sharp, sparse peak; mostly 0) | UNCERTAINTY → UCB | Mostly zeros; explore until any signal appears |
+| **F2** | **Noisy ML Log-Likelihood** | 2 | 2 settings → noisy log-likelihood | EI (+ White kernel) | Noise-robust improvement |
+| **F3** | **Drug Discovery — Adverse Reactions** | 3 | component ratios → −(side effect) | UCB κ=2.576 | Steer toward least-negative region |
+| **F4** | **Warehouse Placement** | 4 | 4 placement factors → efficiency | UCB κ=3.0 | High exploration to avoid local optima |
+| **F5** | **Chemical Yield Optimisation** | 4 | 4 process settings → yield | UCB (explore→exploit) | Find signal, then exploit hard |
+| **F6** | **Cake Recipe Optimisation** | 5 | 5 ingredient amounts → −(badness) | EI | Balanced push toward 0 |
+| **F7** | **ML Hyperparameter Tuning** | 6 | 6 hyperparameters → validation score | EI | Balanced search in 6D |
+| **F8** | **8-Parameter ML Model Optimisation** | 8 | 8 parameters → score | UCB κ=2.576 | Broad exploration of a large space |
+
+Each `function_*/` folder contains a detailed `EXPLANATION_F*.md` (learn-from-scratch write-up) and a
+comprehensive `analysis_F*.png` figure (data → GP → acquisition → Week 1 → Week 2).
 
 ## Repository contents
 
@@ -41,8 +48,9 @@ point. The goal is to **maximise** each function within a limited number of week
 | `BBO_Capstone_Optimized.ipynb` | Main pipeline notebook (GP + AF, per-function strategy, plots) |
 | `WEEK1_REFLECTION.md` | Reflection on Week 1 results (what worked, what didn't, why) |
 | `WEEK2_STRATEGY.md` | Refined Week 2 strategy, per function, with reasoning |
-| `function_1/ … function_8/` | Input/output data (`.npy`) for each function (incl. Week 1 point) |
+| `function_1/ … function_8/` | Per-function data (`.npy`), `EXPLANATION_F*.md`, and `analysis_F*.png` |
 | `make_progress_report.py` | Builds the per-function iteration diagnostics report image |
+| `make_function_analysis.py` | Builds the 9-panel per-function analysis figures |
 | `progress_week2_report.png` / `.jpg` | Iteration tracking table (Current Best, acquisition, result, method, ν, κ/ξ, length scales) |
 | `progress_week1.png`, `progress_week2.png` | Best-observed-output progress charts |
 | `function_*_week2_analysis.png` | Per-function Week 2 observation / input plots |
