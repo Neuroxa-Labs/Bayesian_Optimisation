@@ -38,7 +38,7 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 
 ## 4. Why this acquisition function: **UCB (k=2.576)**
 
-With only 15 points in 3-D, the space is sparse and the map is incomplete. **UCB with a high k=2.576** keeps exploration strong (the 99% confidence band) while still rewarding regions the model predicts are good, so we do not lock onto a local optimum too early.
+With only 15 points in 3-D, the space is sparse. **UCB k=2.576** with **narrow bounds** on sensitive dims (x3 ls=0.07: search ±0.15 around best) keeps exploration local after Week 1's boundary jump backfired.
 
 ## 5. Week 1 - what we sent and what happened
 
@@ -48,13 +48,13 @@ With only 15 points in 3-D, the space is sparse and the map is incomplete. **UCB
 
 ## 6. Week 2 - the refined decision
 
-- **Plan:** x = [0.4926, 0.0200, 0.0200]
-- **GP expectation at this point:** mu = -0.0612, sigma = 0.0754
-- **Reasoning:** With only 15 points in 3-D, the space is sparse and the map is incomplete. **UCB with a high k=2.576** keeps exploration strong (the 99% confidence band) while still rewarding regions the model predicts are good, so we do not lock onto a local optimum too early.
+- **Plan:** x = [0.4926, 0.6916, 0.4013]
+- **GP expectation at this point:** mu = -0.0551, sigma = 0.0667
+- **Reasoning:** With only 15 points in 3-D, the space is sparse. **UCB k=2.576** with **narrow bounds** on sensitive dims (x3 ls=0.07: search ±0.15 around best) keeps exploration local after Week 1's boundary jump backfired.
 
 ## 7. The lesson
 
-Small length-scale dimensions are sensitive - take small steps in them. Boundary values (0.02 / 0.98) are risky because the GP has little data there. When a big jump backfires, switch to careful local search.
+Small length-scale dimensions are sensitive - take small steps in them. When a big jump backfires, narrow the search box around the best point instead of hugging box edges.
 
 ## 8. Summary
 
@@ -66,7 +66,7 @@ Small length-scale dimensions are sensitive - take small steps in them. Boundary
 | Previous best | -0.0348 |
 | Week 1 result | -0.1685 (no improvement) |
 | Current best | -0.0348 |
-| Week 2 query | [0.4926, 0.0200, 0.0200] |
-| GP expects (W2) | mu = -0.0612 |
+| Week 2 query | [0.4926, 0.6916, 0.4013] |
+| GP expects (W2) | mu = -0.0551 |
 
 *See `analysis_F3.png` in this folder for the full 9-panel visual analysis.*

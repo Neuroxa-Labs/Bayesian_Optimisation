@@ -22,14 +22,14 @@ which is exactly the behaviour we want.
 
 | Fn | Dim | Week 1 outcome | Week 2 AF (auto) | Mode | Rationale |
 |----|-----|----------------|------------------|------|-----------|
-| F1 | 2 | still ~0 (no signal) | **UNCERTAINTY** | Pure explore | No signal yet → keep mapping the largest empty gaps until any non-zero reading appears. |
+| F1 | 2 | still ~0 (no signal) | **COVERAGE** + boundary penalty | Interior explore | Farthest from existing points; avoid GP boundary artefacts. Query: `0.421-0.464`. |
 | F2 | 2 | 0.490 (noise dip) | **EI** | Explore-lean | Noisy target; refine *around* the known-good region (best ≈ 0.611). Don't abandon it on one low draw. |
-| F3 | 3 | −0.168 (worse) | **UCB κ=2.576** | Explore | Expected exploration cost; keep mapping. Still early (3D). |
+| F3 | 3 | −0.168 (worse) | **UCB κ=2.576** + narrow bounds | Local explore | x3 sensitive (ls=0.07): search x3∈[0.19,0.49], x2∈[0.53,0.69] around best. Query: `0.493-0.692-0.401`. |
 | F4 | 4 | −4.03 → 0.257 (big jump) | **UCB κ=3.0** | Explore (high κ) | Multimodal; keep wide coverage but start tracking the new positive basin. |
 | F5 | 4 | 1089 → **2497** (huge) | **UCB κ=1.0** (signal-triggered exploit) | **Exploit** | Signal crossed threshold (2000) → tighten around the best point. Primary win to consolidate. |
 | F6 | 5 | −0.714 → −0.478 | **EI** | Explore-lean | Steady gain; EI keeps a balanced push toward 0 in 5D. |
 | F7 | 6 | 1.365 → 1.451 | **EI** | Explore-lean | High-dim; balanced EI, sustained exploration is still valuable. |
-| F8 | 8 | 9.598 → 9.796 | **UCB κ=2.576** | Explore | Largest space (8D); keep broad exploration, small steady gains expected. |
+| F8 | 8 | 9.598 → 9.796 | **UCB κ=2.576** + boundary penalty | Explore | Penalise edge-hugging points (was 5 dims on boundary → now 1). Query: `0.07-0.07-0.02-...`. |
 
 ## 3. Where the focus should go this week
 
@@ -39,8 +39,11 @@ which is exactly the behaviour we want.
    inside `[0.02, 0.98]` but allow them to press against the edge.
 2. **F4 — lock onto the new basin.** We escaped a negative region into a positive one. Keep high-κ
    coverage (multimodal risk) but bias new samples toward the basin around the Week 1 success.
-3. **F1 — patience.** Continue pure exploration; a zero is elimination, not failure. The next query
-   targets the biggest uncovered region. No change.
+3. **F1 — coverage, not corners.** Switched from raw UNCERTAINTY to coverage + boundary penalty;
+   targets the largest interior gap (`0.421, 0.464`), not a misleading edge point.
+4. **F3 — small steps on sensitive x3.** Narrow bounds around the best point after Week 1's large
+   jump backfired.
+5. **F8 — boundary penalty.** UCB still explores, but edge points are penalised.
 
 ## 4. A deliberate strategic question (the "thoughtful iteration" part)
 
@@ -62,10 +65,16 @@ the core refinement of our Week 2 approach.
 ## 5. Summary
 
 - **No framework change.** Week 1 validated the per-function AF design.
-- **F5 → exploit** (signal-triggered), **F1 → keep pure exploration** (no signal), everything else
-  **stays the course** within the exploration phase.
+- **F5 → exploit** (signal-triggered), **F1 → coverage exploration** (interior gaps), **F3/F8 →
+  refined bounds/penalties**, everything else **stays the course** within the exploration phase.
 - The key reasoning: let the **data and dimensionality**, not just the calendar, decide how fast each
   function moves from exploration to exploitation.
 
-> **Next action:** generate Week 2 query points by running the pipeline with the updated 11-point
-> dataset, then submit and record the new outputs for the Week 3 iteration.
+> **Week 2 queries (submitted):**
+> ```
+> F1: 0.421062-0.463562   F2: 0.734317-0.926564   F3: 0.492581-0.691593-0.401268
+> F4: 0.460385-0.434644-0.203056-0.431758   F5: 0.074189-0.696480-0.980000-0.980000
+> F6: 0.517086-0.282151-0.771390-0.980000-0.207535
+> F7: 0.020000-0.491672-0.247422-0.214597-0.377195-0.806097
+> F8: 0.070000-0.070000-0.020000-0.038786-0.403935-0.070000-0.070000-0.893085
+> ```
