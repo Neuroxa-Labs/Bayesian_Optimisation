@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 ROOT = Path(__file__).parent
 
 CFG = {
-    1: dict(dim=2, n=10, a=1e-12, nu=0.5, white=False, m="UNCERTAINTY", k=None),
+    1: dict(dim=2, n=10, a=1e-12, nu=0.5, white=False, m="COVERAGE", k=None),
     2: dict(dim=2, n=10, a=1e-8, nu=2.5, white=True, m="EI", k=None),
     3: dict(dim=3, n=15, a=1e-6, nu=1.5, white=False, m="UCB", k=2.576),
     4: dict(dim=4, n=30, a=1e-4, nu=2.5, white=False, m="UCB", k=3.0),
@@ -29,8 +29,8 @@ NARR = {
     1: dict(world="You are sweeping a 2-D field to locate a hidden radioactive source with a Geiger counter.",
             x="the (x1, x2) position on the map", y="the counter reading (higher = closer to the source)",
             goal="find the position with the strongest reading (the hidden source).",
-            why="The peak is sharp and sparse: almost every reading is 0, so there is no slope to climb. With no signal, the only rational move is **pure exploration** - probe the largest unscanned gaps until a non-zero reading appears. The moment one does, the model switches to UCB to home in on it.",
-            lesson="A zero is not failure - it is elimination. In sparse-peak problems you must cover ground before you can exploit. nu=0.5 lets the GP model a rough, spiky surface instead of assuming smoothness."),
+            why="The peak is sharp and sparse: almost every reading is 0. With no signal, use **coverage-based exploration** (farthest from existing points) plus a boundary penalty - GP uncertainty at box edges is misleading.",
+            lesson="A zero is not failure - it is elimination. Avoid boundary artefacts; scan the largest interior gaps. nu=0.5 models a rough, spiky surface."),
     2: dict(world="You are tuning a machine-learning model whose validation log-likelihood is measured with noise.",
             x="2 model settings", y="a noisy log-likelihood score (higher = better)",
             goal="maximise the (noisy) log-likelihood.",
@@ -39,8 +39,8 @@ NARR = {
     3: dict(world="A drug-development lab mixes 3 chemical components and measures a side-effect score.",
             x="the 3 component ratios (x1, x2, x3)", y="the negative side effect (y near 0 = safe, very negative = harmful)",
             goal="minimise side effects, i.e. push y as close to 0 as possible (we maximise y = -(side effect)).",
-            why="With only 15 points in 3-D, the space is sparse and the map is incomplete. **UCB with a high k=2.576** keeps exploration strong (the 99% confidence band) while still rewarding regions the model predicts are good, so we do not lock onto a local optimum too early.",
-            lesson="Small length-scale dimensions are sensitive - take small steps in them. Boundary values (0.02 / 0.98) are risky because the GP has little data there. When a big jump backfires, switch to careful local search."),
+            why="With only 15 points in 3-D, the space is sparse. **UCB k=2.576** with **narrow bounds** on sensitive dims (x3 ls=0.07: search ±0.15 around best) keeps exploration local after Week 1's boundary jump backfired.",
+            lesson="Small length-scale dimensions are sensitive - take small steps in them. When a big jump backfires, narrow the search box around the best point instead of hugging box edges."),
     4: dict(world="You are placing items in a warehouse; 4 factors control how efficient the layout is.",
             x="4 placement factors", y="an efficiency score (higher = better)",
             goal="maximise warehouse efficiency.",
@@ -64,8 +64,8 @@ NARR = {
     8: dict(world="You are optimising a complex ML model with 8 parameters.",
             x="8 parameters", y="a model score (higher = better)",
             goal="maximise the score in a large 8-D space.",
-            why="The 8-D space is enormous, so broad exploration is essential. **UCB k=2.576** keeps exploration alive while still tracking the highest-score regions the model has found. nu=1.5 is a sensible mid-smoothness compromise for a complex surface.",
-            lesson="In very high dimension, expect slow, steady progress and keep exploring - there is no shortcut through a large space on a tight query budget."),
+            why="The 8-D space is enormous. **UCB k=2.576** plus a **boundary penalty** keeps exploration alive but discourages edge-hugging points (Week 2 had 1 dim on boundary vs 5 before). nu=1.5 is a mid-smoothness compromise.",
+            lesson="In very high dimension, expect slow steady progress. Penalise boundary artefacts so UCB does not waste queries on misleading GP uncertainty at box edges."),
 }
 
 WK1_X = {1: [0.196386, 0.970701], 2: [0.694835, 0.926564], 3: [0.492581, 0.020000, 0.648182],
@@ -76,11 +76,11 @@ WK1_X = {1: [0.196386, 0.970701], 2: [0.694835, 0.926564], 3: [0.492581, 0.02000
 WK1_Y = {1: 4.846319514951174e-214, 2: 0.4898172329737405, 3: -0.16845658599408186,
          4: 0.2574881015382826, 5: 2497.315519875975, 6: -0.47754451531418857,
          7: 1.4506493171190014, 8: 9.795587212017}
-WK2_X = {1: [0.980000, 0.035116], 2: [0.734317, 0.926564], 3: [0.492581, 0.020000, 0.020000],
+WK2_X = {1: [0.421062, 0.463562], 2: [0.734317, 0.926564], 3: [0.492581, 0.691593, 0.401268],
          4: [0.460385, 0.434644, 0.203056, 0.431758], 5: [0.074189, 0.696480, 0.980000, 0.980000],
          6: [0.517086, 0.282151, 0.771390, 0.980000, 0.207535],
          7: [0.020000, 0.491672, 0.247422, 0.214597, 0.377195, 0.806097],
-         8: [0.020000, 0.020000, 0.020000, 0.038786, 0.403935, 0.980000, 0.020000, 0.893085]}
+         8: [0.070000, 0.070000, 0.020000, 0.038786, 0.403935, 0.070000, 0.070000, 0.893085]}
 
 
 def fit(X, Y, c):

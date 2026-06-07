@@ -35,9 +35,9 @@ A tiny length scale means "very sensitive"; a maxed-out one means "this dimensio
 The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
 dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain).
 
-## 4. Why this acquisition function: **UNCERTAINTY**
+## 4. Why this acquisition function: **COVERAGE**
 
-The peak is sharp and sparse: almost every reading is 0, so there is no slope to climb. With no signal, the only rational move is **pure exploration** - probe the largest unscanned gaps until a non-zero reading appears. The moment one does, the model switches to UCB to home in on it.
+The peak is sharp and sparse: almost every reading is 0. With no signal, use **coverage-based exploration** (farthest from existing points) plus a boundary penalty - GP uncertainty at box edges is misleading.
 
 ## 5. Week 1 - what we sent and what happened
 
@@ -47,13 +47,13 @@ The peak is sharp and sparse: almost every reading is 0, so there is no slope to
 
 ## 6. Week 2 - the refined decision
 
-- **Plan:** x = [0.9800, 0.0351]
-- **GP expectation at this point:** mu = -3.277e-04, sigma = 0.0010
-- **Reasoning:** The peak is sharp and sparse: almost every reading is 0, so there is no slope to climb. With no signal, the only rational move is **pure exploration** - probe the largest unscanned gaps until a non-zero reading appears. The moment one does, the model switches to UCB to home in on it.
+- **Plan:** x = [0.4211, 0.4636]
+- **GP expectation at this point:** mu = -1.895e-04, sigma = 9.441e-04
+- **Reasoning:** The peak is sharp and sparse: almost every reading is 0. With no signal, use **coverage-based exploration** (farthest from existing points) plus a boundary penalty - GP uncertainty at box edges is misleading.
 
 ## 7. The lesson
 
-A zero is not failure - it is elimination. In sparse-peak problems you must cover ground before you can exploit. nu=0.5 lets the GP model a rough, spiky surface instead of assuming smoothness.
+A zero is not failure - it is elimination. Avoid boundary artefacts; scan the largest interior gaps. nu=0.5 models a rough, spiky surface.
 
 ## 8. Summary
 
@@ -61,11 +61,11 @@ A zero is not failure - it is elimination. In sparse-peak problems you must cove
 |---|---|
 | Real-world task | Radiation Source Detection |
 | Dimensions | 2 |
-| Acquisition | UNCERTAINTY (Matern nu=0.5) |
+| Acquisition | COVERAGE (Matern nu=0.5) |
 | Previous best | 7.711e-16 |
 | Week 1 result | 4.846e-214 (no improvement) |
 | Current best | 7.711e-16 |
-| Week 2 query | [0.9800, 0.0351] |
-| GP expects (W2) | mu = -3.277e-04 |
+| Week 2 query | [0.4211, 0.4636] |
+| GP expects (W2) | mu = -1.895e-04 |
 
 *See `analysis_F1.png` in this folder for the full 9-panel visual analysis.*

@@ -68,13 +68,11 @@ comprehensive `analysis_F*.png` figure (data → GP → acquisition → Week 1 �
 - **F5** was the standout: 1089 → 2497 (+129%) after the explore→exploit switch.
 - **F1** still reads ~0 (sparse peak — exploration continues); **F2/F3** did not improve, but for
   explainable reasons (noise / expected exploration cost).
-- **Week 2 queries generated.** Refinements this iteration:
-  - **Per-function Matérn smoothness ν**: ν=0.5 for F1 (sharp/sparse peak), ν=1.5 for F3 and F8,
-    ν=2.5 for the rest. Sensitivity testing showed F1, F3 and F8 candidate locations change
-    meaningfully with ν — confirming the per-function choice.
-  - **Anti-duplicate guard**: if the optimiser proposes a point that coincides with an existing
-    observation (e.g. F5 sitting on its own best), it switches to a small local exploration around
-    the peak instead of wasting a query.
+- **Week 2 queries submitted.** Refinements:
+  - Per-function Matérn ν (F1=0.5, F3/F8=1.5), F5 anti-duplicate local UCB.
+  - **F1:** coverage + boundary penalty (interior gap `0.421–0.464`, not box edge).
+  - **F3:** narrow bounds on sensitive dims (x3 ±0.15 around best → `0.493–0.692–0.401`).
+  - **F8:** UCB + boundary penalty (1 dim on boundary vs 5 before).
 
 See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md) and [`WEEK2_STRATEGY.md`](WEEK2_STRATEGY.md) for the
 full reasoning, and `progress_week2_report.png` for the per-iteration diagnostics table.

@@ -43,7 +43,7 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 
 ## 4. Why this acquisition function: **UCB (k=2.576)**
 
-The 8-D space is enormous, so broad exploration is essential. **UCB k=2.576** keeps exploration alive while still tracking the highest-score regions the model has found. nu=1.5 is a sensible mid-smoothness compromise for a complex surface.
+The 8-D space is enormous. **UCB k=2.576** plus a **boundary penalty** keeps exploration alive but discourages edge-hugging points (Week 2 had 1 dim on boundary vs 5 before). nu=1.5 is a mid-smoothness compromise.
 
 ## 5. Week 1 - what we sent and what happened
 
@@ -53,13 +53,13 @@ The 8-D space is enormous, so broad exploration is essential. **UCB k=2.576** ke
 
 ## 6. Week 2 - the refined decision
 
-- **Plan:** x = [0.0200, 0.0200, 0.0200, 0.0388, 0.4039, 0.9800, 0.0200, 0.8931]
-- **GP expectation at this point:** mu = 9.7626, sigma = 0.2149
-- **Reasoning:** The 8-D space is enormous, so broad exploration is essential. **UCB k=2.576** keeps exploration alive while still tracking the highest-score regions the model has found. nu=1.5 is a sensible mid-smoothness compromise for a complex surface.
+- **Plan:** x = [0.0700, 0.0700, 0.0200, 0.0388, 0.4039, 0.0700, 0.0700, 0.8931]
+- **GP expectation at this point:** mu = 9.7252, sigma = 0.2059
+- **Reasoning:** The 8-D space is enormous. **UCB k=2.576** plus a **boundary penalty** keeps exploration alive but discourages edge-hugging points (Week 2 had 1 dim on boundary vs 5 before). nu=1.5 is a mid-smoothness compromise.
 
 ## 7. The lesson
 
-In very high dimension, expect slow, steady progress and keep exploring - there is no shortcut through a large space on a tight query budget.
+In very high dimension, expect slow steady progress. Penalise boundary artefacts so UCB does not waste queries on misleading GP uncertainty at box edges.
 
 ## 8. Summary
 
@@ -71,7 +71,7 @@ In very high dimension, expect slow, steady progress and keep exploring - there 
 | Previous best | 9.5985 |
 | Week 1 result | 9.7956 (improved) |
 | Current best | 9.7956 |
-| Week 2 query | [0.0200, 0.0200, 0.0200, 0.0388, 0.4039, 0.9800, 0.0200, 0.8931] |
-| GP expects (W2) | mu = 9.7626 |
+| Week 2 query | [0.0700, 0.0700, 0.0200, 0.0388, 0.4039, 0.0700, 0.0700, 0.8931] |
+| GP expects (W2) | mu = 9.7252 |
 
 *See `analysis_F8.png` in this folder for the full 9-panel visual analysis.*
