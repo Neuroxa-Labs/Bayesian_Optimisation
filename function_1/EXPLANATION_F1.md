@@ -12,15 +12,15 @@
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given (10 initial points + the Week 1 point = 11 observations)
+## 2. What we were given (10 initial points + 2 weekly queries = 12 observations)
 
 | # | x1 | x2 | y | note |
 |---|---|---|---|---|
 | 3 | 0.7310 | 0.7330 | 7.711e-16 | BEST |
 | 8 | 0.6834 | 0.8611 | 2.535e-40 |  |
 | 2 | 0.5743 | 0.8799 | 1.033e-46 |  |
-| 6 | 0.4104 | 0.1476 | -2.159e-54 |  |
-| 5 | 0.6501 | 0.6815 | -0.0036 | WORST |
+| 5 | 0.6501 | 0.6815 | -0.0036 |  |
+| 12 | 0.4211 | 0.4636 | -0.0066 | WORST |
 
 - **Best so far:** y = 7.711e-16 at x = [0.7310, 0.7330]
 
@@ -29,8 +29,8 @@ Bayesian Optimisation is built for - finding the best of an expensive unknown fu
 The Gaussian Process fits one **length scale** per dimension - how fast y changes along that axis.
 A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
 
-- `x1`: length-scale = 0.0123 -> **very sensitive** - small changes move y a lot (take small steps)
-- `x2`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
+- `x1`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
+- `x2`: length-scale = 0.0183 -> **very sensitive** - small changes move y a lot (take small steps)
 
 The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
 dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain).
@@ -45,11 +45,12 @@ The peak is sharp and sparse: almost every reading is 0. With no signal, use **c
 - **Received:** y = 4.846e-214
 - **Outcome:** did **not** improve over the previous best (7.711e-16) - but it is still information.
 
-## 6. Week 2 - the refined decision
+## 6. Week 2 - what we sent and what happened
 
-- **Plan:** x = [0.4211, 0.4636]
-- **GP expectation at this point:** mu = -1.895e-04, sigma = 9.441e-04
-- **Reasoning:** The peak is sharp and sparse: almost every reading is 0. With no signal, use **coverage-based exploration** (farthest from existing points) plus a boundary penalty - GP uncertainty at box edges is misleading.
+- **Sent:** x = [0.4211, 0.4636]
+- **Received:** y = -0.0066
+- **GP had expected:** mu = -0.0066, sigma = 2.004e-09
+- **Outcome:** did **not** improve over the previous best (7.711e-16).
 
 ## 7. The lesson
 
@@ -62,10 +63,9 @@ A zero is not failure - it is elimination. Avoid boundary artefacts; scan the la
 | Real-world task | Radiation Source Detection |
 | Dimensions | 2 |
 | Acquisition | COVERAGE (Matern nu=0.5) |
-| Previous best | 7.711e-16 |
+| Best before W1 | 7.711e-16 |
 | Week 1 result | 4.846e-214 (no improvement) |
+| Week 2 result | -0.0066 (no improvement) |
 | Current best | 7.711e-16 |
-| Week 2 query | [0.4211, 0.4636] |
-| GP expects (W2) | mu = -1.895e-04 |
 
 *See `analysis_F1.png` in this folder for the full 9-panel visual analysis.*

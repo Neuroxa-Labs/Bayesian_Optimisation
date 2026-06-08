@@ -68,14 +68,12 @@ comprehensive `analysis_F*.png` figure (data → GP → acquisition → Week 1 �
 - **F5** was the standout: 1089 → 2497 (+129%) after the explore→exploit switch.
 - **F1** still reads ~0 (sparse peak — exploration continues); **F2/F3** did not improve, but for
   explainable reasons (noise / expected exploration cost).
-- **Week 2 queries submitted.** Refinements:
-  - Per-function Matérn ν (F1=0.5, F3/F8=1.5), F5 anti-duplicate local UCB.
-  - **F1:** coverage + boundary penalty (interior gap `0.421–0.464`, not box edge).
-  - **F3:** narrow bounds on sensitive dims (x3 ±0.15 around best → `0.493–0.692–0.401`).
-  - **F8:** UCB + boundary penalty (1 dim on boundary vs 5 before).
+- **Week 2 results received.** 1/8 improved — only **F3** (−0.168 → −0.020) after narrow-bounds fix.
+  F5 exploit step returned 1811 (best remains 2497). See [`WEEK2_REFLECTION.md`](WEEK2_REFLECTION.md).
+- **Week 3 queries generated** (`CURRENT_WEEK = 3`). Submit from notebook or portal block below.
 
-See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md) and [`WEEK2_STRATEGY.md`](WEEK2_STRATEGY.md) for the
-full reasoning, and `progress_week2_report.png` for the per-iteration diagnostics table.
+See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md), [`WEEK2_STRATEGY.md`](WEEK2_STRATEGY.md), and
+`progress_week3_report.png` for diagnostics. Interactive dashboard: `bbo_progress_report.html`.
 
 ## Requirements
 

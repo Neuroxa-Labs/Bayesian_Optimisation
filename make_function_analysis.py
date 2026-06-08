@@ -94,6 +94,11 @@ WK2_X = {
     7: [0.020000, 0.491672, 0.247422, 0.214597, 0.377195, 0.806097],
     8: [0.070000, 0.070000, 0.020000, 0.038786, 0.403935, 0.070000, 0.070000, 0.893085],
 }
+WK2_Y = {
+    1: -0.006627379464825304, 2: 0.5706060535359335, 3: -0.020302412806162906,
+    4: -3.305599024194517, 5: 1811.05681696222, 6: -0.5782346356754113,
+    7: 1.2983310369966137, 8: 9.637407822369,
+}
 
 
 def fit(X, Y, c):
@@ -135,14 +140,15 @@ def fmt(v):
 def make_figure(fn):
     c = CFG[fn]
     dim, n0 = c["dim"], c["n"]
-    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 1]
-    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 1]
+    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 2]
+    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 2]
     gp = fit(X, Y, c)
     ls = length_scales(gp)
     fb = float(Y.max())
     best_i = int(np.argmax(Y))
     best_x = X[best_i]
-    w1x, w1y, w2x = np.array(WK1_X[fn]), WK1_Y[fn], np.array(WK2_X[fn])
+    w1x, w1y = np.array(WK1_X[fn]), WK1_Y[fn]
+    w2x, w2y = np.array(WK2_X[fn]), WK2_Y[fn]
 
     # two most sensitive dims (smallest length scale)
     order = np.argsort(ls)
@@ -160,10 +166,12 @@ def make_figure(fn):
     colors = ["#7fbf7f" if y >= np.percentile(Y, 66) else
               ("#f2b56b" if y >= np.percentile(Y, 33) else "#e06666") for y in Y]
     colors[best_i] = "#3b7dd8"
-    colors[-1] = "#9b59b6"  # week 1 point (last)
+    if len(Y) >= 2:
+        colors[-2] = "#9b59b6"  # week 1
+        colors[-1] = "#00bcd4"  # week 2
     ax.bar(idx, Y, color=colors)
     ax.axhline(fb, ls="--", color="green", lw=1, alpha=0.6)
-    ax.set_title("(1) Observed y values\n(blue=best, purple=Week1)", fontsize=11, fontweight="bold")
+    ax.set_title("(1) Observed y values\n(blue=best, purple=W1, cyan=W2)", fontsize=11, fontweight="bold")
     ax.set_xlabel("observation #"); ax.set_ylabel("y")
     ax.grid(alpha=0.25, axis="y")
 
@@ -246,16 +254,16 @@ def make_figure(fn):
 
     # Panel 8: Week1 -> Week2 decision text
     ax = fig.add_subplot(gs[2, 1]); ax.axis("off")
-    improved = w1y > float(Y[:-1].max())
+    w2_prev = float(Y[:-1].max())
+    w2_improved = w2y > w2_prev
     mu_w2, sg_w2 = gp.predict(w2x.reshape(1, -1), return_std=True)
-    txt2 = (f"WEEK 1 -> WEEK 2 DECISION\n"
+    txt2 = (f"WEEK 2 RESULT\n"
             f"--------------------------------\n"
-            f"Week 1 sent : [{', '.join(fmt(v) for v in w1x)}]\n"
-            f"Week 1 got  : y = {fmt(w1y)}\n"
-            f"Result      : {'IMPROVED' if improved else 'did not improve'} "
-            f"(prev best {fmt(float(Y[:-1].max()))})\n\n"
-            f"Week 2 plan : [{', '.join(fmt(v) for v in w2x)}]\n"
-            f"GP expects  : mu={fmt(float(mu_w2[0]))}, sigma={fmt(float(sg_w2[0]))}\n\n"
+            f"Week 2 sent : [{', '.join(fmt(v) for v in w2x)}]\n"
+            f"Week 2 got  : y = {fmt(w2y)}\n"
+            f"Result      : {'IMPROVED' if w2_improved else 'did not improve'} "
+            f"(prev best {fmt(w2_prev)})\n"
+            f"GP expected : mu={fmt(float(mu_w2[0]))}, sigma={fmt(float(sg_w2[0]))}\n\n"
             f"Reasoning   :\n{STORY[fn][2]}")
     ax.text(0.0, 1.0, txt2, va="top", ha="left", fontsize=9.2, family="monospace",
             transform=ax.transAxes, wrap=True)
@@ -265,7 +273,8 @@ def make_figure(fn):
     running = np.maximum.accumulate(Y)
     ax.plot(idx, Y, "o-", color="#888", ms=4, label="y per query")
     ax.plot(idx, running, color="green", lw=2, label="best so far")
-    ax.scatter([len(Y) - 1], [Y[-1]], marker="X", c="red", s=120, zorder=5, label="Week1 result")
+    ax.scatter([len(Y) - 2], [Y[-2]], marker="X", c="red", s=120, zorder=5, label="Week1")
+    ax.scatter([len(Y) - 1], [Y[-1]], marker="^", c="cyan", s=120, zorder=5, label="Week2")
     ax.set_title("(9) Observation history", fontsize=11, fontweight="bold")
     ax.set_xlabel("observation #"); ax.set_ylabel("y"); ax.legend(fontsize=7); ax.grid(alpha=0.25)
 

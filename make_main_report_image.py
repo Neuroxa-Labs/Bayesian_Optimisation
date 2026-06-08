@@ -34,15 +34,15 @@ W1 = [
 ]
 
 W2 = [
-    (1, 7.71e-16, 0.0, [0.421062, 0.463562], [0.0123, 10]),
-    (2, 0.6112, 0.0126, [0.734317, 0.926564], [0.0691, 10]),
-    (3, -0.0348, 0.12, [0.492581, 0.691593, 0.401268], [10, 2.54, 0.0713]),
-    (4, 0.2575, 1.365, [0.460385, 0.434644, 0.203056, 0.431758], [1.600, 1.458, 1.634, 1.462]),
-    (5, 2497.32, 2530.8, [0.074189, 0.696480, 0.980000, 0.980000], [10, 10, 1.146, 0.328]),
-    (6, -0.4775, 0.0538, [0.517086, 0.282151, 0.771390, 0.980000, 0.207535], [0.538, 0.981, 1.15, 1.247, 0.997]),
-    (7, 1.4506, 0.0182, [0.020000, 0.491672, 0.247422, 0.214597, 0.377195, 0.806097], [1.06, 10, 10, 0.378, 0.22, 0.251]),
+    (1, 7.71e-16, 0.27, [0.421062, 0.463562], -0.006627, [0.0123, 10]),
+    (2, 0.6112, 0.0126, [0.734317, 0.926564], 0.5706, [0.0691, 10]),
+    (3, -0.0348, 0.12, [0.492581, 0.691593, 0.401268], -0.0203, [10, 2.54, 0.0713]),
+    (4, 0.2575, 1.365, [0.460385, 0.434644, 0.203056, 0.431758], -3.306, [1.600, 1.458, 1.634, 1.462]),
+    (5, 2497.32, 2530.8, [0.074189, 0.696480, 0.980000, 0.980000], 1811.06, [10, 10, 1.146, 0.328]),
+    (6, -0.4775, 0.0538, [0.517086, 0.282151, 0.771390, 0.980000, 0.207535], -0.5782, [0.538, 0.981, 1.15, 1.247, 0.997]),
+    (7, 1.4506, 0.0182, [0.020000, 0.491672, 0.247422, 0.214597, 0.377195, 0.806097], 1.2983, [1.06, 10, 10, 0.378, 0.22, 0.251]),
     (8, 9.7956, 10.31, [0.070000, 0.070000, 0.020000, 0.038786, 0.403935, 0.070000, 0.070000, 0.893085],
-     [3.6, 5.703, 2.663, 9.301, 10, 7.346, 3.75, 10]),
+     9.6374, [3.6, 5.703, 2.663, 9.301, 10, 7.346, 3.75, 10]),
 ]
 
 
@@ -92,16 +92,21 @@ def draw_table(ax, title, rows, week2=False):
         name, dim, af, nu = META[fn]
         best, acq = row[1], row[2]
         if week2:
-            xq, ls = row[3], row[4]
-            actual, imp = None, None
+            xq, actual, ls = row[3], row[4], row[5]
+            imp = actual - best if actual is not None else None
         else:
             actual, ls = row[3], row[4]
             imp = actual - best
-        if week2:
+        if week2 and actual is None:
             xstr = " ".join(f"{v:.3f}" for v in xq)
             delta = "pending"
             result = "pending"
             bg = "#fffde7"
+        elif week2:
+            xstr = " ".join(f"{v:.3f}" for v in xq)
+            delta = ("+" if imp > 0 else "") + fmt(imp)
+            result = fmt(actual)
+            bg = "#e8f8f0" if imp > 0 else "#fdecea"
         else:
             xstr = ""
             delta = ("+" if imp > 0 else "") + fmt(imp)
@@ -148,10 +153,10 @@ ax0.text(0.0, 0.52,
 ax1 = fig.add_subplot(gs[1])
 ax1.axis("off")
 cards = [("5", "Week 1\nimproved", "#00b894"),
-         ("2", "Week 1\nworsened", "#e17055"),
+         ("1", "Week 2\nimproved", "#00b894"),
+         ("7", "Week 2\nworsened", "#e17055"),
          ("1", "No signal\n(F1)", "#636e72"),
-         ("8", "Week 2\nsubmitted", "#2d6dc7"),
-         ("+129%", "F5 best\njump", "#00b894")]
+         ("8", "Week 3\nready", "#2d6dc7")]
 for i, (num, lbl, col) in enumerate(cards):
     x = 0.02 + i * 0.19
     rect = mpatches.FancyBboxPatch((x, 0.15), 0.16, 0.7, boxstyle="round,pad=0.02",
@@ -168,7 +173,7 @@ draw_table(ax2, "ITERATION 1 — Week 1 (results received)", W1, week2=False)
 
 # Week 2 table
 ax3 = fig.add_subplot(gs[3])
-draw_table(ax3, "ITERATION 2 — Week 2 (queries submitted, results pending)", W2, week2=True)
+draw_table(ax3, "ITERATION 2 — Week 2 (results received)", W2, week2=True)
 
 # Legend
 ax4 = fig.add_subplot(gs[4])

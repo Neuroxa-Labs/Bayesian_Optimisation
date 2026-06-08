@@ -32,14 +32,14 @@ FUNCTIONS = {
 # method + exploration parameter per function/iteration (exploration phase, weeks 1-2)
 # F5 flips to exploitation in iter2 once its best crosses 2000.
 METHOD = {
-    1: ("UNC", None, "UNC", None),       # (m_i1, p_i1, m_i2, p_i2)
-    2: ("EI", 0.0, "EI", 0.0),
-    3: ("UCB", 2.576, "UCB", 2.576),
-    4: ("UCB", 3.0, "UCB", 3.0),
-    5: ("UCB", 2.576, "UCB", 1.0),
-    6: ("EI", 0.0, "EI", 0.0),
-    7: ("EI", 0.0, "EI", 0.0),
-    8: ("UCB", 2.576, "UCB", 2.576),
+    1: ("UNC", None, "COV", None, "COV", None),
+    2: ("EI", 0.0, "EI", 0.0, "EI", 0.0),
+    3: ("UCB", 2.576, "UCB", 2.576, "UCB", 2.576),
+    4: ("UCB", 3.0, "UCB", 3.0, "UCB", 3.0),
+    5: ("UCB", 2.576, "UCB", 1.0, "UCB", 1.0),
+    6: ("EI", 0.0, "EI", 0.0, "EI", 0.0),
+    7: ("EI", 0.0, "EI", 0.0, "EI", 0.0),
+    8: ("UCB", 2.576, "UCB", 2.576, "UCB", 2.576),
 }
 
 WK1_X = {
@@ -64,6 +64,20 @@ WK2_X = {
     6: [0.517086, 0.282151, 0.771390, 0.980000, 0.207535],
     7: [0.020000, 0.491672, 0.247422, 0.214597, 0.377195, 0.806097],
     8: [0.070000, 0.070000, 0.020000, 0.038786, 0.403935, 0.070000, 0.070000, 0.893085],
+}
+WK2_Y = {
+    1: -0.006627379464825304, 2: 0.5706060535359335, 3: -0.020302412806162906,
+    4: -3.305599024194517, 5: 1811.05681696222, 6: -0.5782346356754113,
+    7: 1.2983310369966137, 8: 9.637407822369,
+}
+WK3_X = {
+    1: [0.020000, 0.702476], 2: [0.718765, 0.926564],
+    3: [0.980000, 0.691593, 0.411196],
+    4: [0.326442, 0.431530, 0.480218, 0.453003],
+    5: [0.194749, 0.846480, 0.980000, 0.980000],
+    6: [0.524058, 0.360869, 0.413794, 0.897694, 0.020000],
+    7: [0.020000, 0.491672, 0.247422, 0.174546, 0.355144, 0.715523],
+    8: [0.070000, 0.070000, 0.020000, 0.038786, 0.403935, 0.930000, 0.020000, 0.893085],
 }
 
 
@@ -115,7 +129,7 @@ def fmt(v):
 
 # ---- compute everything ----
 iters = {}  # iters[it][fn] = dict of metrics
-for it in (1, 2):
+for it in (1, 2, 3):
     iters[it] = {}
     for fn, cfg in FUNCTIONS.items():
         X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")
@@ -126,11 +140,16 @@ for it in (1, 2):
             next_x = WK1_X[fn]
             actual = WK1_Y[fn]
             method, param = METHOD[fn][0], METHOD[fn][1]
-        else:
+        elif it == 2:
             Xi, Yi = X[: n0 + 1], Y[: n0 + 1]
             next_x = WK2_X[fn]
-            actual = None  # pending
+            actual = WK2_Y[fn]
             method, param = METHOD[fn][2], METHOD[fn][3]
+        else:
+            Xi, Yi = X[: n0 + 2], Y[: n0 + 2]
+            next_x = WK3_X[fn]
+            actual = None
+            method, param = METHOD[fn][4], METHOD[fn][5]
         gp = fit_gp(Xi, Yi, cfg)
         cur_best = float(Yi.max())
         amp, ls = kernel_amp_and_ls(gp)
@@ -150,11 +169,11 @@ SHORT = {1: "Radiation\nDetection", 2: "Noisy ML\nLog-Lik", 3: "Drug\nSide-Effec
          7: "ML Hyper-\nparameters", 8: "8-Param\nML Model"}
 fn_cols = [f"F{i}\n{SHORT[i]}" for i in range(1, 9)]
 
-fig, axes = plt.subplots(2, 1, figsize=(17, 13))
+fig, axes = plt.subplots(3, 1, figsize=(17, 19))
 fig.suptitle("BBO Progress Report — per-function GP / Bayesian Optimisation diagnostics",
              fontsize=15, fontweight="bold")
 
-for ax_idx, it in enumerate((1, 2)):
+for ax_idx, it in enumerate((1, 2, 3)):
     ax = axes[ax_idx]
     ax.axis("off")
     ax.set_title(f"ITERATION {it}  (Week {it})", loc="left", fontsize=13,
@@ -215,8 +234,8 @@ for ax_idx, it in enumerate((1, 2)):
             cell.set_fontsize(8)
 
 plt.tight_layout(rect=[0, 0, 1, 0.97])
-png = ROOT / "progress_week2_report.png"
-jpg = ROOT / "progress_week2_report.jpg"
+png = ROOT / "progress_week3_report.png"
+jpg = ROOT / "progress_week3_report.jpg"
 plt.savefig(png, dpi=150, bbox_inches="tight")
 try:
     plt.savefig(jpg, dpi=150, bbox_inches="tight")

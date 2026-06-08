@@ -12,26 +12,26 @@
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given (15 initial points + the Week 1 point = 16 observations)
+## 2. What we were given (15 initial points + 2 weekly queries = 17 observations)
 
 | # | x1 | x2 | x3 | y | note |
 |---|---|---|---|---|---|
-| 4 | 0.4926 | 0.6116 | 0.3402 | -0.0348 | BEST |
+| 17 | 0.4926 | 0.6916 | 0.4013 | -0.0203 | BEST |
+| 4 | 0.4926 | 0.6116 | 0.3402 | -0.0348 |  |
 | 14 | 0.6001 | 0.7251 | 0.0661 | -0.0364 |  |
-| 11 | 0.2205 | 0.2978 | 0.3436 | -0.0469 |  |
 | 16 | 0.4926 | 0.0200 | 0.6482 | -0.1685 |  |
 | 7 | 0.1518 | 0.4400 | 0.9909 | -0.3989 | WORST |
 
-- **Best so far:** y = -0.0348 at x = [0.4926, 0.6116, 0.3402]
+- **Best so far:** y = -0.0203 at x = [0.4926, 0.6916, 0.4013]
 
 ## 3. What the GP learned (reading the length scales)
 
 The Gaussian Process fits one **length scale** per dimension - how fast y changes along that axis.
 A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
 
-- `x1`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
-- `x2`: length-scale = 2.5377 -> moderate influence
-- `x3`: length-scale = 0.0713 -> **very sensitive** - small changes move y a lot (take small steps)
+- `x1`: length-scale = 0.5720 -> moderate influence
+- `x2`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
+- `x3`: length-scale = 0.1650 -> **very sensitive** - small changes move y a lot (take small steps)
 
 The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
 dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain).
@@ -46,11 +46,12 @@ With only 15 points in 3-D, the space is sparse. **UCB k=2.576** with **narrow b
 - **Received:** y = -0.1685
 - **Outcome:** did **not** improve over the previous best (-0.0348) - but it is still information.
 
-## 6. Week 2 - the refined decision
+## 6. Week 2 - what we sent and what happened
 
-- **Plan:** x = [0.4926, 0.6916, 0.4013]
-- **GP expectation at this point:** mu = -0.0551, sigma = 0.0667
-- **Reasoning:** With only 15 points in 3-D, the space is sparse. **UCB k=2.576** with **narrow bounds** on sensitive dims (x3 ls=0.07: search ±0.15 around best) keeps exploration local after Week 1's boundary jump backfired.
+- **Sent:** x = [0.4926, 0.6916, 0.4013]
+- **Received:** y = -0.0203
+- **GP had expected:** mu = -0.0203, sigma = 8.319e-05
+- **Outcome:** **IMPROVED** over the previous best (-0.0348).
 
 ## 7. The lesson
 
@@ -63,10 +64,9 @@ Small length-scale dimensions are sensitive - take small steps in them. When a b
 | Real-world task | Drug Discovery - Adverse Reactions |
 | Dimensions | 3 |
 | Acquisition | UCB k=2.576 (Matern nu=1.5) |
-| Previous best | -0.0348 |
+| Best before W1 | -0.0348 |
 | Week 1 result | -0.1685 (no improvement) |
-| Current best | -0.0348 |
-| Week 2 query | [0.4926, 0.6916, 0.4013] |
-| GP expects (W2) | mu = -0.0551 |
+| Week 2 result | -0.0203 (improved) |
+| Current best | -0.0203 |
 
 *See `analysis_F3.png` in this folder for the full 9-panel visual analysis.*
