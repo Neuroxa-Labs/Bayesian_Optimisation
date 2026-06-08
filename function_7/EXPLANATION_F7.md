@@ -12,13 +12,13 @@
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given (30 initial points + the Week 1 point = 31 observations)
+## 2. What we were given (30 initial points + 2 weekly queries = 32 observations)
 
 | # | x1 | x2 | x3 | x4 | x5 | x6 | y | note |
 |---|---|---|---|---|---|---|---|---|
 | 31 | 0.0200 | 0.4917 | 0.2474 | 0.2174 | 0.3780 | 0.7465 | 1.4506 | BEST |
 | 7 | 0.0579 | 0.4917 | 0.2474 | 0.2181 | 0.4204 | 0.7310 | 1.3650 |  |
-| 25 | 0.8816 | 0.2045 | 0.4145 | 0.4204 | 0.2649 | 0.7307 | 0.6751 |  |
+| 32 | 0.0200 | 0.4917 | 0.2474 | 0.2146 | 0.3772 | 0.8061 | 1.2983 |  |
 | 28 | 0.8469 | 0.1424 | 0.0607 | 0.7563 | 0.5524 | 0.0813 | 0.0031 |  |
 | 20 | 0.8799 | 0.3980 | 0.0036 | 0.9570 | 0.2645 | 0.1149 | 0.0027 | WORST |
 
@@ -29,12 +29,12 @@ Bayesian Optimisation is built for - finding the best of an expensive unknown fu
 The Gaussian Process fits one **length scale** per dimension - how fast y changes along that axis.
 A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
 
-- `x1`: length-scale = 1.0597 -> moderate influence
+- `x1`: length-scale = 1.0412 -> moderate influence
 - `x2`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
 - `x3`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
-- `x4`: length-scale = 0.3784 -> **very sensitive** - small changes move y a lot (take small steps)
-- `x5`: length-scale = 0.2199 -> **very sensitive** - small changes move y a lot (take small steps)
-- `x6`: length-scale = 0.2509 -> **very sensitive** - small changes move y a lot (take small steps)
+- `x4`: length-scale = 0.3790 -> **very sensitive** - small changes move y a lot (take small steps)
+- `x5`: length-scale = 0.2156 -> **very sensitive** - small changes move y a lot (take small steps)
+- `x6`: length-scale = 0.2074 -> **very sensitive** - small changes move y a lot (take small steps)
 
 The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
 dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain).
@@ -49,11 +49,12 @@ High dimension means the space is large and easy to over-commit in. **EI** keeps
 - **Received:** y = 1.4506
 - **Outcome:** **IMPROVED** over the previous best (1.3650).
 
-## 6. Week 2 - the refined decision
+## 6. Week 2 - what we sent and what happened
 
-- **Plan:** x = [0.0200, 0.4917, 0.2474, 0.2146, 0.3772, 0.8061]
-- **GP expectation at this point:** mu = 1.4035, sigma = 0.0929
-- **Reasoning:** High dimension means the space is large and easy to over-commit in. **EI** keeps a careful balance; jumping to exploitation too early would risk locking onto a local optimum before the space is mapped.
+- **Sent:** x = [0.0200, 0.4917, 0.2474, 0.2146, 0.3772, 0.8061]
+- **Received:** y = 1.2983
+- **GP had expected:** mu = 1.2983, sigma = 4.051e-04
+- **Outcome:** did **not** improve over the previous best (1.4506).
 
 ## 7. The lesson
 
@@ -66,10 +67,9 @@ In 6-D, patience matters. Small, reliable improvements accumulate; aggressive ex
 | Real-world task | ML Hyperparameter Tuning |
 | Dimensions | 6 |
 | Acquisition | EI (Matern nu=2.5) |
-| Previous best | 1.3650 |
+| Best before W1 | 1.3650 |
 | Week 1 result | 1.4506 (improved) |
+| Week 2 result | 1.2983 (no improvement) |
 | Current best | 1.4506 |
-| Week 2 query | [0.0200, 0.4917, 0.2474, 0.2146, 0.3772, 0.8061] |
-| GP expects (W2) | mu = 1.4035 |
 
 *See `analysis_F7.png` in this folder for the full 9-panel visual analysis.*

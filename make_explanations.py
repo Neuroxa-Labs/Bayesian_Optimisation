@@ -81,6 +81,9 @@ WK2_X = {1: [0.421062, 0.463562], 2: [0.734317, 0.926564], 3: [0.492581, 0.69159
          6: [0.517086, 0.282151, 0.771390, 0.980000, 0.207535],
          7: [0.020000, 0.491672, 0.247422, 0.214597, 0.377195, 0.806097],
          8: [0.070000, 0.070000, 0.020000, 0.038786, 0.403935, 0.070000, 0.070000, 0.893085]}
+WK2_Y = {1: -0.006627379464825304, 2: 0.5706060535359335, 3: -0.020302412806162906,
+         4: -3.305599024194517, 5: 1811.05681696222, 6: -0.5782346356754113,
+         7: 1.2983310369966137, 8: 9.637407822369}
 
 
 def fit(X, Y, c):
@@ -111,15 +114,18 @@ def vec(x):
 
 for fn, c in CFG.items():
     dim, n0 = c["dim"], c["n"]
-    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 1]
-    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 1]
+    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 2]
+    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 2]
     gp = fit(X, Y, c); ls = lscales(gp)
-    prev_best = float(Y[:-1].max()); cur_best = float(Y.max())
+    w1_prev = float(Y[:n0].max()); cur_best = float(Y.max())
     bi = int(np.argmax(Y)); bx = X[bi]
-    w1x, w1y, w2x = WK1_X[fn], WK1_Y[fn], WK2_X[fn]
+    w1x, w1y = WK1_X[fn], WK1_Y[fn]
+    w2x, w2y = WK2_X[fn], WK2_Y[fn]
+    w2_prev = float(Y[:-1].max())
     mu2, sg2 = gp.predict(np.asarray(w2x).reshape(1, -1), return_std=True)
     mu2, sg2 = float(mu2[0]), float(sg2[0])
-    improved = w1y > prev_best
+    w1_improved = w1y > w1_prev
+    w2_improved = w2y > w2_prev
     nr = NARR[fn]
 
     # ranked observations
@@ -157,7 +163,7 @@ for fn, c in CFG.items():
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given ({n0} initial points + the Week 1 point = {len(Y)} observations)
+## 2. What we were given ({n0} initial points + 2 weekly queries = {len(Y)} observations)
 
 | # | {xheaders} | y | note |
 |---|{"|".join(["---"] * dim)}|---|---|
@@ -183,13 +189,14 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 
 - **Sent:** x = {vec(w1x)}
 - **Received:** y = {f(w1y)}
-- **Outcome:** {"**IMPROVED** over the previous best (" + f(prev_best) + ")" if improved else "did **not** improve over the previous best (" + f(prev_best) + ") - but it is still information"}.
+- **Outcome:** {"**IMPROVED** over the previous best (" + f(w1_prev) + ")" if w1_improved else "did **not** improve over the previous best (" + f(w1_prev) + ") - but it is still information"}.
 
-## 6. Week 2 - the refined decision
+## 6. Week 2 - what we sent and what happened
 
-- **Plan:** x = {vec(w2x)}
-- **GP expectation at this point:** mu = {f(mu2)}, sigma = {f(sg2)}
-- **Reasoning:** {nr['why']}
+- **Sent:** x = {vec(w2x)}
+- **Received:** y = {f(w2y)}
+- **GP had expected:** mu = {f(mu2)}, sigma = {f(sg2)}
+- **Outcome:** {"**IMPROVED** over the previous best (" + f(w2_prev) + ")" if w2_improved else "did **not** improve over the previous best (" + f(w2_prev) + ")"}.
 
 ## 7. The lesson
 
@@ -202,11 +209,10 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 | Real-world task | {NAME[fn]} |
 | Dimensions | {dim} |
 | Acquisition | {c['m']}{(' k=' + str(c['k'])) if c['k'] else ''} (Matern nu={c['nu']}) |
-| Previous best | {f(prev_best)} |
-| Week 1 result | {f(w1y)} ({"improved" if improved else "no improvement"}) |
+| Best before W1 | {f(w1_prev)} |
+| Week 1 result | {f(w1y)} ({"improved" if w1_improved else "no improvement"}) |
+| Week 2 result | {f(w2y)} ({"improved" if w2_improved else "no improvement"}) |
 | Current best | {f(cur_best)} |
-| Week 2 query | {vec(w2x)} |
-| GP expects (W2) | mu = {f(mu2)} |
 
 *See `analysis_F{fn}.png` in this folder for the full 9-panel visual analysis.*
 """

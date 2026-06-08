@@ -70,7 +70,8 @@ tr:hover td{filter:brightness(0.97);}
     <a href="https://github.com/Neuroxa-Labs/Bayesian_Optimisation">GitHub repo</a> &nbsp;·&nbsp;
     <a href="README.md">README</a> &nbsp;·&nbsp;
     <a href="WEEK1_REFLECTION.md">Week 1 reflection</a> &nbsp;·&nbsp;
-    <a href="WEEK2_STRATEGY.md">Week 2 strategy</a>
+    <a href="WEEK2_STRATEGY.md">Week 2 strategy</a> &nbsp;·&nbsp;
+    <a href="WEEK2_REFLECTION.md">Week 2 reflection</a>
   </p>
   <p style="margin-top:6px;">
     Eight real-world black-box optimisation tasks (2D–8D). Each week we submit one query <code>x</code> per
@@ -94,17 +95,16 @@ tr:hover td{filter:brightness(0.97);}
 <div class="card">
   <div class="sum">
     <div class="sc"><div class="sc-n g">5</div><div class="sc-l">Week 1 improved</div></div>
-    <div class="sc"><div class="sc-n r">2</div><div class="sc-l">Week 1 worsened</div></div>
+    <div class="sc"><div class="sc-n g">1</div><div class="sc-l">Week 2 improved</div></div>
+    <div class="sc"><div class="sc-n r">7</div><div class="sc-l">Week 2 worsened</div></div>
     <div class="sc"><div class="sc-n m">1</div><div class="sc-l">No signal yet (F1)</div></div>
-    <div class="sc"><div class="sc-n b">8</div><div class="sc-l">Week 2 submitted</div></div>
-    <div class="sc"><div class="sc-n g">+129%</div><div class="sc-l">F5 best jump (W1)</div></div>
+    <div class="sc"><div class="sc-n b">8</div><div class="sc-l">Week 3 ready</div></div>
   </div>
   <div class="note">
-    <strong>Week 1 headline:</strong> 5 of 8 functions improved on the first query (F4, F5, F6, F7, F8).
-    F5 was the standout (1089 → 2497). F1 still reads ~0 (sparse peak — exploration continues).
-    F2/F3 did not improve, but for explainable reasons (noise / exploration cost).
-    <strong>Week 2 refinements:</strong> per-function Matérn ν, F5 anti-duplicate local UCB,
-    F1 coverage + boundary penalty, F3 sensitive-dim narrow bounds, F8 UCB + boundary penalty.
+    <strong>Week 1:</strong> 5/8 improved (F4–F8); F5 standout 1089 → 2497.
+    <strong>Week 2:</strong> only <strong>F3</strong> improved (−0.168 → −0.020) after narrow-bounds fix;
+    F5 exploit step underperformed (1811 vs best 2497). Week 2 variance is expected in exploration phase.
+    <strong>Week 3 queries</strong> generated from 12–42 observations per function.
   </div>
 </div>
 
@@ -122,7 +122,7 @@ tr:hover td{filter:brightness(0.97);}
 </div>
 
 <div class="card">
-  <div class="week-lbl">Iteration 2 — Week 2 (queries submitted, results pending)</div>
+  <div class="week-lbl">Iteration 2 — Week 2 (results received)</div>
   <table>
     <thead><tr>
       <th>Function</th><th>Method</th><th>ν</th>
@@ -136,15 +136,29 @@ tr:hover td{filter:brightness(0.97);}
 </div>
 
 <div class="card">
+  <div class="week-lbl">Iteration 3 — Week 3 (queries ready to submit)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th>Method</th><th>ν</th>
+      <th class="r">Best before</th><th class="r">Acq. score</th>
+      <th class="r">Query x</th>
+      <th class="r">Actual result</th><th class="r">Δ improvement</th>
+      <th>Length scales</th>
+    </tr></thead>
+    <tbody id="tb3"></tbody>
+  </table>
+</div>
+
+<div class="card">
   <div class="week-lbl">Visual summary</div>
   <div class="img-row">
     <div>
       <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
-      <a href="progress_week2_report.png"><img src="progress_week2_report.png" alt="Progress report table"></a>
+      <a href="progress_week3_report.png"><img src="progress_week3_report.png" alt="Progress report table"></a>
     </div>
     <div>
       <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Best observed output by function</p>
-      <a href="progress_week2.png"><img src="progress_week2.png" alt="Best observed progress chart"></a>
+      <a href="progress_week3.png"><img src="progress_week3.png" alt="Best observed progress chart"></a>
     </div>
   </div>
 </div>
@@ -191,21 +205,40 @@ const W1=[
 
 const W2=[
   {fn:1,m:'COV',nu:'0.5',best:7.71e-16,acq:0.27,
-   x:[0.421062,0.463562],actual:null,ls:[0.0123,10]},
+   x:[0.421062,0.463562],actual:-0.006627,ls:[0.0123,10]},
   {fn:2,m:'EI', nu:'2.5',best:0.6112,  acq:0.0126,
-   x:[0.734317,0.926564],actual:null,ls:[0.0691,10]},
+   x:[0.734317,0.926564],actual:0.5706,ls:[0.0691,10]},
   {fn:3,m:'UCB',nu:'1.5',best:-0.0348, acq:0.12,
-   x:[0.492581,0.691593,0.401268],actual:null,ls:[10,2.54,0.0713]},
+   x:[0.492581,0.691593,0.401268],actual:-0.0203,ls:[10,2.54,0.0713]},
   {fn:4,m:'UCB',nu:'2.5',best:0.2575,  acq:1.365,
-   x:[0.460385,0.434644,0.203056,0.431758],actual:null,ls:[1.600,1.458,1.634,1.462]},
+   x:[0.460385,0.434644,0.203056,0.431758],actual:-3.306,ls:[1.600,1.458,1.634,1.462]},
   {fn:5,m:'UCB',nu:'2.5',best:2497.32, acq:2530.8,
-   x:[0.074189,0.696480,0.980000,0.980000],actual:null,ls:[10,10,1.146,0.328]},
+   x:[0.074189,0.696480,0.980000,0.980000],actual:1811.06,ls:[10,10,1.146,0.328]},
   {fn:6,m:'EI', nu:'2.5',best:-0.4775, acq:0.0538,
-   x:[0.517086,0.282151,0.771390,0.980000,0.207535],actual:null,ls:[0.538,0.981,1.15,1.247,0.997]},
+   x:[0.517086,0.282151,0.771390,0.980000,0.207535],actual:-0.5782,ls:[0.538,0.981,1.15,1.247,0.997]},
   {fn:7,m:'EI', nu:'2.5',best:1.4506,  acq:0.0182,
-   x:[0.020000,0.491672,0.247422,0.214597,0.377195,0.806097],actual:null,ls:[1.06,10,10,0.378,0.22,0.251]},
+   x:[0.020000,0.491672,0.247422,0.214597,0.377195,0.806097],actual:1.2983,ls:[1.06,10,10,0.378,0.22,0.251]},
   {fn:8,m:'UCB',nu:'1.5',best:9.7956,  acq:10.31,
-   x:[0.070000,0.070000,0.020000,0.038786,0.403935,0.070000,0.070000,0.893085],actual:null,ls:[3.6,5.703,2.663,9.301,10,7.346,3.75,10]},
+   x:[0.070000,0.070000,0.020000,0.038786,0.403935,0.070000,0.070000,0.893085],actual:9.6374,ls:[3.6,5.703,2.663,9.301,10,7.346,3.75,10]},
+];
+
+const W3=[
+  {fn:1,m:'COV',nu:'0.5',best:7.71e-16,acq:0.27,
+   x:[0.020000,0.702476],actual:null,ls:[10,0.0183]},
+  {fn:2,m:'EI', nu:'2.5',best:0.6112,  acq:0.013,
+   x:[0.718765,0.926564],actual:null,ls:[0.0819,10]},
+  {fn:3,m:'UCB',nu:'1.5',best:-0.0203, acq:0.15,
+   x:[0.980000,0.691593,0.411196],actual:null,ls:[0.572,10,0.165]},
+  {fn:4,m:'UCB',nu:'2.5',best:0.2575,  acq:2.18,
+   x:[0.326442,0.431530,0.480218,0.453003],actual:null,ls:[1.388,1.254,1.194,1.245]},
+  {fn:5,m:'UCB',nu:'2.5',best:2497.32, acq:2668,
+   x:[0.194749,0.846480,0.980000,0.980000],actual:null,ls:[0.235,10,10,0.165]},
+  {fn:6,m:'EI', nu:'2.5',best:-0.4775, acq:0.048,
+   x:[0.524058,0.360869,0.413794,0.897694,0.020000],actual:null,ls:[0.559,1.010,1.14,1.279,1.165]},
+  {fn:7,m:'EI', nu:'2.5',best:1.4506,  acq:0.017,
+   x:[0.020000,0.491672,0.247422,0.174546,0.355144,0.715523],actual:null,ls:[1.041,10,10,0.379,0.216,0.207]},
+  {fn:8,m:'UCB',nu:'1.5',best:9.7956,  acq:10.26,
+   x:[0.070000,0.070000,0.020000,0.038786,0.403935,0.930000,0.020000,0.893085],actual:null,ls:[3.665,5.741,2.690,9.727,10,7.318,3.832,10]},
 ];
 
 function fmt(v){
@@ -299,6 +332,7 @@ function renderGrid(){
 
 renderW1(W1,'tb1');
 renderW2(W2,'tb2');
+renderW2(W3,'tb3');
 renderGrid();
 </script>
 </body>
