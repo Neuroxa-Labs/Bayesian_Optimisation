@@ -12,13 +12,13 @@
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given (10 initial points + 2 weekly queries = 12 observations)
+## 2. What we were given (10 initial points + 3 weekly queries = 13 observations)
 
 | # | x1 | x2 | y | note |
 |---|---|---|---|---|
 | 10 | 0.7026 | 0.9266 | 0.6112 | BEST |
+| 13 | 0.7188 | 0.9266 | 0.6022 |  |
 | 12 | 0.7343 | 0.9266 | 0.5706 |  |
-| 1 | 0.6658 | 0.1240 | 0.5390 |  |
 | 9 | 0.3386 | 0.2139 | -0.0139 |  |
 | 3 | 0.1427 | 0.3490 | -0.0656 | WORST |
 
@@ -29,8 +29,8 @@ Bayesian Optimisation is built for - finding the best of an expensive unknown fu
 The Gaussian Process fits one **length scale** per dimension - how fast y changes along that axis.
 A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
 
-- `x1`: length-scale = 0.0819 -> **very sensitive** - small changes move y a lot (take small steps)
-- `x2`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
+- `x1`: length-scale = 0.0249 -> **very sensitive** - small changes move y a lot (take small steps)
+- `x2`: length-scale = 1.2221 -> moderate influence
 
 The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
 dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain).
@@ -49,14 +49,20 @@ Because the signal is noisy, a single low reading does not mean a region is bad.
 
 - **Sent:** x = [0.7343, 0.9266]
 - **Received:** y = 0.5706
-- **GP had expected:** mu = 0.5554, sigma = 0.0743
 - **Outcome:** did **not** improve over the previous best (0.6112).
 
-## 7. The lesson
+## 7. Week 3 - what we sent and what happened
+
+- **Sent:** x = [0.7188, 0.9266]
+- **Received:** y = 0.6022
+- **GP had expected:** mu = 0.6022, sigma = 0.0012
+- **Outcome:** did **not** improve over the previous best (0.6112).
+
+## 8. The lesson
 
 Treat noise as noise. Do not abandon a promising region after one unlucky sample - keep sampling near the known-good area.
 
-## 8. Summary
+## 9. Summary
 
 | | Value |
 |---|---|
@@ -66,6 +72,7 @@ Treat noise as noise. Do not abandon a promising region after one unlucky sample
 | Best before W1 | 0.6112 |
 | Week 1 result | 0.4898 (no improvement) |
 | Week 2 result | 0.5706 (no improvement) |
+| Week 3 result | 0.6022 (no improvement) |
 | Current best | 0.6112 |
 
 *See `analysis_F2.png` in this folder for the full 9-panel visual analysis.*

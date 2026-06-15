@@ -28,9 +28,19 @@ F7: 0.070000-0.491672-0.247422-0.167429-0.353878-0.715603
 F8: 0.070000-0.070000-0.020000-0.038786-0.403935-0.930000-0.020000-0.893085
 ```
 
-## Expected focus
+## Week 3 results (received)
 
-- **F3:** continue toward 0 (momentum from −0.020 best).
-- **F5:** climb from 2497 using EI at true best region.
-- **F4:** stay in positive basin, avoid W2-style deep negative.
-- **F1:** interior coverage (F1 x1 still near buffer — monitor).
+| Fn | y | vs prev best | Note |
+|----|---|--------------|------|
+| F1 | ≈ 0 | flat | still no signal |
+| F2 | 0.602 | ↓ | below 0.611 |
+| F3 | −0.023 | ↓ | slight regression from −0.020 |
+| F4 | −0.126 | ↓ | positive basin but not improved |
+| F5 | **3108** | **↑** | EI exploit + log-y worked |
+| F6 | −0.538 | ↓ | |
+| F7 | **1.525** | **↑** | new best |
+| F8 | 9.606 | ↓ | below 9.796 |
+
+**2/8 improved.** Cumulative bests: F5 **3108**, F7 **1.525**, F3 −0.020, F4 0.257, F8 9.796.
+
+See [`WEEK3_REFLECTION.md`](WEEK3_REFLECTION.md) for full analysis.

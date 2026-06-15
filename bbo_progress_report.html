@@ -71,7 +71,10 @@ tr:hover td{filter:brightness(0.97);}
     <a href="README.md">README</a> &nbsp;·&nbsp;
     <a href="WEEK1_REFLECTION.md">Week 1 reflection</a> &nbsp;·&nbsp;
     <a href="WEEK2_STRATEGY.md">Week 2 strategy</a> &nbsp;·&nbsp;
-    <a href="WEEK2_REFLECTION.md">Week 2 reflection</a>
+    <a href="WEEK2_REFLECTION.md">Week 2 reflection</a> &nbsp;·&nbsp;
+    <a href="WEEK3_REFLECTION.md">Week 3 reflection</a> &nbsp;·&nbsp;
+    <a href="WEEK3_STRATEGY.md">Week 3 strategy</a> &nbsp;·&nbsp;
+    <a href="WEEK3_REFLECTION.md">Week 3 reflection</a>
   </p>
   <p style="margin-top:6px;">
     Eight real-world black-box optimisation tasks (2D–8D). Each week we submit one query <code>x</code> per
@@ -96,15 +99,17 @@ tr:hover td{filter:brightness(0.97);}
   <div class="sum">
     <div class="sc"><div class="sc-n g">5</div><div class="sc-l">Week 1 improved</div></div>
     <div class="sc"><div class="sc-n g">1</div><div class="sc-l">Week 2 improved</div></div>
-    <div class="sc"><div class="sc-n r">7</div><div class="sc-l">Week 2 worsened</div></div>
-    <div class="sc"><div class="sc-n m">1</div><div class="sc-l">No signal yet (F1)</div></div>
-    <div class="sc"><div class="sc-n b">8</div><div class="sc-l">Week 3 ready</div></div>
+    <div class="sc"><div class="sc-n g">2</div><div class="sc-l">Week 3 improved</div></div>
+    <div class="sc"><div class="sc-n r">6</div><div class="sc-l">Week 3 worsened</div></div>
+    <div class="sc"><div class="sc-n b">4</div><div class="sc-l">Week 4 ready</div></div>
   </div>
   <div class="note">
     <strong>Week 1:</strong> 5/8 improved (F4–F8); F5 standout 1089 → 2497.
     <strong>Week 2:</strong> only <strong>F3</strong> improved (−0.168 → −0.020) after narrow-bounds fix;
-    F5 exploit step underperformed (1811 vs best 2497). Week 2 variance is expected in exploration phase.
-    <strong>Week 3 queries</strong> generated from 12–42 observations per function.
+    F5 exploit step underperformed (1811 vs best 2497).
+    <strong>Week 3:</strong> <strong>2/8 improved</strong> — <strong>F5</strong> 2497 → <strong>3108</strong> (EI exploit + log-y),
+    <strong>F7</strong> 1.451 → <strong>1.525</strong>. F4 basin search stayed positive but did not beat 0.257.
+    <strong>Week 4 queries</strong> generated; strategy review before portal submission.
   </div>
 </div>
 
@@ -136,7 +141,7 @@ tr:hover td{filter:brightness(0.97);}
 </div>
 
 <div class="card">
-  <div class="week-lbl">Iteration 3 — Week 3 (queries ready to submit)</div>
+  <div class="week-lbl">Iteration 3 — Week 3 (results received)</div>
   <table>
     <thead><tr>
       <th>Function</th><th>Method</th><th>ν</th>
@@ -223,22 +228,22 @@ const W2=[
 ];
 
 const W3=[
-  {fn:1,m:'COV',nu:'0.5',best:7.71e-16,acq:0.27,
-   x:[0.020000,0.702476],actual:null,ls:[10,0.0183]},
-  {fn:2,m:'EI', nu:'2.5',best:0.6112,  acq:0.013,
-   x:[0.718765,0.926564],actual:null,ls:[0.0819,10]},
-  {fn:3,m:'UCB',nu:'1.5',best:-0.0203, acq:0.15,
-   x:[0.980000,0.691593,0.411196],actual:null,ls:[0.572,10,0.165]},
-  {fn:4,m:'UCB',nu:'2.5',best:0.2575,  acq:2.18,
-   x:[0.326442,0.431530,0.480218,0.453003],actual:null,ls:[1.388,1.254,1.194,1.245]},
-  {fn:5,m:'UCB',nu:'2.5',best:2497.32, acq:2668,
-   x:[0.194749,0.846480,0.980000,0.980000],actual:null,ls:[0.235,10,10,0.165]},
-  {fn:6,m:'EI', nu:'2.5',best:-0.4775, acq:0.048,
-   x:[0.524058,0.360869,0.413794,0.897694,0.020000],actual:null,ls:[0.559,1.010,1.14,1.279,1.165]},
-  {fn:7,m:'EI', nu:'2.5',best:1.4506,  acq:0.017,
-   x:[0.020000,0.491672,0.247422,0.174546,0.355144,0.715523],actual:null,ls:[1.041,10,10,0.379,0.216,0.207]},
+  {fn:1,m:'COV',nu:'0.5',best:7.71e-16,acq:7.44e-05,
+   x:[0.070000,0.669525],actual:-1.76e-130,ls:[10,0.0183]},
+  {fn:2,m:'EI', nu:'2.5',best:0.6112,  acq:0.0114,
+   x:[0.718765,0.926564],actual:0.6022,ls:[0.0819,10]},
+  {fn:3,m:'UCB',nu:'1.5',best:-0.0203, acq:0.0897,
+   x:[0.642581,0.691593,0.478715],actual:-0.0227,ls:[0.572,10,0.165]},
+  {fn:4,m:'UCB',nu:'2.5',best:0.2575,  acq:1.517,
+   x:[0.343955,0.453869,0.398079,0.433861],actual:-0.1262,ls:[1.388,1.254,1.194,1.245]},
+  {fn:5,m:'EI', nu:'2.5',best:2497.32, acq:1.893,
+   x:[0.150000,0.926480,0.980000,0.980000],actual:3108.49,ls:[0.235,10,10,0.165]},
+  {fn:6,m:'EI', nu:'2.5',best:-0.4775, acq:0.0540,
+   x:[0.524058,0.360869,0.413794,0.897694,0.020000],actual:-0.5377,ls:[0.559,1.010,1.14,1.279,1.165]},
+  {fn:7,m:'EI', nu:'2.5',best:1.4506,  acq:0.0215,
+   x:[0.070000,0.491672,0.247422,0.167429,0.353878,0.715603],actual:1.5253,ls:[1.041,10,10,0.379,0.216,0.207]},
   {fn:8,m:'UCB',nu:'1.5',best:9.7956,  acq:10.26,
-   x:[0.070000,0.070000,0.020000,0.038786,0.403935,0.930000,0.020000,0.893085],actual:null,ls:[3.665,5.741,2.690,9.727,10,7.318,3.832,10]},
+   x:[0.070000,0.070000,0.020000,0.038786,0.403935,0.930000,0.020000,0.893085],actual:9.6064,ls:[3.665,5.741,2.690,9.727,10,7.318,3.832,10]},
 ];
 
 function fmt(v){
