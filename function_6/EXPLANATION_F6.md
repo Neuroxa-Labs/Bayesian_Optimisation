@@ -12,13 +12,13 @@
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given (20 initial points + 2 weekly queries = 22 observations)
+## 2. What we were given (20 initial points + 3 weekly queries = 23 observations)
 
 | # | x1 | x2 | x3 | x4 | x5 | y | note |
 |---|---|---|---|---|---|---|---|
 | 21 | 0.4656 | 0.2431 | 0.5775 | 0.9800 | 0.0200 | -0.4775 | BEST |
+| 23 | 0.5241 | 0.3609 | 0.4138 | 0.8977 | 0.0200 | -0.5377 |  |
 | 22 | 0.5171 | 0.2822 | 0.7714 | 0.9800 | 0.2075 | -0.5782 |  |
-| 1 | 0.7282 | 0.1547 | 0.7326 | 0.6940 | 0.0564 | -0.7143 |  |
 | 19 | 0.9218 | 0.9319 | 0.4149 | 0.5951 | 0.7356 | -2.1558 |  |
 | 9 | 0.1257 | 0.8627 | 0.0285 | 0.2466 | 0.7512 | -2.5712 | WORST |
 
@@ -29,11 +29,11 @@ Bayesian Optimisation is built for - finding the best of an expensive unknown fu
 The Gaussian Process fits one **length scale** per dimension - how fast y changes along that axis.
 A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
 
-- `x1`: length-scale = 0.5589 -> moderate influence
-- `x2`: length-scale = 1.0096 -> moderate influence
-- `x3`: length-scale = 1.1400 -> moderate influence
-- `x4`: length-scale = 1.2788 -> moderate influence
-- `x5`: length-scale = 1.1646 -> moderate influence
+- `x1`: length-scale = 0.7279 -> moderate influence
+- `x2`: length-scale = 0.9615 -> moderate influence
+- `x3`: length-scale = 1.2153 -> moderate influence
+- `x4`: length-scale = 1.4853 -> moderate influence
+- `x5`: length-scale = 1.0589 -> moderate influence
 
 The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
 dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain).
@@ -52,14 +52,20 @@ In 5-D a balanced search pays off. **EI** gives a measured explore/exploit trade
 
 - **Sent:** x = [0.5171, 0.2822, 0.7714, 0.9800, 0.2075]
 - **Received:** y = -0.5782
-- **GP had expected:** mu = -0.5782, sigma = 5.107e-04
 - **Outcome:** did **not** improve over the previous best (-0.4775).
 
-## 7. The lesson
+## 7. Week 3 - what we sent and what happened
+
+- **Sent:** x = [0.5241, 0.3609, 0.4138, 0.8977, 0.0200]
+- **Received:** y = -0.5377
+- **GP had expected:** mu = -0.5377, sigma = 5.301e-04
+- **Outcome:** did **not** improve over the previous best (-0.4775).
+
+## 8. The lesson
 
 In medium dimension, steady incremental gains are the norm. EI's balance avoids both blind wandering and premature exploitation.
 
-## 8. Summary
+## 9. Summary
 
 | | Value |
 |---|---|
@@ -69,6 +75,7 @@ In medium dimension, steady incremental gains are the norm. EI's balance avoids 
 | Best before W1 | -0.7143 |
 | Week 1 result | -0.4775 (improved) |
 | Week 2 result | -0.5782 (no improvement) |
+| Week 3 result | -0.5377 (no improvement) |
 | Current best | -0.4775 |
 
 *See `analysis_F6.png` in this folder for the full 9-panel visual analysis.*

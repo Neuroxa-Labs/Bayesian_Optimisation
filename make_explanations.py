@@ -84,6 +84,14 @@ WK2_X = {1: [0.421062, 0.463562], 2: [0.734317, 0.926564], 3: [0.492581, 0.69159
 WK2_Y = {1: -0.006627379464825304, 2: 0.5706060535359335, 3: -0.020302412806162906,
          4: -3.305599024194517, 5: 1811.05681696222, 6: -0.5782346356754113,
          7: 1.2983310369966137, 8: 9.637407822369}
+WK3_X = {1: [0.070000, 0.669525], 2: [0.718765, 0.926564], 3: [0.642581, 0.691593, 0.478715],
+         4: [0.343955, 0.453869, 0.398079, 0.433861], 5: [0.150000, 0.926480, 0.980000, 0.980000],
+         6: [0.524058, 0.360869, 0.413794, 0.897694, 0.020000],
+         7: [0.070000, 0.491672, 0.247422, 0.167429, 0.353878, 0.715603],
+         8: [0.070000, 0.070000, 0.020000, 0.038786, 0.403935, 0.930000, 0.020000, 0.893085]}
+WK3_Y = {1: -1.7640587689392826e-130, 2: 0.6022360650843126, 3: -0.02269443855307699,
+         4: -0.12619162666369688, 5: 3108.4878561302053, 6: -0.5376870203763128,
+         7: 1.5253347319738353, 8: 9.606407822369}
 
 
 def fit(X, Y, c):
@@ -114,18 +122,21 @@ def vec(x):
 
 for fn, c in CFG.items():
     dim, n0 = c["dim"], c["n"]
-    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 2]
-    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 2]
+    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 3]
+    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 3]
     gp = fit(X, Y, c); ls = lscales(gp)
     w1_prev = float(Y[:n0].max()); cur_best = float(Y.max())
     bi = int(np.argmax(Y)); bx = X[bi]
     w1x, w1y = WK1_X[fn], WK1_Y[fn]
     w2x, w2y = WK2_X[fn], WK2_Y[fn]
-    w2_prev = float(Y[:-1].max())
-    mu2, sg2 = gp.predict(np.asarray(w2x).reshape(1, -1), return_std=True)
-    mu2, sg2 = float(mu2[0]), float(sg2[0])
+    w3x, w3y = WK3_X[fn], WK3_Y[fn]
+    w2_prev = float(Y[:-2].max())
+    w3_prev = float(Y[:-1].max())
+    mu3, sg3 = gp.predict(np.asarray(w3x).reshape(1, -1), return_std=True)
+    mu3, sg3 = float(mu3[0]), float(sg3[0])
     w1_improved = w1y > w1_prev
     w2_improved = w2y > w2_prev
+    w3_improved = w3y > w3_prev
     nr = NARR[fn]
 
     # ranked observations
@@ -163,7 +174,7 @@ for fn, c in CFG.items():
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given ({n0} initial points + 2 weekly queries = {len(Y)} observations)
+## 2. What we were given ({n0} initial points + 3 weekly queries = {len(Y)} observations)
 
 | # | {xheaders} | y | note |
 |---|{"|".join(["---"] * dim)}|---|---|
@@ -195,14 +206,20 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 
 - **Sent:** x = {vec(w2x)}
 - **Received:** y = {f(w2y)}
-- **GP had expected:** mu = {f(mu2)}, sigma = {f(sg2)}
 - **Outcome:** {"**IMPROVED** over the previous best (" + f(w2_prev) + ")" if w2_improved else "did **not** improve over the previous best (" + f(w2_prev) + ")"}.
 
-## 7. The lesson
+## 7. Week 3 - what we sent and what happened
+
+- **Sent:** x = {vec(w3x)}
+- **Received:** y = {f(w3y)}
+- **GP had expected:** mu = {f(mu3)}, sigma = {f(sg3)}
+- **Outcome:** {"**IMPROVED** over the previous best (" + f(w3_prev) + ")" if w3_improved else "did **not** improve over the previous best (" + f(w3_prev) + ")"}.
+
+## 8. The lesson
 
 {nr['lesson']}
 
-## 8. Summary
+## 9. Summary
 
 | | Value |
 |---|---|
@@ -212,6 +229,7 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 | Best before W1 | {f(w1_prev)} |
 | Week 1 result | {f(w1y)} ({"improved" if w1_improved else "no improvement"}) |
 | Week 2 result | {f(w2y)} ({"improved" if w2_improved else "no improvement"}) |
+| Week 3 result | {f(w3y)} ({"improved" if w3_improved else "no improvement"}) |
 | Current best | {f(cur_best)} |
 
 *See `analysis_F{fn}.png` in this folder for the full 9-panel visual analysis.*

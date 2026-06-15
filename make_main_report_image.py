@@ -16,7 +16,7 @@ META = {
     2: ("Noisy ML Log-Lik", 2, "EI", "2.5"),
     3: ("Drug Side-Effects", 3, "UCB", "1.5"),
     4: ("Warehouse Placement", 4, "UCB", "2.5"),
-    5: ("Chemical Yield", 4, "UCB", "2.5"),
+    5: ("Chemical Yield", 4, "EI", "2.5"),
     6: ("Cake Recipe", 5, "EI", "2.5"),
     7: ("ML Hyperparameters", 6, "EI", "2.5"),
     8: ("8-Param ML Model", 8, "UCB", "1.5"),
@@ -43,6 +43,18 @@ W2 = [
     (7, 1.4506, 0.0182, [0.020000, 0.491672, 0.247422, 0.214597, 0.377195, 0.806097], 1.2983, [1.06, 10, 10, 0.378, 0.22, 0.251]),
     (8, 9.7956, 10.31, [0.070000, 0.070000, 0.020000, 0.038786, 0.403935, 0.070000, 0.070000, 0.893085],
      9.6374, [3.6, 5.703, 2.663, 9.301, 10, 7.346, 3.75, 10]),
+]
+
+W3 = [
+    (1, 7.71e-16, 7.44e-05, [0.070000, 0.669525], -1.76e-130, [10, 0.0183]),
+    (2, 0.6112, 0.0114, [0.718765, 0.926564], 0.6022, [0.0819, 10]),
+    (3, -0.0203, 0.0897, [0.642581, 0.691593, 0.478715], -0.0227, [0.572, 10, 0.165]),
+    (4, 0.2575, 1.517, [0.343955, 0.453869, 0.398079, 0.433861], -0.1262, [1.388, 1.254, 1.194, 1.245]),
+    (5, 2497.32, 1.893, [0.150000, 0.926480, 0.980000, 0.980000], 3108.49, [0.235, 10, 10, 0.165]),
+    (6, -0.4775, 0.0540, [0.524058, 0.360869, 0.413794, 0.897694, 0.020000], -0.5377, [0.559, 1.010, 1.14, 1.279, 1.165]),
+    (7, 1.4506, 0.0215, [0.070000, 0.491672, 0.247422, 0.167429, 0.353878, 0.715603], 1.5253, [1.041, 10, 10, 0.379, 0.216, 0.207]),
+    (8, 9.7956, 10.26, [0.070000, 0.070000, 0.020000, 0.038786, 0.403935, 0.930000, 0.020000, 0.893085],
+     9.6064, [3.665, 5.741, 2.690, 9.727, 10, 7.318, 3.832, 10]),
 ]
 
 
@@ -134,8 +146,8 @@ def draw_table(ax, title, rows, week2=False):
             cell.set_text_props(fontweight="bold")
 
 
-fig = plt.figure(figsize=(18, 22), facecolor="white")
-gs = GridSpec(5, 1, figure=fig, height_ratios=[0.8, 0.6, 1.1, 1.3, 0.35], hspace=0.35)
+fig = plt.figure(figsize=(18, 28), facecolor="white")
+gs = GridSpec(6, 1, figure=fig, height_ratios=[0.7, 0.55, 1.0, 1.2, 1.2, 0.3], hspace=0.32)
 
 # Header
 ax0 = fig.add_subplot(gs[0])
@@ -154,9 +166,9 @@ ax1 = fig.add_subplot(gs[1])
 ax1.axis("off")
 cards = [("5", "Week 1\nimproved", "#00b894"),
          ("1", "Week 2\nimproved", "#00b894"),
-         ("7", "Week 2\nworsened", "#e17055"),
-         ("1", "No signal\n(F1)", "#636e72"),
-         ("8", "Week 3\nready", "#2d6dc7")]
+         ("2", "Week 3\nimproved", "#00b894"),
+         ("6", "Week 3\nworsened", "#e17055"),
+         ("4", "Week 4\nready", "#2d6dc7")]
 for i, (num, lbl, col) in enumerate(cards):
     x = 0.02 + i * 0.19
     rect = mpatches.FancyBboxPatch((x, 0.15), 0.16, 0.7, boxstyle="round,pad=0.02",
@@ -175,24 +187,28 @@ draw_table(ax2, "ITERATION 1 — Week 1 (results received)", W1, week2=False)
 ax3 = fig.add_subplot(gs[3])
 draw_table(ax3, "ITERATION 2 — Week 2 (results received)", W2, week2=True)
 
-# Legend
+# Week 3 table
 ax4 = fig.add_subplot(gs[4])
-ax4.axis("off")
+draw_table(ax4, "ITERATION 3 — Week 3 (results received)", W3, week2=True)
+
+# Legend
+ax5 = fig.add_subplot(gs[5])
+ax5.axis("off")
 legend_items = [
     ("#e17055", "Degenerate ls >= 4.5 (D)"),
     ("#fdcb6e", "Sensitive ls < 0.2 (S)"),
     ("#55efc4", "Normal (N)"),
     ("#e8f8f0", "Improved row"),
     ("#fdecea", "Worsened row"),
-    ("#fffde7", "Pending (Week 2)"),
+    ("#fffde7", "Pending"),
 ]
 for i, (col, txt) in enumerate(legend_items):
-    ax4.add_patch(mpatches.Rectangle((0.02 + i * 0.16, 0.35), 0.025, 0.35, facecolor=col,
-                                     edgecolor="#ccc", transform=ax4.transAxes))
-    ax4.text(0.05 + i * 0.16, 0.52, txt, fontsize=8, color="#636e72", va="center",
-             transform=ax4.transAxes)
-ax4.text(0.02, 0.05, "Full interactive report: bbo_progress_report.html  |  GitHub: Neuroxa-Labs/Bayesian_Optimisation",
-         fontsize=8.5, color="#2d6dc7", transform=ax4.transAxes)
+    ax5.add_patch(mpatches.Rectangle((0.02 + i * 0.16, 0.35), 0.025, 0.35, facecolor=col,
+                                     edgecolor="#ccc", transform=ax5.transAxes))
+    ax5.text(0.05 + i * 0.16, 0.52, txt, fontsize=8, color="#636e72", va="center",
+             transform=ax5.transAxes)
+ax5.text(0.02, 0.05, "Full interactive report: bbo_progress_report.html  |  GitHub: Neuroxa-Labs/Bayesian_Optimisation",
+         fontsize=8.5, color="#2d6dc7", transform=ax5.transAxes)
 
 png = ROOT / "bbo_progress_report.png"
 jpg = ROOT / "bbo_progress_report.jpg"
