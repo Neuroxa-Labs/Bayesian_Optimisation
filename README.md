@@ -72,10 +72,11 @@ comprehensive `analysis_F*.png` figure (data → GP → acquisition → Week 1 �
   explainable reasons (noise / expected exploration cost).
 - **Week 2 results received.** 1/8 improved — only **F3** (−0.168 → −0.020) after narrow-bounds fix.
   F5 exploit step returned 1811 (best remains 2497). See [`WEEK2_REFLECTION.md`](WEEK2_REFLECTION.md).
-- **Week 3 queries ready** — see [`WEEK3_STRATEGY.md`](WEEK3_STRATEGY.md) for rationale and portal values.
+- **Week 3 results received.** 2/8 improved — **F5** 2497 → **3108** (+24%, EI exploit worked), **F7** 1.451 → **1.525**. See [`WEEK3_REFLECTION.md`](WEEK3_REFLECTION.md).
+- **Week 4 queries ready** — see [`WEEK4_STRATEGY.md`](WEEK4_STRATEGY.md).
 
 See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md), [`WEEK2_REFLECTION.md`](WEEK2_REFLECTION.md),
-[`WEEK2_STRATEGY.md`](WEEK2_STRATEGY.md), and `progress_week3_report.png` for diagnostics.
+[`WEEK3_STRATEGY.md`](WEEK3_STRATEGY.md), and `progress_week3_report.png` for diagnostics.
 
 ---
 
@@ -127,17 +128,17 @@ parallel**, not a replacement.
 
 ---
 
-## Week 3 portal submission
+## Week 4 portal submission
 
 ```
-Function 1:  0.070000-0.669525
-Function 2:  0.718765-0.926564
-Function 3:  0.642581-0.691593-0.478715
-Function 4:  0.343955-0.453869-0.398079-0.433861
-Function 5:  0.150000-0.926480-0.980000-0.980000
-Function 6:  0.524058-0.360869-0.413794-0.897694-0.020000
-Function 7:  0.070000-0.491672-0.247422-0.167429-0.353878-0.715603
-Function 8:  0.070000-0.070000-0.020000-0.038786-0.403935-0.930000-0.020000-0.893085
+Function 1:  0.662502-0.070000
+Function 2:  0.709311-0.406719
+Function 3:  0.492581-0.611593-0.521038
+Function 4:  0.427912-0.347959-0.398079-0.465276
+Function 5:  0.300000-0.980000-0.980000-0.980000
+Function 6:  0.429970-0.020000-0.980000-0.883280-0.020000
+Function 7:  0.070000-0.070000-0.247422-0.144873-0.351501-0.694213
+Function 8:  0.195586-0.070000-0.233778-0.038786-0.403935-0.460628-0.234045-0.893085
 ```
 
 ## Requirements
