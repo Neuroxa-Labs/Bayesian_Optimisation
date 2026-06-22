@@ -13,7 +13,7 @@ ROOT = Path(__file__).parent
 
 META = {
     1: ("Radiation Detection", 2, "COV", "0.5"),
-    2: ("Noisy ML Log-Lik", 2, "EI", "2.5"),
+    2: ("Noisy ML Log-Lik", 2, "MAN", "2.5"),
     3: ("Drug Side-Effects", 3, "UCB", "1.5"),
     4: ("Warehouse Placement", 4, "UCB", "2.5"),
     5: ("Chemical Yield", 4, "EI", "2.5"),
@@ -55,6 +55,18 @@ W3 = [
     (7, 1.4506, 0.0215, [0.070000, 0.491672, 0.247422, 0.167429, 0.353878, 0.715603], 1.5253, [1.041, 10, 10, 0.379, 0.216, 0.207]),
     (8, 9.7956, 10.26, [0.070000, 0.070000, 0.020000, 0.038786, 0.403935, 0.930000, 0.020000, 0.893085],
      9.6064, [3.665, 5.741, 2.690, 9.727, 10, 7.318, 3.832, 10]),
+]
+
+W4 = [
+    (1, 7.71e-16, 3.25e-04, [0.661537, 0.436390], 3.21e-28, [0.129, 0.014]),
+    (2, 0.6112, 0.0297, [0.700000, 0.020000], 0.6599, [0.025, 1.22]),
+    (3, -0.0203, 0.0098, [0.592581, 0.771593, 0.436323], -0.0434, [10, 2.57, 0.116]),
+    (4, 0.2575, 0.290, [0.414097, 0.385945, 0.378079, 0.441536], 0.1660, [1.348, 1.324, 1.181, 1.278]),
+    (5, 3108.49, 61.64, [0.380000, 0.980000, 0.980000, 0.980000], 3743.83, [2.026, 0.744, 0.319, 10]),
+    (6, -0.4775, 0.0295, [0.365618, 0.143059, 0.477549, 0.930000, 0.120000], -0.6062, [0.728, 0.962, 1.215, 1.485, 1.059]),
+    (7, 1.5253, 0.0145, [0.070000, 0.431672, 0.307422, 0.158929, 0.347393, 0.672154], 1.8575, [1.054, 2.92, 10, 0.449, 0.227, 0.254]),
+    (8, 9.7956, 9.804, [0.020000, 0.020000, 0.188184, 0.038786, 0.403935, 0.486122, 0.020000, 0.893085],
+     9.7958, [3.704, 5.743, 2.692, 9.745, 10, 7.069, 3.837, 10]),
 ]
 
 
@@ -146,8 +158,8 @@ def draw_table(ax, title, rows, week2=False):
             cell.set_text_props(fontweight="bold")
 
 
-fig = plt.figure(figsize=(18, 28), facecolor="white")
-gs = GridSpec(6, 1, figure=fig, height_ratios=[0.7, 0.55, 1.0, 1.2, 1.2, 0.3], hspace=0.32)
+fig = plt.figure(figsize=(18, 34), facecolor="white")
+gs = GridSpec(7, 1, figure=fig, height_ratios=[0.65, 0.5, 0.95, 1.1, 1.1, 1.1, 0.28], hspace=0.30)
 
 # Header
 ax0 = fig.add_subplot(gs[0])
@@ -167,8 +179,8 @@ ax1.axis("off")
 cards = [("5", "Week 1\nimproved", "#00b894"),
          ("1", "Week 2\nimproved", "#00b894"),
          ("2", "Week 3\nimproved", "#00b894"),
-         ("6", "Week 3\nworsened", "#e17055"),
-         ("4", "Week 4\nready", "#2d6dc7")]
+         ("4", "Week 4\nimproved", "#00b894"),
+         ("5", "Week 5\nready", "#2d6dc7")]
 for i, (num, lbl, col) in enumerate(cards):
     x = 0.02 + i * 0.19
     rect = mpatches.FancyBboxPatch((x, 0.15), 0.16, 0.7, boxstyle="round,pad=0.02",
@@ -191,9 +203,13 @@ draw_table(ax3, "ITERATION 2 — Week 2 (results received)", W2, week2=True)
 ax4 = fig.add_subplot(gs[4])
 draw_table(ax4, "ITERATION 3 — Week 3 (results received)", W3, week2=True)
 
-# Legend
+# Week 4 table
 ax5 = fig.add_subplot(gs[5])
-ax5.axis("off")
+draw_table(ax5, "ITERATION 4 — Week 4 (results received)", W4, week2=True)
+
+# Legend
+ax6 = fig.add_subplot(gs[6])
+ax6.axis("off")
 legend_items = [
     ("#e17055", "Degenerate ls >= 4.5 (D)"),
     ("#fdcb6e", "Sensitive ls < 0.2 (S)"),
@@ -203,12 +219,12 @@ legend_items = [
     ("#fffde7", "Pending"),
 ]
 for i, (col, txt) in enumerate(legend_items):
-    ax5.add_patch(mpatches.Rectangle((0.02 + i * 0.16, 0.35), 0.025, 0.35, facecolor=col,
-                                     edgecolor="#ccc", transform=ax5.transAxes))
-    ax5.text(0.05 + i * 0.16, 0.52, txt, fontsize=8, color="#636e72", va="center",
-             transform=ax5.transAxes)
-ax5.text(0.02, 0.05, "Full interactive report: bbo_progress_report.html  |  GitHub: Neuroxa-Labs/Bayesian_Optimisation",
-         fontsize=8.5, color="#2d6dc7", transform=ax5.transAxes)
+    ax6.add_patch(mpatches.Rectangle((0.02 + i * 0.16, 0.35), 0.025, 0.35, facecolor=col,
+                                     edgecolor="#ccc", transform=ax6.transAxes))
+    ax6.text(0.05 + i * 0.16, 0.52, txt, fontsize=8, color="#636e72", va="center",
+             transform=ax6.transAxes)
+ax6.text(0.02, 0.05, "Full interactive report: bbo_progress_report.html  |  GitHub: Neuroxa-Labs/Bayesian_Optimisation",
+         fontsize=8.5, color="#2d6dc7", transform=ax6.transAxes)
 
 png = ROOT / "bbo_progress_report.png"
 jpg = ROOT / "bbo_progress_report.jpg"

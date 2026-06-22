@@ -92,6 +92,15 @@ WK3_X = {1: [0.070000, 0.669525], 2: [0.718765, 0.926564], 3: [0.642581, 0.69159
 WK3_Y = {1: -1.7640587689392826e-130, 2: 0.6022360650843126, 3: -0.02269443855307699,
          4: -0.12619162666369688, 5: 3108.4878561302053, 6: -0.5376870203763128,
          7: 1.5253347319738353, 8: 9.606407822369}
+WK4_X = {1: [0.661537, 0.436390], 2: [0.700000, 0.020000],
+         3: [0.592581, 0.771593, 0.436323], 4: [0.414097, 0.385945, 0.378079, 0.441536],
+         5: [0.380000, 0.980000, 0.980000, 0.980000],
+         6: [0.365618, 0.143059, 0.477549, 0.930000, 0.120000],
+         7: [0.070000, 0.431672, 0.307422, 0.158929, 0.347393, 0.672154],
+         8: [0.020000, 0.020000, 0.188184, 0.038786, 0.403935, 0.486122, 0.020000, 0.893085]}
+WK4_Y = {1: 3.21298272257291e-28, 2: 0.6598602814677763, 3: -0.043381912559889324,
+         4: 0.16598412185782196, 5: 3743.829067735118, 6: -0.6062467956245956,
+         7: 1.8574559098912007, 8: 9.795759089917}
 
 
 def fit(X, Y, c):
@@ -122,21 +131,24 @@ def vec(x):
 
 for fn, c in CFG.items():
     dim, n0 = c["dim"], c["n"]
-    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 3]
-    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 3]
+    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 4]
+    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 4]
     gp = fit(X, Y, c); ls = lscales(gp)
     w1_prev = float(Y[:n0].max()); cur_best = float(Y.max())
     bi = int(np.argmax(Y)); bx = X[bi]
     w1x, w1y = WK1_X[fn], WK1_Y[fn]
     w2x, w2y = WK2_X[fn], WK2_Y[fn]
     w3x, w3y = WK3_X[fn], WK3_Y[fn]
-    w2_prev = float(Y[:-2].max())
-    w3_prev = float(Y[:-1].max())
-    mu3, sg3 = gp.predict(np.asarray(w3x).reshape(1, -1), return_std=True)
-    mu3, sg3 = float(mu3[0]), float(sg3[0])
+    w4x, w4y = WK4_X[fn], WK4_Y[fn]
+    w2_prev = float(Y[:-3].max()) if len(Y) > 3 else float(Y[:n0].max())
+    w3_prev = float(Y[:-2].max())
+    w4_prev = float(Y[:-1].max())
+    mu4, sg4 = gp.predict(np.asarray(w4x).reshape(1, -1), return_std=True)
+    mu4, sg4 = float(mu4[0]), float(sg4[0])
     w1_improved = w1y > w1_prev
     w2_improved = w2y > w2_prev
     w3_improved = w3y > w3_prev
+    w4_improved = w4y > w4_prev
     nr = NARR[fn]
 
     # ranked observations
@@ -174,7 +186,7 @@ for fn, c in CFG.items():
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given ({n0} initial points + 3 weekly queries = {len(Y)} observations)
+## 2. What we were given ({n0} initial points + 4 weekly queries = {len(Y)} observations)
 
 | # | {xheaders} | y | note |
 |---|{"|".join(["---"] * dim)}|---|---|
@@ -212,14 +224,20 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 
 - **Sent:** x = {vec(w3x)}
 - **Received:** y = {f(w3y)}
-- **GP had expected:** mu = {f(mu3)}, sigma = {f(sg3)}
 - **Outcome:** {"**IMPROVED** over the previous best (" + f(w3_prev) + ")" if w3_improved else "did **not** improve over the previous best (" + f(w3_prev) + ")"}.
 
-## 8. The lesson
+## 8. Week 4 - what we sent and what happened
+
+- **Sent:** x = {vec(w4x)}
+- **Received:** y = {f(w4y)}
+- **GP had expected:** mu = {f(mu4)}, sigma = {f(sg4)}
+- **Outcome:** {"**IMPROVED** over the previous best (" + f(w4_prev) + ")" if w4_improved else "did **not** improve over the previous best (" + f(w4_prev) + ")"}.
+
+## 9. The lesson
 
 {nr['lesson']}
 
-## 9. Summary
+## 10. Summary
 
 | | Value |
 |---|---|
@@ -230,6 +248,7 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 | Week 1 result | {f(w1y)} ({"improved" if w1_improved else "no improvement"}) |
 | Week 2 result | {f(w2y)} ({"improved" if w2_improved else "no improvement"}) |
 | Week 3 result | {f(w3y)} ({"improved" if w3_improved else "no improvement"}) |
+| Week 4 result | {f(w4y)} ({"improved" if w4_improved else "no improvement"}) |
 | Current best | {f(cur_best)} |
 
 *See `analysis_F{fn}.png` in this folder for the full 9-panel visual analysis.*

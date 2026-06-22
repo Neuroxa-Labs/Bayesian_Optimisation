@@ -34,16 +34,16 @@ one expensive real experiment.
 | Fn | Real-world task | Dim | What `x` / `y` mean | Primary AF | Why this AF |
 |----|-----------------|-----|---------------------|-----------|-------------|
 | **F1** | **Radiation Source Detection** | 2 | position → counter reading (sharp, sparse peak; mostly 0) | UNCERTAINTY → UCB | Mostly zeros; explore until any signal appears |
-| **F2** | **Noisy ML Log-Likelihood** | 2 | 2 settings → noisy log-likelihood | EI (+ White kernel) | Noise-robust improvement |
+| **F2** | **Noisy ML Log-Likelihood** | 2 | 2 settings → noisy log-likelihood | EI (+ White kernel) | New best **0.660** (W4) |
 | **F3** | **Drug Discovery — Adverse Reactions** | 3 | component ratios → −(side effect) | UCB κ=2.576 | Steer toward least-negative region |
 | **F4** | **Warehouse Placement** | 4 | 4 placement factors → efficiency | UCB κ=2.5 | Multimodal; local basin search after W2 dip |
-| **F5** | **Chemical Yield Optimisation** | 4 | 4 process settings → yield | EI exploit (after signal) | log(y) GP; EI over f*=2497 |
+| **F5** | **Chemical Yield Optimisation** | 4 | 4 process settings → yield | EI exploit (after signal) | log(y) GP; best **3744** (W4) |
 | **F6** | **Cake Recipe Optimisation** | 5 | 5 ingredient amounts → −(badness) | EI | Balanced push toward 0 |
 | **F7** | **ML Hyperparameter Tuning** | 6 | 6 hyperparameters → validation score | EI | Balanced search in 6D |
 | **F8** | **8-Parameter ML Model Optimisation** | 8 | 8 parameters → score | UCB κ=2.576 | Broad exploration of a large space |
 
 Each `function_*/` folder contains a detailed `EXPLANATION_F*.md` (learn-from-scratch write-up) and a
-comprehensive `analysis_F*.png` figure (data → GP → acquisition → Week 1 → Week 2).
+comprehensive `analysis_F*.png` figure (data → GP → acquisition → weekly panels through Week 4).
 
 ## Repository contents
 
@@ -56,12 +56,18 @@ comprehensive `analysis_F*.png` figure (data → GP → acquisition → Week 1 �
 | `WEEK1_REFLECTION.md` | Reflection on Week 1 results (what worked, what didn't, why) |
 | `WEEK2_STRATEGY.md` | Week 2 strategy and submitted queries |
 | `WEEK2_REFLECTION.md` | Week 2 results analysis |
-| `WEEK3_STRATEGY.md` | Week 3 strategy and portal submission block |
+| `WEEK3_STRATEGY.md` | Week 3 strategy and results |
+| `WEEK3_REFLECTION.md` | Week 3 results analysis |
+| `WEEK4_STRATEGY.md` | Week 4 strategy, queries, and results |
+| `WEEK4_REFLECTION.md` | Week 4 results analysis |
+| `WEEK4_DISCUSSION.md` | Week 4 forum reflection (GP vs NN) |
+| `generate_week4.py` | Week 4 peer-informed query generator |
+| `append_week4.py` | Append Week 4 portal results to `.npy` files |
 | `function_1/ … function_8/` | Per-function data (`.npy`), `EXPLANATION_F*.md`, and `analysis_F*.png` |
 | `make_progress_report.py` | Builds the per-function iteration diagnostics report image |
 | `make_function_analysis.py` | Builds the 9-panel per-function analysis figures |
-| `progress_week2_report.png` / `.jpg` | Iteration tracking table (Current Best, acquisition, result, method, ν, κ/ξ, length scales) |
-| `progress_week1.png`, `progress_week2.png` | Best-observed-output progress charts |
+| `progress_week4_report.png` / `.jpg` | Iteration tracking table through Week 4 |
+| `progress_week1.png` … `progress_week4.png` | Best-observed-output progress charts |
 | `function_*_week2_analysis.png` | Per-function Week 2 observation / input plots |
 
 ## Progress
@@ -72,11 +78,11 @@ comprehensive `analysis_F*.png` figure (data → GP → acquisition → Week 1 �
   explainable reasons (noise / expected exploration cost).
 - **Week 2 results received.** 1/8 improved — only **F3** (−0.168 → −0.020) after narrow-bounds fix.
   F5 exploit step returned 1811 (best remains 2497). See [`WEEK2_REFLECTION.md`](WEEK2_REFLECTION.md).
-- **Week 3 results received.** 2/8 improved — **F5** 2497 → **3108** (+24%, EI exploit worked), **F7** 1.451 → **1.525**. See [`WEEK3_REFLECTION.md`](WEEK3_REFLECTION.md).
-- **Week 4 queries ready** — see [`WEEK4_STRATEGY.md`](WEEK4_STRATEGY.md).
+- **Week 3 results received.** 2/8 improved — **F5** 2497 → **3108**, **F7** 1.451 → **1.525**. See [`WEEK3_REFLECTION.md`](WEEK3_REFLECTION.md).
+- **Week 4 results received.** **4/8 improved** — **F5** 3108 → **3744**, **F7** 1.525 → **1.857**, **F2** 0.611 → **0.660**. See [`WEEK4_REFLECTION.md`](WEEK4_REFLECTION.md).
 
 See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md), [`WEEK2_REFLECTION.md`](WEEK2_REFLECTION.md),
-[`WEEK3_STRATEGY.md`](WEEK3_STRATEGY.md), and `progress_week3_report.png` for diagnostics.
+[`WEEK3_REFLECTION.md`](WEEK3_REFLECTION.md), and `progress_week4_report.png` for diagnostics.
 
 ---
 
@@ -128,7 +134,7 @@ parallel**, not a replacement.
 
 ---
 
-## Week 4 portal submission
+## Week 5 portal submission (draft — not yet submitted)
 
 ```
 Function 1:  0.662502-0.070000

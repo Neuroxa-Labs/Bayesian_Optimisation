@@ -73,8 +73,7 @@ tr:hover td{filter:brightness(0.97);}
     <a href="WEEK2_STRATEGY.md">Week 2 strategy</a> &nbsp;·&nbsp;
     <a href="WEEK2_REFLECTION.md">Week 2 reflection</a> &nbsp;·&nbsp;
     <a href="WEEK3_REFLECTION.md">Week 3 reflection</a> &nbsp;·&nbsp;
-    <a href="WEEK3_STRATEGY.md">Week 3 strategy</a> &nbsp;·&nbsp;
-    <a href="WEEK3_REFLECTION.md">Week 3 reflection</a>
+    <a href="WEEK4_REFLECTION.md">Week 4 reflection</a>
   </p>
   <p style="margin-top:6px;">
     Eight real-world black-box optimisation tasks (2D–8D). Each week we submit one query <code>x</code> per
@@ -100,8 +99,8 @@ tr:hover td{filter:brightness(0.97);}
     <div class="sc"><div class="sc-n g">5</div><div class="sc-l">Week 1 improved</div></div>
     <div class="sc"><div class="sc-n g">1</div><div class="sc-l">Week 2 improved</div></div>
     <div class="sc"><div class="sc-n g">2</div><div class="sc-l">Week 3 improved</div></div>
-    <div class="sc"><div class="sc-n r">6</div><div class="sc-l">Week 3 worsened</div></div>
-    <div class="sc"><div class="sc-n b">4</div><div class="sc-l">Week 4 ready</div></div>
+    <div class="sc"><div class="sc-n g">4</div><div class="sc-l">Week 4 improved</div></div>
+    <div class="sc"><div class="sc-n b">5</div><div class="sc-l">Week 5 ready</div></div>
   </div>
   <div class="note">
     <strong>Week 1:</strong> 5/8 improved (F4–F8); F5 standout 1089 → 2497.
@@ -109,7 +108,9 @@ tr:hover td{filter:brightness(0.97);}
     F5 exploit step underperformed (1811 vs best 2497).
     <strong>Week 3:</strong> <strong>2/8 improved</strong> — <strong>F5</strong> 2497 → <strong>3108</strong> (EI exploit + log-y),
     <strong>F7</strong> 1.451 → <strong>1.525</strong>. F4 basin search stayed positive but did not beat 0.257.
-    <strong>Week 4 queries</strong> generated; strategy review before portal submission.
+    <strong>Week 4:</strong> <strong>4/8 improved</strong> — <strong>F5</strong> 3108 → <strong>3744</strong>,
+    <strong>F7</strong> 1.525 → <strong>1.857</strong>, <strong>F2</strong> 0.611 → <strong>0.660</strong>.
+    Peer-informed grid (F1), EI exploit (F5/F7), local basin (F4).
   </div>
 </div>
 
@@ -155,7 +156,35 @@ tr:hover td{filter:brightness(0.97);}
 </div>
 
 <div class="card">
+  <div class="week-lbl">Iteration 4 — Week 4 (results received)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th>Method</th><th>ν</th>
+      <th class="r">Best before</th><th class="r">Acq. score</th>
+      <th class="r">Query x</th>
+      <th class="r">Actual result</th><th class="r">Δ improvement</th>
+      <th>Length scales</th>
+    </tr></thead>
+    <tbody id="tb4"></tbody>
+  </table>
+</div>
+
+<div class="card">
   <div class="week-lbl">Visual summary</div>
+  <div class="img-row">
+    <div>
+      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
+      <a href="progress_week4_report.png"><img src="progress_week4_report.png" alt="Progress report table"></a>
+    </div>
+    <div>
+      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Best observed output by function</p>
+      <a href="progress_week4.png"><img src="progress_week4.png" alt="Best observed progress chart"></a>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="week-lbl">Visual summary (archive)</div>
   <div class="img-row">
     <div>
       <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
@@ -244,6 +273,25 @@ const W3=[
    x:[0.070000,0.491672,0.247422,0.167429,0.353878,0.715603],actual:1.5253,ls:[1.041,10,10,0.379,0.216,0.207]},
   {fn:8,m:'UCB',nu:'1.5',best:9.7956,  acq:10.26,
    x:[0.070000,0.070000,0.020000,0.038786,0.403935,0.930000,0.020000,0.893085],actual:9.6064,ls:[3.665,5.741,2.690,9.727,10,7.318,3.832,10]},
+];
+
+const W4=[
+  {fn:1,m:'COV',nu:'0.5',best:7.71e-16,acq:3.25e-04,
+   x:[0.661537,0.436390],actual:3.21e-28,ls:[0.129,0.0143]},
+  {fn:2,m:'MAN',nu:'—',  best:0.6112,  acq:0.0297,
+   x:[0.700000,0.020000],actual:0.6599,ls:[0.025,1.22]},
+  {fn:3,m:'EI', nu:'2.5',best:-0.0203, acq:0.0098,
+   x:[0.592581,0.771593,0.436323],actual:-0.0434,ls:[10,2.57,0.116]},
+  {fn:4,m:'EI', nu:'2.5',best:0.2575,  acq:0.290,
+   x:[0.414097,0.385945,0.378079,0.441536],actual:0.1660,ls:[1.348,1.324,1.181,1.278]},
+  {fn:5,m:'EI', nu:'2.5',best:3108.49, acq:61.64,
+   x:[0.380000,0.980000,0.980000,0.980000],actual:3743.83,ls:[2.026,0.744,0.319,10]},
+  {fn:6,m:'EI', nu:'2.5',best:-0.4775, acq:0.0295,
+   x:[0.365618,0.143059,0.477549,0.930000,0.120000],actual:-0.6062,ls:[0.728,0.962,1.215,1.485,1.059]},
+  {fn:7,m:'EI', nu:'2.5',best:1.5253,  acq:0.0145,
+   x:[0.070000,0.431672,0.307422,0.158929,0.347393,0.672154],actual:1.8575,ls:[1.054,2.92,10,0.449,0.227,0.254]},
+  {fn:8,m:'UCB',nu:'1.5',best:9.7956,  acq:9.804,
+   x:[0.020000,0.020000,0.188184,0.038786,0.403935,0.486122,0.020000,0.893085],actual:9.7958,ls:[3.704,5.743,2.692,9.745,10,7.069,3.837,10]},
 ];
 
 function fmt(v){
@@ -338,6 +386,7 @@ function renderGrid(){
 renderW1(W1,'tb1');
 renderW2(W2,'tb2');
 renderW2(W3,'tb3');
+renderW2(W4,'tb4');
 renderGrid();
 </script>
 </body>

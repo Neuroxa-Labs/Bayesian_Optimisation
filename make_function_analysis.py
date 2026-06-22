@@ -113,6 +113,20 @@ WK3_Y = {
     4: -0.12619162666369688, 5: 3108.4878561302053, 6: -0.5376870203763128,
     7: 1.5253347319738353, 8: 9.606407822369,
 }
+WK4_X = {
+    1: [0.661537, 0.436390], 2: [0.700000, 0.020000],
+    3: [0.592581, 0.771593, 0.436323],
+    4: [0.414097, 0.385945, 0.378079, 0.441536],
+    5: [0.380000, 0.980000, 0.980000, 0.980000],
+    6: [0.365618, 0.143059, 0.477549, 0.930000, 0.120000],
+    7: [0.070000, 0.431672, 0.307422, 0.158929, 0.347393, 0.672154],
+    8: [0.020000, 0.020000, 0.188184, 0.038786, 0.403935, 0.486122, 0.020000, 0.893085],
+}
+WK4_Y = {
+    1: 3.21298272257291e-28, 2: 0.6598602814677763, 3: -0.043381912559889324,
+    4: 0.16598412185782196, 5: 3743.829067735118, 6: -0.6062467956245956,
+    7: 1.8574559098912007, 8: 9.795759089917,
+}
 
 
 def fit(X, Y, c):
@@ -154,8 +168,8 @@ def fmt(v):
 def make_figure(fn):
     c = CFG[fn]
     dim, n0 = c["dim"], c["n"]
-    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 3]
-    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 3]
+    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 4]
+    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 4]
     gp = fit(X, Y, c)
     ls = length_scales(gp)
     fb = float(Y.max())
@@ -164,6 +178,7 @@ def make_figure(fn):
     w1x, w1y = np.array(WK1_X[fn]), WK1_Y[fn]
     w2x, w2y = np.array(WK2_X[fn]), WK2_Y[fn]
     w3x, w3y = np.array(WK3_X[fn]), WK3_Y[fn]
+    w4x, w4y = np.array(WK4_X[fn]), WK4_Y[fn]
 
     # two most sensitive dims (smallest length scale)
     order = np.argsort(ls)
@@ -172,7 +187,7 @@ def make_figure(fn):
     fig = plt.figure(figsize=(20, 13.5))
     gs = gridspec.GridSpec(3, 3, figure=fig, hspace=0.42, wspace=0.28,
                            left=0.05, right=0.97, top=0.9, bottom=0.06)
-    fig.suptitle(f"F{fn}  -  {NAME[fn]}  ({dim}-D)\nData -> GP -> Acquisition -> Weeks 1-3",
+    fig.suptitle(f"F{fn}  -  {NAME[fn]}  ({dim}-D)\nData -> GP -> Acquisition -> Weeks 1-4",
                  fontsize=17, fontweight="bold")
 
     # Panel 1: Y values bar chart
@@ -181,13 +196,14 @@ def make_figure(fn):
     colors = ["#7fbf7f" if y >= np.percentile(Y, 66) else
               ("#f2b56b" if y >= np.percentile(Y, 33) else "#e06666") for y in Y]
     colors[best_i] = "#3b7dd8"
-    if len(Y) >= 3:
-        colors[-3] = "#9b59b6"
-        colors[-2] = "#00bcd4"
-        colors[-1] = "#ff9800"
+    if len(Y) >= 4:
+        colors[-4] = "#9b59b6"
+        colors[-3] = "#00bcd4"
+        colors[-2] = "#ff9800"
+        colors[-1] = "#8bc34a"
     ax.bar(idx, Y, color=colors)
     ax.axhline(fb, ls="--", color="green", lw=1, alpha=0.6)
-    ax.set_title("(1) Observed y\n(blue=best, purple=W1, cyan=W2, orange=W3)", fontsize=11, fontweight="bold")
+    ax.set_title("(1) Observed y\n(blue=best, W1-W4 coloured)", fontsize=11, fontweight="bold")
     ax.set_xlabel("observation #"); ax.set_ylabel("y")
     ax.grid(alpha=0.25, axis="y")
 
@@ -240,6 +256,8 @@ def make_figure(fn):
                    s=150, label="Week2", zorder=5)
         ax.scatter([w3x[d0]], [w3x[d1]], marker="D", c="orange", edgecolors="black",
                    s=130, label="Week3", zorder=5)
+        ax.scatter([w4x[d0]], [w4x[d1]], marker="P", c="limegreen", edgecolors="black",
+                   s=130, label="Week4", zorder=5)
         ax.set_xlabel(f"x{d0+1}"); ax.set_ylabel(f"x{d1+1}")
 
     titles = [("(4) GP mean (prediction)", mu_g, "viridis"),
@@ -268,21 +286,22 @@ def make_figure(fn):
     ax.axvline(w1x[d0], ls=":", color="red", label="Week1")
     ax.axvline(w2x[d0], ls="-.", color="cyan", label="Week2")
     ax.axvline(w3x[d0], ls=":", color="orange", label="Week3")
+    ax.axvline(w4x[d0], ls="--", color="limegreen", label="Week4")
     ax.set_title(f"(7) Sensitivity along x{d0+1}\n(most sensitive dim)", fontsize=11, fontweight="bold")
     ax.set_xlabel(f"x{d0+1}"); ax.set_ylabel("GP mean y"); ax.legend(fontsize=7); ax.grid(alpha=0.25)
 
-    # Panel 8: Week 3 result
+    # Panel 8: Week 4 result
     ax = fig.add_subplot(gs[2, 1]); ax.axis("off")
-    w3_prev = float(Y[:-1].max())
-    w3_improved = w3y > w3_prev
-    mu_w3, sg_w3 = gp.predict(w3x.reshape(1, -1), return_std=True)
-    txt2 = (f"WEEK 3 RESULT\n"
+    w4_prev = float(Y[:-1].max())
+    w4_improved = w4y > w4_prev
+    mu_w4, sg_w4 = gp.predict(w4x.reshape(1, -1), return_std=True)
+    txt2 = (f"WEEK 4 RESULT\n"
             f"--------------------------------\n"
-            f"Week 3 sent : [{', '.join(fmt(v) for v in w3x)}]\n"
-            f"Week 3 got  : y = {fmt(w3y)}\n"
-            f"Result      : {'IMPROVED' if w3_improved else 'did not improve'} "
-            f"(prev best {fmt(w3_prev)})\n"
-            f"GP expected : mu={fmt(float(mu_w3[0]))}, sigma={fmt(float(sg_w3[0]))}")
+            f"Week 4 sent : [{', '.join(fmt(v) for v in w4x)}]\n"
+            f"Week 4 got  : y = {fmt(w4y)}\n"
+            f"Result      : {'IMPROVED' if w4_improved else 'did not improve'} "
+            f"(prev best {fmt(w4_prev)})\n"
+            f"GP expected : mu={fmt(float(mu_w4[0]))}, sigma={fmt(float(sg_w4[0]))}")
     ax.text(0.0, 1.0, txt2, va="top", ha="left", fontsize=9.2, family="monospace",
             transform=ax.transAxes, wrap=True)
 
@@ -291,16 +310,17 @@ def make_figure(fn):
     running = np.maximum.accumulate(Y)
     ax.plot(idx, Y, "o-", color="#888", ms=4, label="y per query")
     ax.plot(idx, running, color="green", lw=2, label="best so far")
-    ax.scatter([len(Y) - 3], [Y[-3]], marker="X", c="red", s=100, zorder=5, label="W1")
-    ax.scatter([len(Y) - 2], [Y[-2]], marker="^", c="cyan", s=100, zorder=5, label="W2")
-    ax.scatter([len(Y) - 1], [Y[-1]], marker="D", c="orange", s=100, zorder=5, label="W3")
+    ax.scatter([len(Y) - 4], [Y[-4]], marker="X", c="red", s=90, zorder=5, label="W1")
+    ax.scatter([len(Y) - 3], [Y[-3]], marker="^", c="cyan", s=90, zorder=5, label="W2")
+    ax.scatter([len(Y) - 2], [Y[-2]], marker="D", c="orange", s=90, zorder=5, label="W3")
+    ax.scatter([len(Y) - 1], [Y[-1]], marker="P", c="limegreen", s=90, zorder=5, label="W4")
     ax.set_title("(9) Observation history", fontsize=11, fontweight="bold")
     ax.set_xlabel("observation #"); ax.set_ylabel("y"); ax.legend(fontsize=7); ax.grid(alpha=0.25)
 
     out = ROOT / f"function_{fn}" / f"analysis_F{fn}.png"
     fig.savefig(out, dpi=140, bbox_inches="tight")
     plt.close(fig)
-    print(f"F{fn}: saved {out.relative_to(ROOT)} | best={fmt(fb)} | W3 y={fmt(w3y)}")
+    print(f"F{fn}: saved {out.relative_to(ROOT)} | best={fmt(fb)} | W4 y={fmt(w4y)}")
 
 
 for fn in range(1, 9):
