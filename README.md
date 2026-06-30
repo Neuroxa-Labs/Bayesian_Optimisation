@@ -45,6 +45,49 @@ one expensive real experiment.
 Each `function_*/` folder contains a detailed `EXPLANATION_F*.md` (learn-from-scratch write-up) and a
 comprehensive `analysis_F*.png` figure (data → GP → acquisition → weekly panels through Week 4).
 
+## Repository layout
+
+```
+capstone/
+├── BBO_Capstone_Optimized.ipynb   # Main GP + acquisition pipeline
+├── bbo_progress_report.html       # Interactive dashboard (start here)
+├── bbo_progress_report.png/jpg    # Full report image
+├── run_week.py                    # Generate Week N queries from notebook logic
+├── generate_week4.py / generate_week5.py   # Approved query generators
+├── append_week2.py … append_week4.py       # Append portal y to .npy files
+├── make_progress_report.py        # Iteration diagnostics table
+├── make_function_analysis.py      # 9-panel per-function figures
+├── make_main_report_image.py      # Dashboard PNG/JPG
+├── make_progress_chart.py         # Best-y progress chart
+├── WEEK*_STRATEGY.md              # Weekly queries + rationale
+├── WEEK*_REFLECTION.md            # Post-results analysis
+├── WEEK*_DISCUSSION.md            # Forum reflections
+├── GITHUB_REPOSITORY_REFLECTION.md  # Repo structure & libraries (Module 16)
+└── function_1/ … function_8/
+    ├── initial_inputs.npy
+    ├── initial_outputs.npy
+    ├── EXPLANATION_F*.md
+    └── analysis_F*.png
+```
+
+## Weekly workflow
+
+```bash
+# 1. After portal email: append new y values
+python append_week4.py          # edit script with portal results first
+
+# 2. Regenerate reports (set WEEK in make_progress_chart.py if needed)
+python make_progress_report.py
+python make_function_analysis.py
+python make_main_report_image.py
+python make_progress_chart.py
+
+# 3. Generate next week's queries
+python run_week.py 5            # or: python generate_week5.py
+
+# 4. Update WEEK*_STRATEGY.md, submit to portal, write forum reflection
+```
+
 ## Repository contents
 
 | Path | Description |
@@ -61,8 +104,12 @@ comprehensive `analysis_F*.png` figure (data → GP → acquisition → weekly p
 | `WEEK4_STRATEGY.md` | Week 4 strategy, queries, and results |
 | `WEEK4_REFLECTION.md` | Week 4 results analysis |
 | `WEEK4_DISCUSSION.md` | Week 4 forum reflection (GP vs NN) |
-| `generate_week4.py` | Week 4 peer-informed query generator |
+| `WEEK5_STRATEGY.md` | Week 5 strategy and approved queries |
+| `WEEK5_DISCUSSION.md` | Week 5 forum reflection (Module 16 / DL lens) |
+| `GITHUB_REPOSITORY_REFLECTION.md` | Repo structure, libraries, documentation (Module 16) |
+| `generate_week4.py` / `generate_week5.py` | Peer-informed / approved query generators |
 | `append_week4.py` | Append Week 4 portal results to `.npy` files |
+| `run_week.py` | Run notebook pipeline for Week N queries |
 | `function_1/ … function_8/` | Per-function data (`.npy`), `EXPLANATION_F*.md`, and `analysis_F*.png` |
 | `make_progress_report.py` | Builds the per-function iteration diagnostics report image |
 | `make_function_analysis.py` | Builds the 9-panel per-function analysis figures |
@@ -80,9 +127,10 @@ comprehensive `analysis_F*.png` figure (data → GP → acquisition → weekly p
   F5 exploit step returned 1811 (best remains 2497). See [`WEEK2_REFLECTION.md`](WEEK2_REFLECTION.md).
 - **Week 3 results received.** 2/8 improved — **F5** 2497 → **3108**, **F7** 1.451 → **1.525**. See [`WEEK3_REFLECTION.md`](WEEK3_REFLECTION.md).
 - **Week 4 results received.** **4/8 improved** — **F5** 3108 → **3744**, **F7** 1.525 → **1.857**, **F2** 0.611 → **0.660**. See [`WEEK4_REFLECTION.md`](WEEK4_REFLECTION.md).
+- **Week 5 submitted** (results pending). Exploit-focused queries; see [`WEEK5_STRATEGY.md`](WEEK5_STRATEGY.md).
 
-See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md), [`WEEK2_REFLECTION.md`](WEEK2_REFLECTION.md),
-[`WEEK3_REFLECTION.md`](WEEK3_REFLECTION.md), and `progress_week4_report.png` for diagnostics.
+See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md) through [`WEEK4_REFLECTION.md`](WEEK4_REFLECTION.md),
+[`WEEK5_DISCUSSION.md`](WEEK5_DISCUSSION.md), and `progress_week4_report.png` for diagnostics.
 
 ---
 
@@ -125,6 +173,10 @@ the perfect point immediately, but to **reason, iterate, and adapt** as new `y` 
 We apply log/scaling **only where the data justify it** (F5 magnitude; F2 noise), not blindly to
 all functions.
 
+### Why not PyTorch / TensorFlow as the surrogate?
+
+Module 16 covers PyTorch and TensorFlow for building and scaling neural networks. I use those ideas in **forum reflections** (see [`WEEK5_DISCUSSION.md`](WEEK5_DISCUSSION.md)), but the portal pipeline stays GP-based: with 14–44 observations per function, NNs risk overfitting and do not provide calibrated uncertainty for EI/UCB without extra machinery (ensembles, MC dropout). See also [`GITHUB_REPOSITORY_REFLECTION.md`](GITHUB_REPOSITORY_REFLECTION.md).
+
 ### Why not SVM as the surrogate?
 
 SVM regression could predict `y`, but UCB/EI need **μ and σ** at candidate points. GP provides both
@@ -134,17 +186,19 @@ parallel**, not a replacement.
 
 ---
 
-## Week 5 portal submission (draft — not yet submitted)
+## Week 5 portal submission (approved)
+
+See [`WEEK5_STRATEGY.md`](WEEK5_STRATEGY.md) for rationale.
 
 ```
 Function 1:  0.662502-0.070000
-Function 2:  0.709311-0.406719
-Function 3:  0.492581-0.611593-0.521038
-Function 4:  0.427912-0.347959-0.398079-0.465276
-Function 5:  0.300000-0.980000-0.980000-0.980000
-Function 6:  0.429970-0.020000-0.980000-0.883280-0.020000
-Function 7:  0.070000-0.070000-0.247422-0.144873-0.351501-0.694213
-Function 8:  0.195586-0.070000-0.233778-0.038786-0.403935-0.460628-0.234045-0.893085
+Function 2:  0.717869-0.020000
+Function 3:  0.492581-0.691593-0.401000
+Function 4:  0.425820-0.439559-0.381148-0.436983
+Function 5:  0.280000-0.980000-0.980000-0.980000
+Function 6:  0.430000-0.240000-0.580000-0.720000-0.120000
+Function 7:  0.070000-0.376096-0.307422-0.107492-0.323741-0.648355
+Function 8:  0.126155-0.070000-0.224493-0.038786-0.403935-0.497424-0.228063-0.893085
 ```
 
 ## Requirements
