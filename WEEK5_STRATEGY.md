@@ -2,6 +2,8 @@
 
 *Approved for portal submission (14 observations per function, balanced phase).*
 
+**Results received:** 3/8 improved — see [`WEEK5_REFLECTION.md`](WEEK5_REFLECTION.md).
+
 ## Strategy summary
 
 | Fn | AF / mode | Rationale |
