@@ -34,13 +34,13 @@ one expensive real experiment.
 | Fn | Real-world task | Dim | What `x` / `y` mean | Primary AF | Why this AF |
 |----|-----------------|-----|---------------------|-----------|-------------|
 | **F1** | **Radiation Source Detection** | 2 | position → counter reading (sharp, sparse peak; mostly 0) | UNCERTAINTY → UCB | Mostly zeros; explore until any signal appears |
-| **F2** | **Noisy ML Log-Likelihood** | 2 | 2 settings → noisy log-likelihood | EI (+ White kernel) | New best **0.660** (W4) |
+| **F2** | **Noisy ML Log-Likelihood** | 2 | 2 settings → noisy log-likelihood | EI (+ White kernel) | New best **0.777** (W5) |
 | **F3** | **Drug Discovery — Adverse Reactions** | 3 | component ratios → −(side effect) | UCB κ=2.576 | Steer toward least-negative region |
 | **F4** | **Warehouse Placement** | 4 | 4 placement factors → efficiency | UCB κ=2.5 | Multimodal; local basin search after W2 dip |
 | **F5** | **Chemical Yield Optimisation** | 4 | 4 process settings → yield | EI exploit (after signal) | log(y) GP; best **3744** (W4) |
-| **F6** | **Cake Recipe Optimisation** | 5 | 5 ingredient amounts → −(badness) | EI | Balanced push toward 0 |
-| **F7** | **ML Hyperparameter Tuning** | 6 | 6 hyperparameters → validation score | EI | Balanced search in 6D |
-| **F8** | **8-Parameter ML Model Optimisation** | 8 | 8 parameters → score | UCB κ=2.576 | Broad exploration of a large space |
+| **F6** | **Cake Recipe Optimisation** | 5 | 5 ingredient amounts → −(badness) | EI | Best **−0.265** (W5) |
+| **F7** | **ML Hyperparameter Tuning** | 6 | 6 hyperparameters → validation score | EI | Best **1.857** (W4) |
+| **F8** | **8-Parameter ML Model Optimisation** | 8 | 8 parameters → score | UCB κ=2.576 | Best **9.864** (W5) |
 
 Each `function_*/` folder contains a detailed `EXPLANATION_F*.md` (learn-from-scratch write-up) and a
 comprehensive `analysis_F*.png` figure (data → GP → acquisition → weekly panels through Week 4).
@@ -105,10 +105,11 @@ python run_week.py 5            # or: python generate_week5.py
 | `WEEK4_REFLECTION.md` | Week 4 results analysis |
 | `WEEK4_DISCUSSION.md` | Week 4 forum reflection (GP vs NN) |
 | `WEEK5_STRATEGY.md` | Week 5 strategy and approved queries |
+| `WEEK5_REFLECTION.md` | Week 5 results analysis |
 | `WEEK5_DISCUSSION.md` | Week 5 forum reflection (Module 16 / DL lens) |
 | `GITHUB_REPOSITORY_REFLECTION.md` | Repo structure, libraries, documentation (Module 16) |
 | `generate_week4.py` / `generate_week5.py` | Peer-informed / approved query generators |
-| `append_week4.py` | Append Week 4 portal results to `.npy` files |
+| `append_week4.py` / `append_week5.py` | Append portal results to `.npy` files |
 | `run_week.py` | Run notebook pipeline for Week N queries |
 | `function_1/ … function_8/` | Per-function data (`.npy`), `EXPLANATION_F*.md`, and `analysis_F*.png` |
 | `make_progress_report.py` | Builds the per-function iteration diagnostics report image |
@@ -127,9 +128,9 @@ python run_week.py 5            # or: python generate_week5.py
   F5 exploit step returned 1811 (best remains 2497). See [`WEEK2_REFLECTION.md`](WEEK2_REFLECTION.md).
 - **Week 3 results received.** 2/8 improved — **F5** 2497 → **3108**, **F7** 1.451 → **1.525**. See [`WEEK3_REFLECTION.md`](WEEK3_REFLECTION.md).
 - **Week 4 results received.** **4/8 improved** — **F5** 3108 → **3744**, **F7** 1.525 → **1.857**, **F2** 0.611 → **0.660**. See [`WEEK4_REFLECTION.md`](WEEK4_REFLECTION.md).
-- **Week 5 submitted** (results pending). Exploit-focused queries; see [`WEEK5_STRATEGY.md`](WEEK5_STRATEGY.md).
+- **Week 5 results received.** **3/8 improved** — **F2** 0.660 → **0.777**, **F6** −0.478 → **−0.265**, **F8** 9.796 → **9.864**. F5/F7 did not beat W4 records. See [`WEEK5_REFLECTION.md`](WEEK5_REFLECTION.md).
 
-See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md) through [`WEEK4_REFLECTION.md`](WEEK4_REFLECTION.md),
+See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md) through [`WEEK5_REFLECTION.md`](WEEK5_REFLECTION.md),
 [`WEEK5_DISCUSSION.md`](WEEK5_DISCUSSION.md), and `progress_week4_report.png` for diagnostics.
 
 ---
