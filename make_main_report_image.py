@@ -69,6 +69,18 @@ W4 = [
      9.7958, [3.704, 5.743, 2.692, 9.745, 10, 7.069, 3.837, 10]),
 ]
 
+W5 = [
+    (1, 7.71e-16, 4.40e-04, [0.662502, 0.070000], -4.78e-128, [0.045, 0.01]),
+    (2, 0.6599, 0.0231, [0.717869, 0.020000], 0.7766, [0.095, 3.70]),
+    (3, -0.0203, 2.07e-04, [0.492581, 0.691593, 0.401000], -0.0223, [10, 2.69, 0.111]),
+    (4, 0.2575, 0.492, [0.425820, 0.439559, 0.381148, 0.436983], 0.2403, [1.358, 1.243, 1.085, 1.258]),
+    (5, 3743.83, 0.00689, [0.280000, 0.980000, 0.980000, 0.980000], 3692.52, [10, 0.749, 0.612, 4.48]),
+    (6, -0.4775, 2.55e-04, [0.430000, 0.240000, 0.580000, 0.720000, 0.120000], -0.2654, [0.526, 1.27, 1.26, 1.77, 2.26]),
+    (7, 1.8575, 0.115, [0.070000, 0.376096, 0.307422, 0.107492, 0.323741, 0.648355], 1.8161, [0.779, 0.284, 10, 0.732, 0.367, 0.389]),
+    (8, 9.7958, 9.928, [0.126155, 0.070000, 0.224493, 0.038786, 0.403935, 0.497424, 0.228063, 0.893085],
+     9.8645, [3.717, 5.763, 2.701, 9.802, 10, 7.091, 3.850, 10]),
+]
+
 
 def fmt(v):
     if v is None:
@@ -158,8 +170,8 @@ def draw_table(ax, title, rows, week2=False):
             cell.set_text_props(fontweight="bold")
 
 
-fig = plt.figure(figsize=(18, 34), facecolor="white")
-gs = GridSpec(7, 1, figure=fig, height_ratios=[0.65, 0.5, 0.95, 1.1, 1.1, 1.1, 0.28], hspace=0.30)
+fig = plt.figure(figsize=(18, 40), facecolor="white")
+gs = GridSpec(8, 1, figure=fig, height_ratios=[0.55, 0.45, 0.85, 1.0, 1.0, 1.0, 1.0, 0.25], hspace=0.28)
 
 # Header
 ax0 = fig.add_subplot(gs[0])
@@ -180,15 +192,16 @@ cards = [("5", "Week 1\nimproved", "#00b894"),
          ("1", "Week 2\nimproved", "#00b894"),
          ("2", "Week 3\nimproved", "#00b894"),
          ("4", "Week 4\nimproved", "#00b894"),
-         ("5", "Week 5\nready", "#2d6dc7")]
+         ("3", "Week 5\nimproved", "#00b894"),
+         ("6", "Week 6\nready", "#2d6dc7")]
 for i, (num, lbl, col) in enumerate(cards):
-    x = 0.02 + i * 0.19
-    rect = mpatches.FancyBboxPatch((x, 0.15), 0.16, 0.7, boxstyle="round,pad=0.02",
+    x = 0.02 + i * 0.155
+    rect = mpatches.FancyBboxPatch((x, 0.15), 0.13, 0.7, boxstyle="round,pad=0.02",
                                    facecolor="#f8f9fa", edgecolor="#e0e0e0", transform=ax1.transAxes)
     ax1.add_patch(rect)
-    ax1.text(x + 0.08, 0.62, num, ha="center", va="center", fontsize=18, fontweight="bold",
+    ax1.text(x + 0.065, 0.62, num, ha="center", va="center", fontsize=18, fontweight="bold",
              color=col, transform=ax1.transAxes)
-    ax1.text(x + 0.08, 0.32, lbl, ha="center", va="center", fontsize=8, color="#636e72",
+    ax1.text(x + 0.065, 0.32, lbl, ha="center", va="center", fontsize=8, color="#636e72",
              transform=ax1.transAxes)
 
 # Week 1 table
@@ -207,9 +220,13 @@ draw_table(ax4, "ITERATION 3 — Week 3 (results received)", W3, week2=True)
 ax5 = fig.add_subplot(gs[5])
 draw_table(ax5, "ITERATION 4 — Week 4 (results received)", W4, week2=True)
 
-# Legend
+# Week 5 table
 ax6 = fig.add_subplot(gs[6])
-ax6.axis("off")
+draw_table(ax6, "ITERATION 5 — Week 5 (results received)", W5, week2=True)
+
+# Legend
+ax7 = fig.add_subplot(gs[7])
+ax7.axis("off")
 legend_items = [
     ("#e17055", "Degenerate ls >= 4.5 (D)"),
     ("#fdcb6e", "Sensitive ls < 0.2 (S)"),
@@ -219,12 +236,12 @@ legend_items = [
     ("#fffde7", "Pending"),
 ]
 for i, (col, txt) in enumerate(legend_items):
-    ax6.add_patch(mpatches.Rectangle((0.02 + i * 0.16, 0.35), 0.025, 0.35, facecolor=col,
-                                     edgecolor="#ccc", transform=ax6.transAxes))
-    ax6.text(0.05 + i * 0.16, 0.52, txt, fontsize=8, color="#636e72", va="center",
-             transform=ax6.transAxes)
-ax6.text(0.02, 0.05, "Full interactive report: bbo_progress_report.html  |  GitHub: Neuroxa-Labs/Bayesian_Optimisation",
-         fontsize=8.5, color="#2d6dc7", transform=ax6.transAxes)
+    ax7.add_patch(mpatches.Rectangle((0.02 + i * 0.16, 0.35), 0.025, 0.35, facecolor=col,
+                                     edgecolor="#ccc", transform=ax7.transAxes))
+    ax7.text(0.05 + i * 0.16, 0.52, txt, fontsize=8, color="#636e72", va="center",
+             transform=ax7.transAxes)
+ax7.text(0.02, 0.05, "Full interactive report: bbo_progress_report.html  |  GitHub: Neuroxa-Labs/Bayesian_Optimisation",
+         fontsize=8.5, color="#2d6dc7", transform=ax7.transAxes)
 
 png = ROOT / "bbo_progress_report.png"
 jpg = ROOT / "bbo_progress_report.jpg"

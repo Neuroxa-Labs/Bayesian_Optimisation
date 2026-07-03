@@ -32,14 +32,14 @@ FUNCTIONS = {
 # method + exploration parameter per function/iteration (exploration phase, weeks 1-2)
 # F5 flips to exploitation in iter2 once its best crosses 2000.
 METHOD = {
-    1: ("UNC", None, "COV", None, "COV", None, "COV", None),
-    2: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "MAN", None),
-    3: ("UCB", 2.576, "UCB", 2.576, "UCB", 2.576, "EI", 0.0),
-    4: ("UCB", 3.0, "UCB", 2.5, "UCB", 2.5, "EI", 0.0),
-    5: ("UCB", 2.576, "UCB", 1.0, "EI", 0.0, "EI", 0.0),
-    6: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
-    7: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
-    8: ("UCB", 2.576, "UCB", 2.576, "UCB", 2.576, "UCB", 2.576),
+    1: ("UNC", None, "COV", None, "COV", None, "COV", None, "COV", None),
+    2: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "MAN", None, "EI", 0.0),
+    3: ("UCB", 2.576, "UCB", 2.576, "UCB", 2.576, "EI", 0.0, "EI", 0.0),
+    4: ("UCB", 3.0, "UCB", 2.5, "UCB", 2.5, "EI", 0.0, "UCB", 1.5),
+    5: ("UCB", 2.576, "UCB", 1.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
+    6: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
+    7: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
+    8: ("UCB", 2.576, "UCB", 2.576, "UCB", 2.576, "UCB", 2.576, "UCB", 1.5),
 }
 
 WK1_X = {
@@ -98,6 +98,20 @@ WK4_Y = {
     4: 0.16598412185782196, 5: 3743.829067735118, 6: -0.6062467956245956,
     7: 1.8574559098912007, 8: 9.795759089917,
 }
+WK5_X = {
+    1: [0.662502, 0.070000], 2: [0.717869, 0.020000],
+    3: [0.492581, 0.691593, 0.401000],
+    4: [0.425820, 0.439559, 0.381148, 0.436983],
+    5: [0.280000, 0.980000, 0.980000, 0.980000],
+    6: [0.430000, 0.240000, 0.580000, 0.720000, 0.120000],
+    7: [0.070000, 0.376096, 0.307422, 0.107492, 0.323741, 0.648355],
+    8: [0.126155, 0.070000, 0.224493, 0.038786, 0.403935, 0.497424, 0.228063, 0.893085],
+}
+WK5_Y = {
+    1: -4.778494662600997e-128, 2: 0.7766450728516721, 3: -0.022346711262055334,
+    4: 0.24027427340052343, 5: 3692.519989512911, 6: -0.2654080647396229,
+    7: 1.8161306404666622, 8: 9.864471173458,
+}
 
 
 def fit_gp(X, Y, cfg):
@@ -148,7 +162,7 @@ def fmt(v):
 
 # ---- compute everything ----
 iters = {}  # iters[it][fn] = dict of metrics
-for it in (1, 2, 3, 4):
+for it in (1, 2, 3, 4, 5):
     iters[it] = {}
     for fn, cfg in FUNCTIONS.items():
         X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")
@@ -169,11 +183,16 @@ for it in (1, 2, 3, 4):
             next_x = WK3_X[fn]
             actual = WK3_Y[fn]
             method, param = METHOD[fn][4], METHOD[fn][5]
-        else:
+        elif it == 4:
             Xi, Yi = X[: n0 + 3], Y[: n0 + 3]
             next_x = WK4_X[fn]
             actual = WK4_Y[fn]
             method, param = METHOD[fn][6], METHOD[fn][7]
+        else:
+            Xi, Yi = X[: n0 + 4], Y[: n0 + 4]
+            next_x = WK5_X[fn]
+            actual = WK5_Y[fn]
+            method, param = METHOD[fn][8], METHOD[fn][9]
         gp = fit_gp(Xi, Yi, cfg)
         cur_best = float(Yi.max())
         amp, ls = kernel_amp_and_ls(gp)
@@ -193,11 +212,11 @@ SHORT = {1: "Radiation\nDetection", 2: "Noisy ML\nLog-Lik", 3: "Drug\nSide-Effec
          7: "ML Hyper-\nparameters", 8: "8-Param\nML Model"}
 fn_cols = [f"F{i}\n{SHORT[i]}" for i in range(1, 9)]
 
-fig, axes = plt.subplots(4, 1, figsize=(17, 24))
+fig, axes = plt.subplots(5, 1, figsize=(17, 30))
 fig.suptitle("BBO Progress Report — per-function GP / Bayesian Optimisation diagnostics",
              fontsize=15, fontweight="bold")
 
-for ax_idx, it in enumerate((1, 2, 3, 4)):
+for ax_idx, it in enumerate((1, 2, 3, 4, 5)):
     ax = axes[ax_idx]
     ax.axis("off")
     ax.set_title(f"ITERATION {it}  (Week {it})", loc="left", fontsize=13,
@@ -258,11 +277,16 @@ for ax_idx, it in enumerate((1, 2, 3, 4)):
             cell.set_fontsize(8)
 
 plt.tight_layout(rect=[0, 0, 1, 0.97])
-png = ROOT / "progress_week4_report.png"
-jpg = ROOT / "progress_week4_report.jpg"
+png = ROOT / "progress_week5_report.png"
+jpg = ROOT / "progress_week5_report.jpg"
 plt.savefig(png, dpi=150, bbox_inches="tight")
 try:
     plt.savefig(jpg, dpi=150, bbox_inches="tight")
     print(f"Saved {png.name} and {jpg.name}")
 except Exception as e:
     print(f"Saved {png.name}; JPEG failed ({e})")
+
+for fn in range(1, 9):
+    d = iters[5][fn]
+    ls = [round(float(v), 4) for v in d["ls"]]
+    print(f"W5 F{fn}: best={d['cur_best']:.6g} acq={d['acq']:.6g} actual={d['actual']:.6g} ls={ls}")

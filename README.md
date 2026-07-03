@@ -43,7 +43,7 @@ one expensive real experiment.
 | **F8** | **8-Parameter ML Model Optimisation** | 8 | 8 parameters → score | UCB κ=2.576 | Best **9.864** (W5) |
 
 Each `function_*/` folder contains a detailed `EXPLANATION_F*.md` (learn-from-scratch write-up) and a
-comprehensive `analysis_F*.png` figure (data → GP → acquisition → weekly panels through Week 4).
+comprehensive `analysis_F*.png` figure (data → GP → acquisition → weekly panels through Week 5).
 
 ## Repository layout
 
@@ -114,8 +114,8 @@ python run_week.py 5            # or: python generate_week5.py
 | `function_1/ … function_8/` | Per-function data (`.npy`), `EXPLANATION_F*.md`, and `analysis_F*.png` |
 | `make_progress_report.py` | Builds the per-function iteration diagnostics report image |
 | `make_function_analysis.py` | Builds the 9-panel per-function analysis figures |
-| `progress_week4_report.png` / `.jpg` | Iteration tracking table through Week 4 |
-| `progress_week1.png` … `progress_week4.png` | Best-observed-output progress charts |
+| `progress_week5_report.png` / `.jpg` | Iteration tracking table through Week 5 |
+| `progress_week1.png` … `progress_week5.png` | Best-observed-output progress charts |
 | `function_*_week2_analysis.png` | Per-function Week 2 observation / input plots |
 
 ## Progress
@@ -131,7 +131,7 @@ python run_week.py 5            # or: python generate_week5.py
 - **Week 5 results received.** **3/8 improved** — **F2** 0.660 → **0.777**, **F6** −0.478 → **−0.265**, **F8** 9.796 → **9.864**. F5/F7 did not beat W4 records. See [`WEEK5_REFLECTION.md`](WEEK5_REFLECTION.md).
 
 See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md) through [`WEEK5_REFLECTION.md`](WEEK5_REFLECTION.md),
-[`WEEK5_DISCUSSION.md`](WEEK5_DISCUSSION.md), and `progress_week4_report.png` for diagnostics.
+[`WEEK5_DISCUSSION.md`](WEEK5_DISCUSSION.md), and `progress_week5_report.png` for diagnostics.
 
 ---
 
@@ -187,20 +187,11 @@ parallel**, not a replacement.
 
 ---
 
-## Week 5 portal submission (approved)
+## Week 5 portal submission (results received)
 
-See [`WEEK5_STRATEGY.md`](WEEK5_STRATEGY.md) for rationale.
+See [`WEEK5_STRATEGY.md`](WEEK5_STRATEGY.md) and [`WEEK5_REFLECTION.md`](WEEK5_REFLECTION.md).
 
-```
-Function 1:  0.662502-0.070000
-Function 2:  0.717869-0.020000
-Function 3:  0.492581-0.691593-0.401000
-Function 4:  0.425820-0.439559-0.381148-0.436983
-Function 5:  0.280000-0.980000-0.980000-0.980000
-Function 6:  0.430000-0.240000-0.580000-0.720000-0.120000
-Function 7:  0.070000-0.376096-0.307422-0.107492-0.323741-0.648355
-Function 8:  0.126155-0.070000-0.224493-0.038786-0.403935-0.497424-0.228063-0.893085
-```
+Submitted queries and outcomes: **3/8 improved** (F2, F6, F8).
 
 ## Requirements
 

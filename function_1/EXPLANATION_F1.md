@@ -12,7 +12,7 @@
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given (10 initial points + 4 weekly queries = 14 observations)
+## 2. What we were given (10 initial points + 5 weekly queries = 15 observations)
 
 | # | x1 | x2 | y | note |
 |---|---|---|---|---|
@@ -29,7 +29,7 @@ Bayesian Optimisation is built for - finding the best of an expensive unknown fu
 The Gaussian Process fits one **length scale** per dimension - how fast y changes along that axis.
 A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
 
-- `x1`: length-scale = 0.0447 -> **very sensitive** - small changes move y a lot (take small steps)
+- `x1`: length-scale = 0.0441 -> **very sensitive** - small changes move y a lot (take small steps)
 - `x2`: length-scale = 0.0100 -> **very sensitive** - small changes move y a lot (take small steps)
 
 The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
@@ -61,14 +61,21 @@ The peak is sharp and sparse: almost every reading is 0. With no signal, use **c
 
 - **Sent:** x = [0.6615, 0.4364]
 - **Received:** y = 3.213e-28
-- **GP had expected:** mu = -7.452e-16, sigma = 1.879e-09
+- **GP had expected:** mu = -6.957e-16, sigma = 1.825e-09
 - **Outcome:** did **not** improve over the previous best (7.711e-16).
 
-## 9. The lesson
+## 9. Week 5 - what we sent and what happened
+
+- **Sent:** x = [0.6625, 0.0700]
+- **Received:** y = -4.778e-128
+- **GP had expected:** mu = -6.819e-16, sigma = 1.825e-09
+- **Outcome:** did **not** improve over the previous best (7.711e-16).
+
+## 10. The lesson
 
 A zero is not failure - it is elimination. Avoid boundary artefacts; scan the largest interior gaps. nu=0.5 models a rough, spiky surface.
 
-## 10. Summary
+## 11. Summary
 
 | | Value |
 |---|---|
@@ -80,6 +87,7 @@ A zero is not failure - it is elimination. Avoid boundary artefacts; scan the la
 | Week 2 result | -0.0066 (no improvement) |
 | Week 3 result | -1.764e-130 (no improvement) |
 | Week 4 result | 3.213e-28 (no improvement) |
+| Week 5 result | -4.778e-128 (no improvement) |
 | Current best | 7.711e-16 |
 
 *See `analysis_F1.png` in this folder for the full 9-panel visual analysis.*

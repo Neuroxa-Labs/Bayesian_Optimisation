@@ -73,7 +73,8 @@ tr:hover td{filter:brightness(0.97);}
     <a href="WEEK2_STRATEGY.md">Week 2 strategy</a> &nbsp;·&nbsp;
     <a href="WEEK2_REFLECTION.md">Week 2 reflection</a> &nbsp;·&nbsp;
     <a href="WEEK3_REFLECTION.md">Week 3 reflection</a> &nbsp;·&nbsp;
-    <a href="WEEK4_REFLECTION.md">Week 4 reflection</a>
+    <a href="WEEK4_REFLECTION.md">Week 4 reflection</a> &nbsp;·&nbsp;
+    <a href="WEEK5_REFLECTION.md">Week 5 reflection</a>
   </p>
   <p style="margin-top:6px;">
     Eight real-world black-box optimisation tasks (2D–8D). Each week we submit one query <code>x</code> per
@@ -100,7 +101,8 @@ tr:hover td{filter:brightness(0.97);}
     <div class="sc"><div class="sc-n g">1</div><div class="sc-l">Week 2 improved</div></div>
     <div class="sc"><div class="sc-n g">2</div><div class="sc-l">Week 3 improved</div></div>
     <div class="sc"><div class="sc-n g">4</div><div class="sc-l">Week 4 improved</div></div>
-    <div class="sc"><div class="sc-n b">5</div><div class="sc-l">Week 5 ready</div></div>
+    <div class="sc"><div class="sc-n g">3</div><div class="sc-l">Week 5 improved</div></div>
+    <div class="sc"><div class="sc-n b">6</div><div class="sc-l">Week 6 ready</div></div>
   </div>
   <div class="note">
     <strong>Week 1:</strong> 5/8 improved (F4–F8); F5 standout 1089 → 2497.
@@ -111,6 +113,9 @@ tr:hover td{filter:brightness(0.97);}
     <strong>Week 4:</strong> <strong>4/8 improved</strong> — <strong>F5</strong> 3108 → <strong>3744</strong>,
     <strong>F7</strong> 1.525 → <strong>1.857</strong>, <strong>F2</strong> 0.611 → <strong>0.660</strong>.
     Peer-informed grid (F1), EI exploit (F5/F7), local basin (F4).
+    <strong>Week 5:</strong> <strong>3/8 improved</strong> — <strong>F2</strong> 0.660 → <strong>0.777</strong>,
+    <strong>F6</strong> −0.478 → <strong>−0.265</strong>, <strong>F8</strong> 9.796 → <strong>9.864</strong>.
+    F6 interior strategy validated; F5 x₁=0.28 did not beat ridge at 0.38.
   </div>
 </div>
 
@@ -170,7 +175,35 @@ tr:hover td{filter:brightness(0.97);}
 </div>
 
 <div class="card">
+  <div class="week-lbl">Iteration 5 — Week 5 (results received)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th>Method</th><th>ν</th>
+      <th class="r">Best before</th><th class="r">Acq. score</th>
+      <th class="r">Query x</th>
+      <th class="r">Actual result</th><th class="r">Δ improvement</th>
+      <th>Length scales</th>
+    </tr></thead>
+    <tbody id="tb5"></tbody>
+  </table>
+</div>
+
+<div class="card">
   <div class="week-lbl">Visual summary</div>
+  <div class="img-row">
+    <div>
+      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
+      <a href="progress_week5_report.png"><img src="progress_week5_report.png" alt="Progress report table"></a>
+    </div>
+    <div>
+      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Best observed output by function</p>
+      <a href="progress_week5.png"><img src="progress_week5.png" alt="Best observed progress chart"></a>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="week-lbl">Visual summary (archive)</div>
   <div class="img-row">
     <div>
       <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
@@ -184,7 +217,7 @@ tr:hover td{filter:brightness(0.97);}
 </div>
 
 <div class="card">
-  <div class="week-lbl">Visual summary (archive)</div>
+  <div class="week-lbl">Visual summary (archive W3)</div>
   <div class="img-row">
     <div>
       <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
@@ -294,6 +327,25 @@ const W4=[
    x:[0.020000,0.020000,0.188184,0.038786,0.403935,0.486122,0.020000,0.893085],actual:9.7958,ls:[3.704,5.743,2.692,9.745,10,7.069,3.837,10]},
 ];
 
+const W5=[
+  {fn:1,m:'COV',nu:'0.5',best:7.71e-16,acq:4.40e-04,
+   x:[0.662502,0.070000],actual:-4.78e-128,ls:[0.0447,0.01]},
+  {fn:2,m:'EI', nu:'2.5',best:0.6599,  acq:0.0231,
+   x:[0.717869,0.020000],actual:0.7766,ls:[0.0954,3.697]},
+  {fn:3,m:'EI', nu:'2.5',best:-0.0203, acq:2.07e-04,
+   x:[0.492581,0.691593,0.401000],actual:-0.0223,ls:[10,2.685,0.111]},
+  {fn:4,m:'UCB',nu:'2.5',best:0.2575,  acq:0.492,
+   x:[0.425820,0.439559,0.381148,0.436983],actual:0.2403,ls:[1.358,1.243,1.085,1.258]},
+  {fn:5,m:'EI', nu:'2.5',best:3743.83, acq:0.00689,
+   x:[0.280000,0.980000,0.980000,0.980000],actual:3692.52,ls:[10,0.749,0.612,4.482]},
+  {fn:6,m:'EI', nu:'2.5',best:-0.4775, acq:2.55e-04,
+   x:[0.430000,0.240000,0.580000,0.720000,0.120000],actual:-0.2654,ls:[0.526,1.270,1.264,1.772,2.258]},
+  {fn:7,m:'EI', nu:'2.5',best:1.8575,  acq:0.115,
+   x:[0.070000,0.376096,0.307422,0.107492,0.323741,0.648355],actual:1.8161,ls:[0.779,0.284,10,0.732,0.367,0.389]},
+  {fn:8,m:'UCB',nu:'1.5',best:9.7958,  acq:9.928,
+   x:[0.126155,0.070000,0.224493,0.038786,0.403935,0.497424,0.228063,0.893085],actual:9.8645,ls:[3.717,5.763,2.701,9.802,10,7.091,3.850,10]},
+];
+
 function fmt(v){
   if(v===null||v===undefined) return '—';
   const a=Math.abs(v);
@@ -387,6 +439,7 @@ renderW1(W1,'tb1');
 renderW2(W2,'tb2');
 renderW2(W3,'tb3');
 renderW2(W4,'tb4');
+renderW2(W5,'tb5');
 renderGrid();
 </script>
 </body>

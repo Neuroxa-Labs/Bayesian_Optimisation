@@ -101,6 +101,15 @@ WK4_X = {1: [0.661537, 0.436390], 2: [0.700000, 0.020000],
 WK4_Y = {1: 3.21298272257291e-28, 2: 0.6598602814677763, 3: -0.043381912559889324,
          4: 0.16598412185782196, 5: 3743.829067735118, 6: -0.6062467956245956,
          7: 1.8574559098912007, 8: 9.795759089917}
+WK5_X = {1: [0.662502, 0.070000], 2: [0.717869, 0.020000],
+         3: [0.492581, 0.691593, 0.401000], 4: [0.425820, 0.439559, 0.381148, 0.436983],
+         5: [0.280000, 0.980000, 0.980000, 0.980000],
+         6: [0.430000, 0.240000, 0.580000, 0.720000, 0.120000],
+         7: [0.070000, 0.376096, 0.307422, 0.107492, 0.323741, 0.648355],
+         8: [0.126155, 0.070000, 0.224493, 0.038786, 0.403935, 0.497424, 0.228063, 0.893085]}
+WK5_Y = {1: -4.778494662600997e-128, 2: 0.7766450728516721, 3: -0.022346711262055334,
+         4: 0.24027427340052343, 5: 3692.519989512911, 6: -0.2654080647396229,
+         7: 1.8161306404666622, 8: 9.864471173458}
 
 
 def fit(X, Y, c):
@@ -131,8 +140,8 @@ def vec(x):
 
 for fn, c in CFG.items():
     dim, n0 = c["dim"], c["n"]
-    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 4]
-    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 4]
+    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 5]
+    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 5]
     gp = fit(X, Y, c); ls = lscales(gp)
     w1_prev = float(Y[:n0].max()); cur_best = float(Y.max())
     bi = int(np.argmax(Y)); bx = X[bi]
@@ -140,15 +149,20 @@ for fn, c in CFG.items():
     w2x, w2y = WK2_X[fn], WK2_Y[fn]
     w3x, w3y = WK3_X[fn], WK3_Y[fn]
     w4x, w4y = WK4_X[fn], WK4_Y[fn]
-    w2_prev = float(Y[:-3].max()) if len(Y) > 3 else float(Y[:n0].max())
-    w3_prev = float(Y[:-2].max())
-    w4_prev = float(Y[:-1].max())
+    w5x, w5y = WK5_X[fn], WK5_Y[fn]
+    w2_prev = float(Y[: n0 + 1].max())
+    w3_prev = float(Y[: n0 + 2].max())
+    w4_prev = float(Y[: n0 + 3].max())
+    w5_prev = float(Y[: n0 + 4].max())
     mu4, sg4 = gp.predict(np.asarray(w4x).reshape(1, -1), return_std=True)
+    mu5, sg5 = gp.predict(np.asarray(w5x).reshape(1, -1), return_std=True)
     mu4, sg4 = float(mu4[0]), float(sg4[0])
+    mu5, sg5 = float(mu5[0]), float(sg5[0])
     w1_improved = w1y > w1_prev
     w2_improved = w2y > w2_prev
     w3_improved = w3y > w3_prev
     w4_improved = w4y > w4_prev
+    w5_improved = w5y > w5_prev
     nr = NARR[fn]
 
     # ranked observations
@@ -186,7 +200,7 @@ for fn, c in CFG.items():
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given ({n0} initial points + 4 weekly queries = {len(Y)} observations)
+## 2. What we were given ({n0} initial points + 5 weekly queries = {len(Y)} observations)
 
 | # | {xheaders} | y | note |
 |---|{"|".join(["---"] * dim)}|---|---|
@@ -233,11 +247,18 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 - **GP had expected:** mu = {f(mu4)}, sigma = {f(sg4)}
 - **Outcome:** {"**IMPROVED** over the previous best (" + f(w4_prev) + ")" if w4_improved else "did **not** improve over the previous best (" + f(w4_prev) + ")"}.
 
-## 9. The lesson
+## 9. Week 5 - what we sent and what happened
+
+- **Sent:** x = {vec(w5x)}
+- **Received:** y = {f(w5y)}
+- **GP had expected:** mu = {f(mu5)}, sigma = {f(sg5)}
+- **Outcome:** {"**IMPROVED** over the previous best (" + f(w5_prev) + ")" if w5_improved else "did **not** improve over the previous best (" + f(w5_prev) + ")"}.
+
+## 10. The lesson
 
 {nr['lesson']}
 
-## 10. Summary
+## 11. Summary
 
 | | Value |
 |---|---|
@@ -249,6 +270,7 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 | Week 2 result | {f(w2y)} ({"improved" if w2_improved else "no improvement"}) |
 | Week 3 result | {f(w3y)} ({"improved" if w3_improved else "no improvement"}) |
 | Week 4 result | {f(w4y)} ({"improved" if w4_improved else "no improvement"}) |
+| Week 5 result | {f(w5y)} ({"improved" if w5_improved else "no improvement"}) |
 | Current best | {f(cur_best)} |
 
 *See `analysis_F{fn}.png` in this folder for the full 9-panel visual analysis.*
