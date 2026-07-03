@@ -12,13 +12,13 @@
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given (20 initial points + 4 weekly queries = 24 observations)
+## 2. What we were given (20 initial points + 5 weekly queries = 25 observations)
 
 | # | x1 | x2 | x3 | x4 | y | note |
 |---|---|---|---|---|---|---|
 | 24 | 0.3800 | 0.9800 | 0.9800 | 0.9800 | 3743.8291 | BEST |
+| 25 | 0.2800 | 0.9800 | 0.9800 | 0.9800 | 3692.5200 |  |
 | 23 | 0.1500 | 0.9265 | 0.9800 | 0.9800 | 3108.4879 |  |
-| 21 | 0.2242 | 0.8465 | 0.9800 | 0.9800 | 2497.3155 |  |
 | 4 | 0.7061 | 0.5342 | 0.2642 | 0.4821 | 4.2109 |  |
 | 3 | 0.4383 | 0.8043 | 0.2102 | 0.1513 | 0.1129 | WORST |
 
@@ -30,9 +30,9 @@ The Gaussian Process fits one **length scale** per dimension - how fast y change
 A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
 
 - `x1`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
-- `x2`: length-scale = 0.7485 -> moderate influence
-- `x3`: length-scale = 0.6116 -> moderate influence
-- `x4`: length-scale = 4.4817 -> moderate influence
+- `x2`: length-scale = 0.8043 -> moderate influence
+- `x3`: length-scale = 0.6245 -> moderate influence
+- `x4`: length-scale = 4.1994 -> moderate influence
 
 The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
 dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain).
@@ -63,14 +63,21 @@ This function has one broad peak, so the strategy is **find the signal, then exp
 
 - **Sent:** x = [0.3800, 0.9800, 0.9800, 0.9800]
 - **Received:** y = 3743.8291
-- **GP had expected:** mu = 3743.8120, sigma = 1.0502
+- **GP had expected:** mu = 3743.7854, sigma = 1.1928
 - **Outcome:** **IMPROVED** over the previous best (3108.4879).
 
-## 9. The lesson
+## 9. Week 5 - what we sent and what happened
+
+- **Sent:** x = [0.2800, 0.9800, 0.9800, 0.9800]
+- **Received:** y = 3692.5200
+- **GP had expected:** mu = 3692.5471, sigma = 1.1909
+- **Outcome:** did **not** improve over the previous best (3743.8291).
+
+## 10. The lesson
 
 Exploitation must keep producing NEW information. Re-querying the exact best point wastes a week - so local search around the peak (with the same acquisition) is the right way to climb.
 
-## 10. Summary
+## 11. Summary
 
 | | Value |
 |---|---|
@@ -82,6 +89,7 @@ Exploitation must keep producing NEW information. Re-querying the exact best poi
 | Week 2 result | 1811.0568 (no improvement) |
 | Week 3 result | 3108.4879 (improved) |
 | Week 4 result | 3743.8291 (improved) |
+| Week 5 result | 3692.5200 (no improvement) |
 | Current best | 3743.8291 |
 
 *See `analysis_F5.png` in this folder for the full 9-panel visual analysis.*
