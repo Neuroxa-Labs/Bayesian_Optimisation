@@ -73,14 +73,16 @@ This stack matches the problem: low-data, expensive queries, need for uncertaint
 **Updates aligned with recent strategy and results**
 
 1. **Repository layout tree** and weekly workflow commands.
-2. **Week 5** strategy, discussion, and approved portal queries.
-3. **Progress through Week 4** with links to reflection files (F5 3744, F7 1.857, etc.).
-4. **`GITHUB_REPOSITORY_REFLECTION.md`** (this file) documenting structure and library choices for the Module 16 activity.
+2. **Week 5–7** strategy, reflections, and portal results (through F8 best **9.865**).
+3. **`WEEK6_DISCUSSION.md`** — Module 17 CNN parallels for the sixth query round.
+4. **`TECHNICAL_JUSTIFICATION.md`** — literature and library rationale (GP + EI/UCB; scikit-learn).
+5. **`GITHUB_REPOSITORY_REFLECTION.md`** (this file) documenting structure and library choices for the Module 16 activity.
 
 **Other documents**
 
 - `EXPLANATION_F*.md` — per-function deep dives for learners.
 - `bbo_progress_report.html` — interactive dashboard linking to all of the above.
+- `WEEK8_STRATEGY.md` — next-round draft (awaiting approval).
 
 Documentation now follows the same layered logic as the optimiser: README = overview, weekly markdown = iteration log, function folders = detail, HTML = visual summary.
 

@@ -62,6 +62,7 @@ capstone/
 ├── WEEK*_STRATEGY.md              # Weekly queries + rationale
 ├── WEEK*_REFLECTION.md            # Post-results analysis
 ├── WEEK*_DISCUSSION.md            # Forum reflections
+├── TECHNICAL_JUSTIFICATION.md     # Literature + library rationale
 ├── GITHUB_REPOSITORY_REFLECTION.md  # Repo structure & libraries (Module 16)
 └── function_1/ … function_8/
     ├── initial_inputs.npy
@@ -108,8 +109,10 @@ python run_week.py 8
 | `WEEK5_REFLECTION.md` | Week 5 results analysis |
 | `WEEK5_DISCUSSION.md` | Week 5 forum reflection (Module 16 / DL lens) |
 | `WEEK6_STRATEGY.md` / `WEEK6_REFLECTION.md` | Week 6 strategy and results |
+| `WEEK6_DISCUSSION.md` | Week 6 forum reflection (Module 17 / CNN parallels) |
 | `WEEK7_STRATEGY.md` / `WEEK7_REFLECTION.md` | Week 7 strategy and results (F1 B+ soft-signal) |
 | `WEEK8_STRATEGY.md` | Week 8 draft strategy (awaiting approval) |
+| `TECHNICAL_JUSTIFICATION.md` | Literature + library rationale (GP/EI/UCB; sklearn) |
 | `GITHUB_REPOSITORY_REFLECTION.md` | Repo structure, libraries, documentation (Module 16) |
 | `generate_week4.py` / `generate_week5.py` | Peer-informed / approved query generators |
 | `append_week4.py` … `append_week7.py` | Append portal results to `.npy` files |
@@ -136,7 +139,8 @@ python run_week.py 8
 - **Week 7 results received.** **1/8 improved** — **F8** 9.864 → **9.865**; F5 re-confirmed 3744 ridge; F1 B+ soft-signal still ~0. See [`WEEK7_REFLECTION.md`](WEEK7_REFLECTION.md).
 - **Week 8 strategy drafted** — return-to-best for F2/F6/F7; F1 probes 2nd-best warm region. See [`WEEK8_STRATEGY.md`](WEEK8_STRATEGY.md).
 
-See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md) through [`WEEK7_REFLECTION.md`](WEEK7_REFLECTION.md)
+See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md) through [`WEEK7_REFLECTION.md`](WEEK7_REFLECTION.md),
+[`WEEK6_DISCUSSION.md`](WEEK6_DISCUSSION.md), [`TECHNICAL_JUSTIFICATION.md`](TECHNICAL_JUSTIFICATION.md),
 and `progress_week7_report.png` for diagnostics.
 
 ---
@@ -163,6 +167,8 @@ the perfect point immediately, but to **reason, iterate, and adapt** as new `y` 
   similarity** between inputs. We use Matérn kernels in the GP for the same reason SVMs use RBF
   kernels: smooth, localised influence in input space. We do **not** replace the GP with an SVM
   because standard SVMs do not provide calibrated predictive variance for acquisition functions.
+- **Prior work & tooling.** See [`TECHNICAL_JUSTIFICATION.md`](TECHNICAL_JUSTIFICATION.md) for the
+  short literature/library rationale (Rasmussen & Williams; Jones et al.; Srinivas et al.; scikit-learn).
 - **Iterative modelling.** Each week is one loop of: fit model on all data so far → choose where to
   sample next → observe → update beliefs. Week 1 (5/8 improved) and Week 2 (1/8, F3 fix) show that
   progress comes from **strategy refinement**, not lucky one-shots.
