@@ -34,16 +34,16 @@ one expensive real experiment.
 | Fn | Real-world task | Dim | What `x` / `y` mean | Primary AF | Why this AF |
 |----|-----------------|-----|---------------------|-----------|-------------|
 | **F1** | **Radiation Source Detection** | 2 | position → counter reading (sharp, sparse peak; mostly 0) | UNCERTAINTY → UCB | Mostly zeros; explore until any signal appears |
-| **F2** | **Noisy ML Log-Likelihood** | 2 | 2 settings → noisy log-likelihood | EI (+ White kernel) | New best **0.777** (W5) |
-| **F3** | **Drug Discovery — Adverse Reactions** | 3 | component ratios → −(side effect) | UCB κ=2.576 | Steer toward least-negative region |
-| **F4** | **Warehouse Placement** | 4 | 4 placement factors → efficiency | UCB κ=2.5 | Multimodal; local basin search after W2 dip |
-| **F5** | **Chemical Yield Optimisation** | 4 | 4 process settings → yield | EI exploit (after signal) | log(y) GP; best **3744** (W4) |
-| **F6** | **Cake Recipe Optimisation** | 5 | 5 ingredient amounts → −(badness) | EI | Best **−0.265** (W5) |
+| **F2** | **Noisy ML Log-Likelihood** | 2 | 2 settings → noisy log-likelihood | EI (+ White kernel) | Best **0.777** (W5) |
+| **F3** | **Drug Discovery — Adverse Reactions** | 3 | component ratios → −(side effect) | UCB κ=2.576 | Best **−0.011** (W6) |
+| **F4** | **Warehouse Placement** | 4 | 4 placement factors → efficiency | UCB κ=2.5 | Best **0.470** (W6) |
+| **F5** | **Chemical Yield Optimisation** | 4 | 4 process settings → yield | EI exploit (after signal) | log(y) GP; best **3744** (W4/W7) |
+| **F6** | **Cake Recipe Optimisation** | 5 | 5 ingredient amounts → −(badness) | EI | Best **−0.240** (W6) |
 | **F7** | **ML Hyperparameter Tuning** | 6 | 6 hyperparameters → validation score | EI | Best **1.857** (W4) |
-| **F8** | **8-Parameter ML Model Optimisation** | 8 | 8 parameters → score | UCB κ=2.576 | Best **9.864** (W5) |
+| **F8** | **8-Parameter ML Model Optimisation** | 8 | 8 parameters → score | UCB κ=2.576 | Best **9.865** (W7) |
 
 Each `function_*/` folder contains a detailed `EXPLANATION_F*.md` (learn-from-scratch write-up) and a
-comprehensive `analysis_F*.png` figure (data → GP → acquisition → weekly panels through Week 5).
+comprehensive `analysis_F*.png` figure (data → GP → acquisition → weekly panels through Week 7).
 
 ## Repository layout
 
@@ -54,7 +54,7 @@ capstone/
 ├── bbo_progress_report.png/jpg    # Full report image
 ├── run_week.py                    # Generate Week N queries from notebook logic
 ├── generate_week4.py / generate_week5.py   # Approved query generators
-├── append_week2.py … append_week4.py       # Append portal y to .npy files
+├── append_week2.py … append_week7.py       # Append portal y to .npy files
 ├── make_progress_report.py        # Iteration diagnostics table
 ├── make_function_analysis.py      # 9-panel per-function figures
 ├── make_main_report_image.py      # Dashboard PNG/JPG
@@ -74,7 +74,7 @@ capstone/
 
 ```bash
 # 1. After portal email: append new y values
-python append_week4.py          # edit script with portal results first
+python append_week7.py          # edit script with portal results first
 
 # 2. Regenerate reports (set WEEK in make_progress_chart.py if needed)
 python make_progress_report.py
@@ -83,7 +83,7 @@ python make_main_report_image.py
 python make_progress_chart.py
 
 # 3. Generate next week's queries
-python run_week.py 5            # or: python generate_week5.py
+python run_week.py 8
 
 # 4. Update WEEK*_STRATEGY.md, submit to portal, write forum reflection
 ```
@@ -107,15 +107,18 @@ python run_week.py 5            # or: python generate_week5.py
 | `WEEK5_STRATEGY.md` | Week 5 strategy and approved queries |
 | `WEEK5_REFLECTION.md` | Week 5 results analysis |
 | `WEEK5_DISCUSSION.md` | Week 5 forum reflection (Module 16 / DL lens) |
+| `WEEK6_STRATEGY.md` / `WEEK6_REFLECTION.md` | Week 6 strategy and results |
+| `WEEK7_STRATEGY.md` / `WEEK7_REFLECTION.md` | Week 7 strategy and results (F1 B+ soft-signal) |
+| `WEEK8_STRATEGY.md` | Week 8 draft strategy (awaiting approval) |
 | `GITHUB_REPOSITORY_REFLECTION.md` | Repo structure, libraries, documentation (Module 16) |
 | `generate_week4.py` / `generate_week5.py` | Peer-informed / approved query generators |
-| `append_week4.py` / `append_week5.py` | Append portal results to `.npy` files |
+| `append_week4.py` … `append_week7.py` | Append portal results to `.npy` files |
 | `run_week.py` | Run notebook pipeline for Week N queries |
 | `function_1/ … function_8/` | Per-function data (`.npy`), `EXPLANATION_F*.md`, and `analysis_F*.png` |
 | `make_progress_report.py` | Builds the per-function iteration diagnostics report image |
 | `make_function_analysis.py` | Builds the 9-panel per-function analysis figures |
-| `progress_week5_report.png` / `.jpg` | Iteration tracking table through Week 5 |
-| `progress_week1.png` … `progress_week5.png` | Best-observed-output progress charts |
+| `progress_week7_report.png` / `.jpg` | Iteration tracking table through Week 7 |
+| `progress_week1.png` … `progress_week7.png` | Best-observed-output progress charts |
 | `function_*_week2_analysis.png` | Per-function Week 2 observation / input plots |
 
 ## Progress
@@ -129,9 +132,12 @@ python run_week.py 5            # or: python generate_week5.py
 - **Week 3 results received.** 2/8 improved — **F5** 2497 → **3108**, **F7** 1.451 → **1.525**. See [`WEEK3_REFLECTION.md`](WEEK3_REFLECTION.md).
 - **Week 4 results received.** **4/8 improved** — **F5** 3108 → **3744**, **F7** 1.525 → **1.857**, **F2** 0.611 → **0.660**. See [`WEEK4_REFLECTION.md`](WEEK4_REFLECTION.md).
 - **Week 5 results received.** **3/8 improved** — **F2** 0.660 → **0.777**, **F6** −0.478 → **−0.265**, **F8** 9.796 → **9.864**. F5/F7 did not beat W4 records. See [`WEEK5_REFLECTION.md`](WEEK5_REFLECTION.md).
+- **Week 6 results received.** **3/8 improved** — **F3** −0.020 → **−0.011**, **F4** 0.257 → **0.470**, **F6** −0.265 → **−0.240**. See [`WEEK6_REFLECTION.md`](WEEK6_REFLECTION.md).
+- **Week 7 results received.** **1/8 improved** — **F8** 9.864 → **9.865**; F5 re-confirmed 3744 ridge; F1 B+ soft-signal still ~0. See [`WEEK7_REFLECTION.md`](WEEK7_REFLECTION.md).
+- **Week 8 strategy drafted** — return-to-best for F2/F6/F7; F1 probes 2nd-best warm region. See [`WEEK8_STRATEGY.md`](WEEK8_STRATEGY.md).
 
-See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md) through [`WEEK5_REFLECTION.md`](WEEK5_REFLECTION.md),
-[`WEEK5_DISCUSSION.md`](WEEK5_DISCUSSION.md), and `progress_week5_report.png` for diagnostics.
+See [`WEEK1_REFLECTION.md`](WEEK1_REFLECTION.md) through [`WEEK7_REFLECTION.md`](WEEK7_REFLECTION.md)
+and `progress_week7_report.png` for diagnostics.
 
 ---
 

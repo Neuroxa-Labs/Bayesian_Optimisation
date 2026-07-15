@@ -31,15 +31,16 @@ FUNCTIONS = {
 
 # method + exploration parameter per function/iteration (exploration phase, weeks 1-2)
 # F5 flips to exploitation in iter2 once its best crosses 2000.
+# (method, param) pairs for weeks 1..7
 METHOD = {
-    1: ("UNC", None, "COV", None, "COV", None, "COV", None, "COV", None),
-    2: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "MAN", None, "EI", 0.0),
-    3: ("UCB", 2.576, "UCB", 2.576, "UCB", 2.576, "EI", 0.0, "EI", 0.0),
-    4: ("UCB", 3.0, "UCB", 2.5, "UCB", 2.5, "EI", 0.0, "UCB", 1.5),
-    5: ("UCB", 2.576, "UCB", 1.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
-    6: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
-    7: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
-    8: ("UCB", 2.576, "UCB", 2.576, "UCB", 2.576, "UCB", 2.576, "UCB", 1.5),
+    1: ("UNC", None, "COV", None, "COV", None, "COV", None, "COV", None, "MAN", None, "SVM", None),
+    2: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "MAN", None, "EI", 0.0, "EI", 0.0, "EI", 0.0),
+    3: ("UCB", 2.576, "UCB", 2.576, "UCB", 2.576, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
+    4: ("UCB", 3.0, "UCB", 2.5, "UCB", 2.5, "EI", 0.0, "UCB", 1.5, "UCB", 1.5, "UCB", 1.5),
+    5: ("UCB", 2.576, "UCB", 1.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
+    6: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
+    7: ("EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0, "EI", 0.0),
+    8: ("UCB", 2.576, "UCB", 2.576, "UCB", 2.576, "UCB", 2.576, "UCB", 1.5, "UCB", 1.5, "UCB", 1.5),
 }
 
 WK1_X = {
@@ -112,6 +113,39 @@ WK5_Y = {
     4: 0.24027427340052343, 5: 3692.519989512911, 6: -0.2654080647396229,
     7: 1.8161306404666622, 8: 9.864471173458,
 }
+WK6_X = {
+    1: [0.755000, 0.710000], 2: [0.750000, 0.020000],
+    3: [0.492581, 0.691593, 0.401000],
+    4: [0.400838, 0.413498, 0.376688, 0.406083],
+    5: [0.360000, 0.980000, 0.980000, 0.980000],
+    6: [0.440000, 0.250000, 0.590000, 0.730000, 0.130000],
+    7: [0.070000, 0.416628, 0.307422, 0.136908, 0.324592, 0.654726],
+    8: [0.070000, 0.272853, 0.209858, 0.038786, 0.403935, 0.545195, 0.198456, 0.893085],
+}
+WK6_Y = {
+    1: -1.2733719774833445e-16, 2: 0.40347007739097895, 3: -0.011366393913517245,
+    4: 0.469508628918597, 5: 3729.8366843702797, 6: -0.24039734108674735,
+    7: 1.8471407406042062, 8: 9.862535706371,
+}
+WK7_X = {
+    1: [0.760000, 0.760000], 2: [0.720000, 0.020000],
+    3: [0.485000, 0.685000, 0.401000],
+    4: [0.395000, 0.420000, 0.380000, 0.410000],
+    5: [0.380000, 0.980000, 0.980000, 0.980000],
+    6: [0.445000, 0.255000, 0.595000, 0.735000, 0.135000],
+    7: [0.070000, 0.435000, 0.310000, 0.160000, 0.350000, 0.675000],
+    8: [0.130000, 0.070000, 0.220000, 0.040000, 0.400000, 0.500000, 0.230000, 0.890000],
+}
+WK7_Y = {
+    1: 5.183539428400652e-25, 2: 0.5073917805634148, 3: -0.014465733476312878,
+    4: 0.4636989224185055, 5: 3743.829067735118, 6: -0.26724660706706216,
+    7: 1.8468357700520182, 8: 9.86519,
+}
+
+WK_XY = {
+    1: (WK1_X, WK1_Y), 2: (WK2_X, WK2_Y), 3: (WK3_X, WK3_Y),
+    4: (WK4_X, WK4_Y), 5: (WK5_X, WK5_Y), 6: (WK6_X, WK6_Y), 7: (WK7_X, WK7_Y),
+}
 
 
 def fit_gp(X, Y, cfg):
@@ -162,41 +196,25 @@ def fmt(v):
 
 # ---- compute everything ----
 iters = {}  # iters[it][fn] = dict of metrics
-for it in (1, 2, 3, 4, 5):
+for it in range(1, 8):
     iters[it] = {}
+    wx, wy = WK_XY[it]
     for fn, cfg in FUNCTIONS.items():
         X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")
         Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")
         n0 = cfg["n_init"]
-        if it == 1:
-            Xi, Yi = X[:n0], Y[:n0]
-            next_x = WK1_X[fn]
-            actual = WK1_Y[fn]
-            method, param = METHOD[fn][0], METHOD[fn][1]
-        elif it == 2:
-            Xi, Yi = X[: n0 + 1], Y[: n0 + 1]
-            next_x = WK2_X[fn]
-            actual = WK2_Y[fn]
-            method, param = METHOD[fn][2], METHOD[fn][3]
-        elif it == 3:
-            Xi, Yi = X[: n0 + 2], Y[: n0 + 2]
-            next_x = WK3_X[fn]
-            actual = WK3_Y[fn]
-            method, param = METHOD[fn][4], METHOD[fn][5]
-        elif it == 4:
-            Xi, Yi = X[: n0 + 3], Y[: n0 + 3]
-            next_x = WK4_X[fn]
-            actual = WK4_Y[fn]
-            method, param = METHOD[fn][6], METHOD[fn][7]
-        else:
-            Xi, Yi = X[: n0 + 4], Y[: n0 + 4]
-            next_x = WK5_X[fn]
-            actual = WK5_Y[fn]
-            method, param = METHOD[fn][8], METHOD[fn][9]
+        Xi, Yi = X[: n0 + it - 1], Y[: n0 + it - 1]
+        next_x = wx[fn]
+        actual = wy[fn]
+        method, param = METHOD[fn][2 * (it - 1)], METHOD[fn][2 * (it - 1) + 1]
         gp = fit_gp(Xi, Yi, cfg)
         cur_best = float(Yi.max())
         amp, ls = kernel_amp_and_ls(gp)
-        acq = acq_value(gp, next_x, method, param if param is not None else 0.0, cur_best)
+        # MAN/SVM/COV: report predictive sigma as diagnostic
+        if method in ("MAN", "SVM", "COV"):
+            acq = acq_value(gp, next_x, "UNC", 0.0, cur_best)
+        else:
+            acq = acq_value(gp, next_x, method, param if param is not None else 0.0, cur_best)
         improvement = (actual - cur_best) if actual is not None else None
         iters[it][fn] = dict(cur_best=cur_best, acq=acq, actual=actual,
                              improvement=improvement, method=method, param=param,
@@ -212,11 +230,11 @@ SHORT = {1: "Radiation\nDetection", 2: "Noisy ML\nLog-Lik", 3: "Drug\nSide-Effec
          7: "ML Hyper-\nparameters", 8: "8-Param\nML Model"}
 fn_cols = [f"F{i}\n{SHORT[i]}" for i in range(1, 9)]
 
-fig, axes = plt.subplots(5, 1, figsize=(17, 30))
+fig, axes = plt.subplots(7, 1, figsize=(17, 42))
 fig.suptitle("BBO Progress Report — per-function GP / Bayesian Optimisation diagnostics",
              fontsize=15, fontweight="bold")
 
-for ax_idx, it in enumerate((1, 2, 3, 4, 5)):
+for ax_idx, it in enumerate(range(1, 8)):
     ax = axes[ax_idx]
     ax.axis("off")
     ax.set_title(f"ITERATION {it}  (Week {it})", loc="left", fontsize=13,
@@ -277,8 +295,8 @@ for ax_idx, it in enumerate((1, 2, 3, 4, 5)):
             cell.set_fontsize(8)
 
 plt.tight_layout(rect=[0, 0, 1, 0.97])
-png = ROOT / "progress_week5_report.png"
-jpg = ROOT / "progress_week5_report.jpg"
+png = ROOT / "progress_week7_report.png"
+jpg = ROOT / "progress_week7_report.jpg"
 plt.savefig(png, dpi=150, bbox_inches="tight")
 try:
     plt.savefig(jpg, dpi=150, bbox_inches="tight")
@@ -287,6 +305,6 @@ except Exception as e:
     print(f"Saved {png.name}; JPEG failed ({e})")
 
 for fn in range(1, 9):
-    d = iters[5][fn]
+    d = iters[7][fn]
     ls = [round(float(v), 4) for v in d["ls"]]
-    print(f"W5 F{fn}: best={d['cur_best']:.6g} acq={d['acq']:.6g} actual={d['actual']:.6g} ls={ls}")
+    print(f"W7 F{fn}: best={d['cur_best']:.6g} acq={d['acq']:.6g} actual={d['actual']:.6g} ls={ls}")

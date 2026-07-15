@@ -110,6 +110,24 @@ WK5_X = {1: [0.662502, 0.070000], 2: [0.717869, 0.020000],
 WK5_Y = {1: -4.778494662600997e-128, 2: 0.7766450728516721, 3: -0.022346711262055334,
          4: 0.24027427340052343, 5: 3692.519989512911, 6: -0.2654080647396229,
          7: 1.8161306404666622, 8: 9.864471173458}
+WK6_X = {1: [0.755000, 0.710000], 2: [0.750000, 0.020000],
+         3: [0.492581, 0.691593, 0.401000], 4: [0.400838, 0.413498, 0.376688, 0.406083],
+         5: [0.360000, 0.980000, 0.980000, 0.980000],
+         6: [0.440000, 0.250000, 0.590000, 0.730000, 0.130000],
+         7: [0.070000, 0.416628, 0.307422, 0.136908, 0.324592, 0.654726],
+         8: [0.070000, 0.272853, 0.209858, 0.038786, 0.403935, 0.545195, 0.198456, 0.893085]}
+WK6_Y = {1: -1.2733719774833445e-16, 2: 0.40347007739097895, 3: -0.011366393913517245,
+         4: 0.469508628918597, 5: 3729.8366843702797, 6: -0.24039734108674735,
+         7: 1.8471407406042062, 8: 9.862535706371}
+WK7_X = {1: [0.760000, 0.760000], 2: [0.720000, 0.020000],
+         3: [0.485000, 0.685000, 0.401000], 4: [0.395000, 0.420000, 0.380000, 0.410000],
+         5: [0.380000, 0.980000, 0.980000, 0.980000],
+         6: [0.445000, 0.255000, 0.595000, 0.735000, 0.135000],
+         7: [0.070000, 0.435000, 0.310000, 0.160000, 0.350000, 0.675000],
+         8: [0.130000, 0.070000, 0.220000, 0.040000, 0.400000, 0.500000, 0.230000, 0.890000]}
+WK7_Y = {1: 5.183539428400652e-25, 2: 0.5073917805634148, 3: -0.014465733476312878,
+         4: 0.4636989224185055, 5: 3743.829067735118, 6: -0.26724660706706216,
+         7: 1.8468357700520182, 8: 9.86519}
 
 
 def fit(X, Y, c):
@@ -140,8 +158,8 @@ def vec(x):
 
 for fn, c in CFG.items():
     dim, n0 = c["dim"], c["n"]
-    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 5]
-    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 5]
+    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 7]
+    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 7]
     gp = fit(X, Y, c); ls = lscales(gp)
     w1_prev = float(Y[:n0].max()); cur_best = float(Y.max())
     bi = int(np.argmax(Y)); bx = X[bi]
@@ -150,19 +168,29 @@ for fn, c in CFG.items():
     w3x, w3y = WK3_X[fn], WK3_Y[fn]
     w4x, w4y = WK4_X[fn], WK4_Y[fn]
     w5x, w5y = WK5_X[fn], WK5_Y[fn]
+    w6x, w6y = WK6_X[fn], WK6_Y[fn]
+    w7x, w7y = WK7_X[fn], WK7_Y[fn]
     w2_prev = float(Y[: n0 + 1].max())
     w3_prev = float(Y[: n0 + 2].max())
     w4_prev = float(Y[: n0 + 3].max())
     w5_prev = float(Y[: n0 + 4].max())
+    w6_prev = float(Y[: n0 + 5].max())
+    w7_prev = float(Y[: n0 + 6].max())
     mu4, sg4 = gp.predict(np.asarray(w4x).reshape(1, -1), return_std=True)
     mu5, sg5 = gp.predict(np.asarray(w5x).reshape(1, -1), return_std=True)
+    mu6, sg6 = gp.predict(np.asarray(w6x).reshape(1, -1), return_std=True)
+    mu7, sg7 = gp.predict(np.asarray(w7x).reshape(1, -1), return_std=True)
     mu4, sg4 = float(mu4[0]), float(sg4[0])
     mu5, sg5 = float(mu5[0]), float(sg5[0])
+    mu6, sg6 = float(mu6[0]), float(sg6[0])
+    mu7, sg7 = float(mu7[0]), float(sg7[0])
     w1_improved = w1y > w1_prev
     w2_improved = w2y > w2_prev
     w3_improved = w3y > w3_prev
     w4_improved = w4y > w4_prev
     w5_improved = w5y > w5_prev
+    w6_improved = w6y > w6_prev
+    w7_improved = w7y > w7_prev
     nr = NARR[fn]
 
     # ranked observations
@@ -200,7 +228,7 @@ for fn, c in CFG.items():
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given ({n0} initial points + 5 weekly queries = {len(Y)} observations)
+## 2. What we were given ({n0} initial points + 7 weekly queries = {len(Y)} observations)
 
 | # | {xheaders} | y | note |
 |---|{"|".join(["---"] * dim)}|---|---|
@@ -254,11 +282,25 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 - **GP had expected:** mu = {f(mu5)}, sigma = {f(sg5)}
 - **Outcome:** {"**IMPROVED** over the previous best (" + f(w5_prev) + ")" if w5_improved else "did **not** improve over the previous best (" + f(w5_prev) + ")"}.
 
-## 10. The lesson
+## 10. Week 6 - what we sent and what happened
+
+- **Sent:** x = {vec(w6x)}
+- **Received:** y = {f(w6y)}
+- **GP had expected:** mu = {f(mu6)}, sigma = {f(sg6)}
+- **Outcome:** {"**IMPROVED** over the previous best (" + f(w6_prev) + ")" if w6_improved else "did **not** improve over the previous best (" + f(w6_prev) + ")"}.
+
+## 11. Week 7 - what we sent and what happened
+
+- **Sent:** x = {vec(w7x)}
+- **Received:** y = {f(w7y)}
+- **GP had expected:** mu = {f(mu7)}, sigma = {f(sg7)}
+- **Outcome:** {"**IMPROVED** over the previous best (" + f(w7_prev) + ")" if w7_improved else "did **not** improve over the previous best (" + f(w7_prev) + ")"}.
+
+## 12. The lesson
 
 {nr['lesson']}
 
-## 11. Summary
+## 13. Summary
 
 | | Value |
 |---|---|
@@ -271,6 +313,8 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 | Week 3 result | {f(w3y)} ({"improved" if w3_improved else "no improvement"}) |
 | Week 4 result | {f(w4y)} ({"improved" if w4_improved else "no improvement"}) |
 | Week 5 result | {f(w5y)} ({"improved" if w5_improved else "no improvement"}) |
+| Week 6 result | {f(w6y)} ({"improved" if w6_improved else "no improvement"}) |
+| Week 7 result | {f(w7y)} ({"improved" if w7_improved else "no improvement"}) |
 | Current best | {f(cur_best)} |
 
 *See `analysis_F{fn}.png` in this folder for the full 9-panel visual analysis.*
