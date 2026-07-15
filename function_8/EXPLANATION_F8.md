@@ -12,30 +12,30 @@
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given (40 initial points + 5 weekly queries = 45 observations)
+## 2. What we were given (40 initial points + 7 weekly queries = 47 observations)
 
 | # | x1 | x2 | x3 | x4 | x5 | x6 | x7 | x8 | y | note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 45 | 0.1262 | 0.0700 | 0.2245 | 0.0388 | 0.4039 | 0.4974 | 0.2281 | 0.8931 | 9.8645 | BEST |
-| 44 | 0.0200 | 0.0200 | 0.1882 | 0.0388 | 0.4039 | 0.4861 | 0.0200 | 0.8931 | 9.7958 |  |
-| 41 | 0.0200 | 0.0200 | 0.1887 | 0.0388 | 0.4039 | 0.4868 | 0.0200 | 0.8931 | 9.7956 |  |
+| 47 | 0.1300 | 0.0700 | 0.2200 | 0.0400 | 0.4000 | 0.5000 | 0.2300 | 0.8900 | 9.8652 | BEST |
+| 45 | 0.1262 | 0.0700 | 0.2245 | 0.0388 | 0.4039 | 0.4974 | 0.2281 | 0.8931 | 9.8645 |  |
+| 46 | 0.0700 | 0.2729 | 0.2099 | 0.0388 | 0.4039 | 0.5452 | 0.1985 | 0.8931 | 9.8625 |  |
 | 22 | 0.8989 | 0.5236 | 0.8768 | 0.2187 | 0.9003 | 0.2828 | 0.9111 | 0.4724 | 5.8411 |  |
 | 10 | 0.9849 | 0.6995 | 0.9989 | 0.1801 | 0.5801 | 0.2311 | 0.4908 | 0.3137 | 5.5922 | WORST |
 
-- **Best so far:** y = 9.8645 at x = [0.1262, 0.0700, 0.2245, 0.0388, 0.4039, 0.4974, 0.2281, 0.8931]
+- **Best so far:** y = 9.8652 at x = [0.1300, 0.0700, 0.2200, 0.0400, 0.4000, 0.5000, 0.2300, 0.8900]
 
 ## 3. What the GP learned (reading the length scales)
 
 The Gaussian Process fits one **length scale** per dimension - how fast y changes along that axis.
 A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
 
-- `x1`: length-scale = 3.7221 -> moderate influence
-- `x2`: length-scale = 5.7656 -> **degenerate** - GP sees little effect from this dimension (it locks it)
-- `x3`: length-scale = 2.7323 -> moderate influence
-- `x4`: length-scale = 9.9790 -> **degenerate** - GP sees little effect from this dimension (it locks it)
+- `x1`: length-scale = 3.7861 -> moderate influence
+- `x2`: length-scale = 5.6695 -> **degenerate** - GP sees little effect from this dimension (it locks it)
+- `x3`: length-scale = 2.7640 -> moderate influence
+- `x4`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
 - `x5`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
-- `x6`: length-scale = 6.8692 -> **degenerate** - GP sees little effect from this dimension (it locks it)
-- `x7`: length-scale = 3.8472 -> moderate influence
+- `x6`: length-scale = 6.8091 -> **degenerate** - GP sees little effect from this dimension (it locks it)
+- `x7`: length-scale = 3.8866 -> moderate influence
 - `x8`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
 
 The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
@@ -67,21 +67,35 @@ The 8-D space is enormous. **UCB k=2.576** plus a **boundary penalty** keeps exp
 
 - **Sent:** x = [0.0200, 0.0200, 0.1882, 0.0388, 0.4039, 0.4861, 0.0200, 0.8931]
 - **Received:** y = 9.7958
-- **GP had expected:** mu = 9.7956, sigma = 0.0024
+- **GP had expected:** mu = 9.7956, sigma = 0.0025
 - **Outcome:** **IMPROVED** over the previous best (9.7956).
 
 ## 9. Week 5 - what we sent and what happened
 
 - **Sent:** x = [0.1262, 0.0700, 0.2245, 0.0388, 0.4039, 0.4974, 0.2281, 0.8931]
 - **Received:** y = 9.8645
-- **GP had expected:** mu = 9.8644, sigma = 0.0034
+- **GP had expected:** mu = 9.8655, sigma = 0.0029
 - **Outcome:** **IMPROVED** over the previous best (9.7958).
 
-## 10. The lesson
+## 10. Week 6 - what we sent and what happened
+
+- **Sent:** x = [0.0700, 0.2729, 0.2099, 0.0388, 0.4039, 0.5452, 0.1985, 0.8931]
+- **Received:** y = 9.8625
+- **GP had expected:** mu = 9.8624, sigma = 0.0035
+- **Outcome:** did **not** improve over the previous best (9.8645).
+
+## 11. Week 7 - what we sent and what happened
+
+- **Sent:** x = [0.1300, 0.0700, 0.2200, 0.0400, 0.4000, 0.5000, 0.2300, 0.8900]
+- **Received:** y = 9.8652
+- **GP had expected:** mu = 9.8642, sigma = 0.0029
+- **Outcome:** **IMPROVED** over the previous best (9.8645).
+
+## 12. The lesson
 
 In very high dimension, expect slow steady progress. Penalise boundary artefacts so UCB does not waste queries on misleading GP uncertainty at box edges.
 
-## 11. Summary
+## 13. Summary
 
 | | Value |
 |---|---|
@@ -94,6 +108,8 @@ In very high dimension, expect slow steady progress. Penalise boundary artefacts
 | Week 3 result | 9.6064 (no improvement) |
 | Week 4 result | 9.7958 (improved) |
 | Week 5 result | 9.8645 (improved) |
-| Current best | 9.8645 |
+| Week 6 result | 9.8625 (no improvement) |
+| Week 7 result | 9.8652 (improved) |
+| Current best | 9.8652 |
 
 *See `analysis_F8.png` in this folder for the full 9-panel visual analysis.*

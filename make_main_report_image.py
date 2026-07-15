@@ -81,6 +81,30 @@ W5 = [
      9.8645, [3.717, 5.763, 2.701, 9.802, 10, 7.091, 3.850, 10]),
 ]
 
+W6 = [
+    (1, 7.71e-16, 1e-4, [0.755000, 0.710000], -1.27e-16, [0.04, 0.01]),
+    (2, 0.7766, 0.01, [0.750000, 0.020000], 0.4035, [0.09, 3.5]),
+    (3, -0.0203, 1e-3, [0.492581, 0.691593, 0.401000], -0.0114, [10, 2.5, 0.11]),
+    (4, 0.2575, 0.40, [0.400838, 0.413498, 0.376688, 0.406083], 0.4695, [1.3, 1.2, 1.1, 1.2]),
+    (5, 3743.83, 0.01, [0.360000, 0.980000, 0.980000, 0.980000], 3729.84, [8.0, 0.75, 0.6, 4.0]),
+    (6, -0.2654, 1e-3, [0.440000, 0.250000, 0.590000, 0.730000, 0.130000], -0.2404, [0.5, 1.2, 1.2, 1.7, 2.0]),
+    (7, 1.8575, 0.05, [0.070000, 0.416628, 0.307422, 0.136908, 0.324592, 0.654726], 1.8471, [0.8, 0.3, 10, 0.7, 0.4, 0.4]),
+    (8, 9.8645, 9.90, [0.070000, 0.272853, 0.209858, 0.038786, 0.403935, 0.545195, 0.198456, 0.893085],
+     9.8625, [3.7, 5.7, 2.7, 9.8, 10, 7.1, 3.8, 10]),
+]
+
+W7 = [
+    (1, 7.71e-16, 1e-4, [0.760000, 0.760000], 5.18e-25, [0.04, 0.01]),
+    (2, 0.7766, 0.01, [0.720000, 0.020000], 0.5074, [0.09, 3.5]),
+    (3, -0.0114, 1e-3, [0.485000, 0.685000, 0.401000], -0.0145, [10, 2.5, 0.11]),
+    (4, 0.4695, 0.20, [0.395000, 0.420000, 0.380000, 0.410000], 0.4637, [1.3, 1.2, 1.1, 1.2]),
+    (5, 3743.83, 0.01, [0.380000, 0.980000, 0.980000, 0.980000], 3743.83, [2.0, 0.75, 0.3, 10]),
+    (6, -0.2404, 1e-3, [0.445000, 0.255000, 0.595000, 0.735000, 0.135000], -0.2672, [0.5, 1.2, 1.2, 1.7, 2.0]),
+    (7, 1.8575, 0.05, [0.070000, 0.435000, 0.310000, 0.160000, 0.350000, 0.675000], 1.8468, [0.8, 0.3, 10, 0.7, 0.4, 0.4]),
+    (8, 9.8645, 9.90, [0.130000, 0.070000, 0.220000, 0.040000, 0.400000, 0.500000, 0.230000, 0.890000],
+     9.8652, [3.7, 5.7, 2.7, 9.8, 10, 7.1, 3.8, 10]),
+]
+
 
 def fmt(v):
     if v is None:
@@ -170,8 +194,10 @@ def draw_table(ax, title, rows, week2=False):
             cell.set_text_props(fontweight="bold")
 
 
-fig = plt.figure(figsize=(18, 40), facecolor="white")
-gs = GridSpec(8, 1, figure=fig, height_ratios=[0.55, 0.45, 0.85, 1.0, 1.0, 1.0, 1.0, 0.25], hspace=0.28)
+fig = plt.figure(figsize=(18, 54), facecolor="white")
+gs = GridSpec(10, 1, figure=fig,
+              height_ratios=[0.55, 0.45, 0.85, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.25],
+              hspace=0.28)
 
 # Header
 ax0 = fig.add_subplot(gs[0])
@@ -182,7 +208,7 @@ ax0.text(0.0, 0.72, "Imperial College PCMLAI  |  Cohort IMP-PCMLAI-26-02  |  8 r
          fontsize=10, color="#636e72", transform=ax0.transAxes, va="top")
 ax0.text(0.0, 0.52,
          "Gaussian Process surrogate + per-function acquisition (UNC / UCB / EI). "
-         "One expensive query per function per week.",
+         "One expensive query per function per week. F1 Week 7 used soft-signal SVM hybrid.",
          fontsize=9.5, color="#636e72", transform=ax0.transAxes, va="top", wrap=True)
 
 # Summary cards
@@ -193,39 +219,37 @@ cards = [("5", "Week 1\nimproved", "#00b894"),
          ("2", "Week 3\nimproved", "#00b894"),
          ("4", "Week 4\nimproved", "#00b894"),
          ("3", "Week 5\nimproved", "#00b894"),
-         ("6", "Week 6\nready", "#2d6dc7")]
+         ("3", "Week 6\nimproved", "#00b894"),
+         ("1", "Week 7\nimproved", "#00b894"),
+         ("8", "Week 8\nready", "#2d6dc7")]
 for i, (num, lbl, col) in enumerate(cards):
-    x = 0.02 + i * 0.155
-    rect = mpatches.FancyBboxPatch((x, 0.15), 0.13, 0.7, boxstyle="round,pad=0.02",
+    x = 0.01 + i * 0.122
+    rect = mpatches.FancyBboxPatch((x, 0.15), 0.11, 0.7, boxstyle="round,pad=0.02",
                                    facecolor="#f8f9fa", edgecolor="#e0e0e0", transform=ax1.transAxes)
     ax1.add_patch(rect)
-    ax1.text(x + 0.065, 0.62, num, ha="center", va="center", fontsize=18, fontweight="bold",
+    ax1.text(x + 0.055, 0.62, num, ha="center", va="center", fontsize=15, fontweight="bold",
              color=col, transform=ax1.transAxes)
-    ax1.text(x + 0.065, 0.32, lbl, ha="center", va="center", fontsize=8, color="#636e72",
+    ax1.text(x + 0.055, 0.32, lbl, ha="center", va="center", fontsize=7, color="#636e72",
              transform=ax1.transAxes)
 
-# Week 1 table
+# Week tables
 ax2 = fig.add_subplot(gs[2])
 draw_table(ax2, "ITERATION 1 — Week 1 (results received)", W1, week2=False)
-
-# Week 2 table
 ax3 = fig.add_subplot(gs[3])
 draw_table(ax3, "ITERATION 2 — Week 2 (results received)", W2, week2=True)
-
-# Week 3 table
 ax4 = fig.add_subplot(gs[4])
 draw_table(ax4, "ITERATION 3 — Week 3 (results received)", W3, week2=True)
-
-# Week 4 table
 ax5 = fig.add_subplot(gs[5])
 draw_table(ax5, "ITERATION 4 — Week 4 (results received)", W4, week2=True)
-
-# Week 5 table
 ax6 = fig.add_subplot(gs[6])
 draw_table(ax6, "ITERATION 5 — Week 5 (results received)", W5, week2=True)
+ax6b = fig.add_subplot(gs[7])
+draw_table(ax6b, "ITERATION 6 — Week 6 (results received)", W6, week2=True)
+ax6c = fig.add_subplot(gs[8])
+draw_table(ax6c, "ITERATION 7 — Week 7 (results received)", W7, week2=True)
 
 # Legend
-ax7 = fig.add_subplot(gs[7])
+ax7 = fig.add_subplot(gs[9])
 ax7.axis("off")
 legend_items = [
     ("#e17055", "Degenerate ls >= 4.5 (D)"),

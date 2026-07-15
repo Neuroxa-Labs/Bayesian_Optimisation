@@ -12,7 +12,7 @@
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given (10 initial points + 5 weekly queries = 15 observations)
+## 2. What we were given (10 initial points + 7 weekly queries = 17 observations)
 
 | # | x1 | x2 | y | note |
 |---|---|---|---|---|
@@ -29,8 +29,8 @@ Bayesian Optimisation is built for - finding the best of an expensive unknown fu
 The Gaussian Process fits one **length scale** per dimension - how fast y changes along that axis.
 A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
 
-- `x1`: length-scale = 0.0989 -> **very sensitive** - small changes move y a lot (take small steps)
-- `x2`: length-scale = 2.8892 -> moderate influence
+- `x1`: length-scale = 0.0894 -> **very sensitive** - small changes move y a lot (take small steps)
+- `x2`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
 
 The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
 dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain).
@@ -61,21 +61,35 @@ Because the signal is noisy, a single low reading does not mean a region is bad.
 
 - **Sent:** x = [0.7000, 0.0200]
 - **Received:** y = 0.6599
-- **GP had expected:** mu = 0.6894, sigma = 0.0560
+- **GP had expected:** mu = 0.6121, sigma = 0.0881
 - **Outcome:** **IMPROVED** over the previous best (0.6112).
 
 ## 9. Week 5 - what we sent and what happened
 
 - **Sent:** x = [0.7179, 0.0200]
 - **Received:** y = 0.7766
-- **GP had expected:** mu = 0.7287, sigma = 0.0584
+- **GP had expected:** mu = 0.6028, sigma = 0.0869
 - **Outcome:** **IMPROVED** over the previous best (0.6599).
 
-## 10. The lesson
+## 10. Week 6 - what we sent and what happened
+
+- **Sent:** x = [0.7500, 0.0200]
+- **Received:** y = 0.4035
+- **GP had expected:** mu = 0.4778, sigma = 0.0977
+- **Outcome:** did **not** improve over the previous best (0.7766).
+
+## 11. Week 7 - what we sent and what happened
+
+- **Sent:** x = [0.7200, 0.0200]
+- **Received:** y = 0.5074
+- **GP had expected:** mu = 0.5982, sigma = 0.0870
+- **Outcome:** did **not** improve over the previous best (0.7766).
+
+## 12. The lesson
 
 Treat noise as noise. Do not abandon a promising region after one unlucky sample - keep sampling near the known-good area.
 
-## 11. Summary
+## 13. Summary
 
 | | Value |
 |---|---|
@@ -88,6 +102,8 @@ Treat noise as noise. Do not abandon a promising region after one unlucky sample
 | Week 3 result | 0.6022 (no improvement) |
 | Week 4 result | 0.6599 (improved) |
 | Week 5 result | 0.7766 (improved) |
+| Week 6 result | 0.4035 (no improvement) |
+| Week 7 result | 0.5074 (no improvement) |
 | Current best | 0.7766 |
 
 *See `analysis_F2.png` in this folder for the full 9-panel visual analysis.*

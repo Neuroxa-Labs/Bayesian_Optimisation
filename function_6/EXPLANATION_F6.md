@@ -12,28 +12,28 @@
 This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
 Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
 
-## 2. What we were given (20 initial points + 5 weekly queries = 25 observations)
+## 2. What we were given (20 initial points + 7 weekly queries = 27 observations)
 
 | # | x1 | x2 | x3 | x4 | x5 | y | note |
 |---|---|---|---|---|---|---|---|
-| 25 | 0.4300 | 0.2400 | 0.5800 | 0.7200 | 0.1200 | -0.2654 | BEST |
-| 21 | 0.4656 | 0.2431 | 0.5775 | 0.9800 | 0.0200 | -0.4775 |  |
-| 23 | 0.5241 | 0.3609 | 0.4138 | 0.8977 | 0.0200 | -0.5377 |  |
+| 26 | 0.4400 | 0.2500 | 0.5900 | 0.7300 | 0.1300 | -0.2404 | BEST |
+| 25 | 0.4300 | 0.2400 | 0.5800 | 0.7200 | 0.1200 | -0.2654 |  |
+| 27 | 0.4450 | 0.2550 | 0.5950 | 0.7350 | 0.1350 | -0.2672 |  |
 | 19 | 0.9218 | 0.9319 | 0.4149 | 0.5951 | 0.7356 | -2.1558 |  |
 | 9 | 0.1257 | 0.8627 | 0.0285 | 0.2466 | 0.7512 | -2.5712 | WORST |
 
-- **Best so far:** y = -0.2654 at x = [0.4300, 0.2400, 0.5800, 0.7200, 0.1200]
+- **Best so far:** y = -0.2404 at x = [0.4400, 0.2500, 0.5900, 0.7300, 0.1300]
 
 ## 3. What the GP learned (reading the length scales)
 
 The Gaussian Process fits one **length scale** per dimension - how fast y changes along that axis.
 A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
 
-- `x1`: length-scale = 0.6296 -> moderate influence
-- `x2`: length-scale = 0.8031 -> moderate influence
-- `x3`: length-scale = 1.1578 -> moderate influence
-- `x4`: length-scale = 0.8336 -> moderate influence
-- `x5`: length-scale = 1.0338 -> moderate influence
+- `x1`: length-scale = 1.3126 -> moderate influence
+- `x2`: length-scale = 1.0494 -> moderate influence
+- `x3`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
+- `x4`: length-scale = 0.3539 -> **very sensitive** - small changes move y a lot (take small steps)
+- `x5`: length-scale = 0.0656 -> **very sensitive** - small changes move y a lot (take small steps)
 
 The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
 dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain).
@@ -64,21 +64,35 @@ In 5-D a balanced search pays off. **EI** gives a measured explore/exploit trade
 
 - **Sent:** x = [0.3656, 0.1431, 0.4775, 0.9300, 0.1200]
 - **Received:** y = -0.6062
-- **GP had expected:** mu = -0.6062, sigma = 5.701e-04
+- **GP had expected:** mu = -0.6062, sigma = 6.126e-04
 - **Outcome:** did **not** improve over the previous best (-0.4775).
 
 ## 9. Week 5 - what we sent and what happened
 
 - **Sent:** x = [0.4300, 0.2400, 0.5800, 0.7200, 0.1200]
 - **Received:** y = -0.2654
-- **GP had expected:** mu = -0.2654, sigma = 5.701e-04
+- **GP had expected:** mu = -0.2654, sigma = 6.125e-04
 - **Outcome:** **IMPROVED** over the previous best (-0.4775).
 
-## 10. The lesson
+## 10. Week 6 - what we sent and what happened
+
+- **Sent:** x = [0.4400, 0.2500, 0.5900, 0.7300, 0.1300]
+- **Received:** y = -0.2404
+- **GP had expected:** mu = -0.2404, sigma = 6.118e-04
+- **Outcome:** **IMPROVED** over the previous best (-0.2654).
+
+## 11. Week 7 - what we sent and what happened
+
+- **Sent:** x = [0.4450, 0.2550, 0.5950, 0.7350, 0.1350]
+- **Received:** y = -0.2672
+- **GP had expected:** mu = -0.2672, sigma = 6.122e-04
+- **Outcome:** did **not** improve over the previous best (-0.2404).
+
+## 12. The lesson
 
 In medium dimension, steady incremental gains are the norm. EI's balance avoids both blind wandering and premature exploitation.
 
-## 11. Summary
+## 13. Summary
 
 | | Value |
 |---|---|
@@ -91,6 +105,8 @@ In medium dimension, steady incremental gains are the norm. EI's balance avoids 
 | Week 3 result | -0.5377 (no improvement) |
 | Week 4 result | -0.6062 (no improvement) |
 | Week 5 result | -0.2654 (improved) |
-| Current best | -0.2654 |
+| Week 6 result | -0.2404 (improved) |
+| Week 7 result | -0.2672 (no improvement) |
+| Current best | -0.2404 |
 
 *See `analysis_F6.png` in this folder for the full 9-panel visual analysis.*
