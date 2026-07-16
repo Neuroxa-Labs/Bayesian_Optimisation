@@ -69,12 +69,15 @@ tr:hover td{filter:brightness(0.97);}
     Imperial College PCMLAI &nbsp;·&nbsp; Cohort IMP-PCMLAI-26-02 &nbsp;·&nbsp;
     <a href="https://github.com/Neuroxa-Labs/Bayesian_Optimisation">GitHub repo</a> &nbsp;·&nbsp;
     <a href="README.md">README</a> &nbsp;·&nbsp;
-    <a href="WEEK1_REFLECTION.md">Week 1 reflection</a> &nbsp;·&nbsp;
-    <a href="WEEK2_STRATEGY.md">Week 2 strategy</a> &nbsp;·&nbsp;
-    <a href="WEEK2_REFLECTION.md">Week 2 reflection</a> &nbsp;·&nbsp;
-    <a href="WEEK3_REFLECTION.md">Week 3 reflection</a> &nbsp;·&nbsp;
-    <a href="WEEK4_REFLECTION.md">Week 4 reflection</a> &nbsp;·&nbsp;
-    <a href="WEEK5_REFLECTION.md">Week 5 reflection</a>
+    <a href="WEEK1_REFLECTION.md">Week 1</a> &nbsp;·&nbsp;
+    <a href="WEEK2_REFLECTION.md">Week 2</a> &nbsp;·&nbsp;
+    <a href="WEEK3_REFLECTION.md">Week 3</a> &nbsp;·&nbsp;
+    <a href="WEEK4_REFLECTION.md">Week 4</a> &nbsp;·&nbsp;
+    <a href="WEEK5_REFLECTION.md">Week 5</a> &nbsp;·&nbsp;
+    <a href="WEEK6_REFLECTION.md">Week 6</a> &nbsp;·&nbsp;
+    <a href="WEEK7_REFLECTION.md">Week 7</a> &nbsp;·&nbsp;
+    <a href="WEEK8_STRATEGY.md">Week 8 strategy</a> &nbsp;·&nbsp;
+    <a href="TECHNICAL_JUSTIFICATION.md">Technical justification</a>
   </p>
   <p style="margin-top:6px;">
     Eight real-world black-box optimisation tasks (2D–8D). Each week we submit one query <code>x</code> per
@@ -102,20 +105,19 @@ tr:hover td{filter:brightness(0.97);}
     <div class="sc"><div class="sc-n g">2</div><div class="sc-l">Week 3 improved</div></div>
     <div class="sc"><div class="sc-n g">4</div><div class="sc-l">Week 4 improved</div></div>
     <div class="sc"><div class="sc-n g">3</div><div class="sc-l">Week 5 improved</div></div>
-    <div class="sc"><div class="sc-n b">6</div><div class="sc-l">Week 6 ready</div></div>
+    <div class="sc"><div class="sc-n g">3</div><div class="sc-l">Week 6 improved</div></div>
+    <div class="sc"><div class="sc-n g">1</div><div class="sc-l">Week 7 improved</div></div>
+    <div class="sc"><div class="sc-n b">8</div><div class="sc-l">Week 8 ready</div></div>
   </div>
   <div class="note">
     <strong>Week 1:</strong> 5/8 improved (F4–F8); F5 standout 1089 → 2497.
-    <strong>Week 2:</strong> only <strong>F3</strong> improved (−0.168 → −0.020) after narrow-bounds fix;
-    F5 exploit step underperformed (1811 vs best 2497).
-    <strong>Week 3:</strong> <strong>2/8 improved</strong> — <strong>F5</strong> 2497 → <strong>3108</strong> (EI exploit + log-y),
-    <strong>F7</strong> 1.451 → <strong>1.525</strong>. F4 basin search stayed positive but did not beat 0.257.
-    <strong>Week 4:</strong> <strong>4/8 improved</strong> — <strong>F5</strong> 3108 → <strong>3744</strong>,
-    <strong>F7</strong> 1.525 → <strong>1.857</strong>, <strong>F2</strong> 0.611 → <strong>0.660</strong>.
-    Peer-informed grid (F1), EI exploit (F5/F7), local basin (F4).
-    <strong>Week 5:</strong> <strong>3/8 improved</strong> — <strong>F2</strong> 0.660 → <strong>0.777</strong>,
-    <strong>F6</strong> −0.478 → <strong>−0.265</strong>, <strong>F8</strong> 9.796 → <strong>9.864</strong>.
-    F6 interior strategy validated; F5 x₁=0.28 did not beat ridge at 0.38.
+    <strong>Week 2:</strong> only <strong>F3</strong> improved (−0.168 → −0.020) after narrow-bounds fix.
+    <strong>Week 3:</strong> <strong>2/8</strong> — F5 → 3108, F7 → 1.525.
+    <strong>Week 4:</strong> <strong>4/8</strong> — F5 → 3744, F7 → 1.857, F2 → 0.660.
+    <strong>Week 5:</strong> <strong>3/8</strong> — F2 → 0.777, F6 → −0.265, F8 → 9.864.
+    <strong>Week 6:</strong> <strong>3/8</strong> — F3 → −0.011, F4 → 0.470, F6 → −0.240.
+    <strong>Week 7:</strong> <strong>1/8</strong> — F8 → <strong>9.865</strong>; F5 ridge re-confirmed at 3744; F1 B+ soft-signal still ~0.
+    Current bests: F2 0.777 · F3 −0.011 · F4 0.470 · F5 3744 · F6 −0.240 · F7 1.857 · F8 9.865.
   </div>
 </div>
 
@@ -189,7 +191,49 @@ tr:hover td{filter:brightness(0.97);}
 </div>
 
 <div class="card">
+  <div class="week-lbl">Iteration 6 — Week 6 (results received)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th>Method</th><th>ν</th>
+      <th class="r">Best before</th><th class="r">Acq. score</th>
+      <th class="r">Query x</th>
+      <th class="r">Actual result</th><th class="r">Δ improvement</th>
+      <th>Length scales</th>
+    </tr></thead>
+    <tbody id="tb6"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="week-lbl">Iteration 7 — Week 7 (results received)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th>Method</th><th>ν</th>
+      <th class="r">Best before</th><th class="r">Acq. score</th>
+      <th class="r">Query x</th>
+      <th class="r">Actual result</th><th class="r">Δ improvement</th>
+      <th>Length scales</th>
+    </tr></thead>
+    <tbody id="tb7"></tbody>
+  </table>
+</div>
+
+<div class="card">
   <div class="week-lbl">Visual summary</div>
+  <div class="img-row">
+    <div>
+      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
+      <a href="progress_week7_report.png"><img src="progress_week7_report.png" alt="Progress report table"></a>
+    </div>
+    <div>
+      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Best observed output by function</p>
+      <a href="progress_week7.png"><img src="progress_week7.png" alt="Best observed progress chart"></a>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="week-lbl">Visual summary (archive W5)</div>
   <div class="img-row">
     <div>
       <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
@@ -203,7 +247,7 @@ tr:hover td{filter:brightness(0.97);}
 </div>
 
 <div class="card">
-  <div class="week-lbl">Visual summary (archive)</div>
+  <div class="week-lbl">Visual summary (archive W4)</div>
   <div class="img-row">
     <div>
       <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
@@ -212,20 +256,6 @@ tr:hover td{filter:brightness(0.97);}
     <div>
       <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Best observed output by function</p>
       <a href="progress_week4.png"><img src="progress_week4.png" alt="Best observed progress chart"></a>
-    </div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="week-lbl">Visual summary (archive W3)</div>
-  <div class="img-row">
-    <div>
-      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
-      <a href="progress_week3_report.png"><img src="progress_week3_report.png" alt="Progress report table"></a>
-    </div>
-    <div>
-      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Best observed output by function</p>
-      <a href="progress_week3.png"><img src="progress_week3.png" alt="Best observed progress chart"></a>
     </div>
   </div>
 </div>
@@ -346,6 +376,44 @@ const W5=[
    x:[0.126155,0.070000,0.224493,0.038786,0.403935,0.497424,0.228063,0.893085],actual:9.8645,ls:[3.717,5.763,2.701,9.802,10,7.091,3.850,10]},
 ];
 
+const W6=[
+  {fn:1,m:'MAN',nu:'0.5',best:7.71e-16,acq:1e-4,
+   x:[0.755000,0.710000],actual:-1.27e-16,ls:[0.04,0.01]},
+  {fn:2,m:'EI', nu:'2.5',best:0.7766,  acq:0.01,
+   x:[0.750000,0.020000],actual:0.4035,ls:[0.09,3.5]},
+  {fn:3,m:'EI', nu:'2.5',best:-0.0203, acq:1e-3,
+   x:[0.492581,0.691593,0.401000],actual:-0.0114,ls:[10,2.5,0.11]},
+  {fn:4,m:'UCB',nu:'2.5',best:0.2575,  acq:0.40,
+   x:[0.400838,0.413498,0.376688,0.406083],actual:0.4695,ls:[1.3,1.2,1.1,1.2]},
+  {fn:5,m:'EI', nu:'2.5',best:3743.83, acq:0.01,
+   x:[0.360000,0.980000,0.980000,0.980000],actual:3729.84,ls:[8.0,0.75,0.6,4.0]},
+  {fn:6,m:'EI', nu:'2.5',best:-0.2654, acq:1e-3,
+   x:[0.440000,0.250000,0.590000,0.730000,0.130000],actual:-0.2404,ls:[0.5,1.2,1.2,1.7,2.0]},
+  {fn:7,m:'EI', nu:'2.5',best:1.8575,  acq:0.05,
+   x:[0.070000,0.416628,0.307422,0.136908,0.324592,0.654726],actual:1.8471,ls:[0.8,0.3,10,0.7,0.4,0.4]},
+  {fn:8,m:'UCB',nu:'1.5',best:9.8645,  acq:9.90,
+   x:[0.070000,0.272853,0.209858,0.038786,0.403935,0.545195,0.198456,0.893085],actual:9.8625,ls:[3.7,5.7,2.7,9.8,10,7.1,3.8,10]},
+];
+
+const W7=[
+  {fn:1,m:'SVM',nu:'0.5',best:7.71e-16,acq:1e-4,
+   x:[0.760000,0.760000],actual:5.18e-25,ls:[0.04,0.01]},
+  {fn:2,m:'EI', nu:'2.5',best:0.7766,  acq:0.01,
+   x:[0.720000,0.020000],actual:0.5074,ls:[0.09,3.5]},
+  {fn:3,m:'EI', nu:'2.5',best:-0.0114, acq:1e-3,
+   x:[0.485000,0.685000,0.401000],actual:-0.0145,ls:[10,2.5,0.11]},
+  {fn:4,m:'UCB',nu:'2.5',best:0.4695,  acq:0.20,
+   x:[0.395000,0.420000,0.380000,0.410000],actual:0.4637,ls:[1.3,1.2,1.1,1.2]},
+  {fn:5,m:'EI', nu:'2.5',best:3743.83, acq:0.01,
+   x:[0.380000,0.980000,0.980000,0.980000],actual:3743.83,ls:[2.0,0.75,0.3,10]},
+  {fn:6,m:'EI', nu:'2.5',best:-0.2404, acq:1e-3,
+   x:[0.445000,0.255000,0.595000,0.735000,0.135000],actual:-0.2672,ls:[0.5,1.2,1.2,1.7,2.0]},
+  {fn:7,m:'EI', nu:'2.5',best:1.8575,  acq:0.05,
+   x:[0.070000,0.435000,0.310000,0.160000,0.350000,0.675000],actual:1.8468,ls:[0.8,0.3,10,0.7,0.4,0.4]},
+  {fn:8,m:'UCB',nu:'1.5',best:9.8645,  acq:9.90,
+   x:[0.130000,0.070000,0.220000,0.040000,0.400000,0.500000,0.230000,0.890000],actual:9.8652,ls:[3.7,5.7,2.7,9.8,10,7.1,3.8,10]},
+];
+
 function fmt(v){
   if(v===null||v===undefined) return '—';
   const a=Math.abs(v);
@@ -367,7 +435,7 @@ function renderW1(data,id){
   data.forEach(d=>{
     const imp=d.actual===null?null:d.actual-d.best;
     const rc=d.actual===null?'pend':imp>0?'imp':'wor';
-    const bc=d.m==='UNC'?'unc':d.m==='COV'?'cov':d.m==='EI'?'ei':'ucb';
+    const bc=d.m==='UNC'?'unc':(d.m==='COV'||d.m==='MAN'||d.m==='SVM')?'cov':d.m==='EI'?'ei':'ucb';
     const pips=d.ls.map((v,i)=>
       `<div class="pip ${pc(v)}" title="x${i+1}=${v.toFixed(3)}"></div>`).join('');
     const aCell=d.actual===null
@@ -394,7 +462,7 @@ function renderW2(data,id){
   data.forEach(d=>{
     const imp=d.actual===null?null:d.actual-d.best;
     const rc=d.actual===null?'pend':imp>0?'imp':'wor';
-    const bc=d.m==='UNC'?'unc':d.m==='COV'?'cov':d.m==='EI'?'ei':'ucb';
+    const bc=d.m==='UNC'?'unc':(d.m==='COV'||d.m==='MAN'||d.m==='SVM')?'cov':d.m==='EI'?'ei':'ucb';
     const pips=d.ls.map((v,i)=>
       `<div class="pip ${pc(v)}" title="x${i+1}=${v.toFixed(3)}"></div>`).join('');
     const xStr=d.x.map(v=>v.toFixed(4)).join(' · ');
@@ -440,6 +508,8 @@ renderW2(W2,'tb2');
 renderW2(W3,'tb3');
 renderW2(W4,'tb4');
 renderW2(W5,'tb5');
+renderW2(W6,'tb6');
+renderW2(W7,'tb7');
 renderGrid();
 </script>
 </body>
