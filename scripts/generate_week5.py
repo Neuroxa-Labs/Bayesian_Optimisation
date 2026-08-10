@@ -3,7 +3,8 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
+DATA_ROOT = ROOT / "data"
 WEEK = 5
 
 # Approved Week 5 — pipeline + manual fixes (F3 x3 lock, F5 x1, F6 interior, F7 x1)

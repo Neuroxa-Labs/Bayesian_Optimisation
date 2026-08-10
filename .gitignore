@@ -3,19 +3,18 @@
 */.ipynb_checkpoints/
 Untitled.ipynb
 **/Untitled.ipynb
-BBO_Capstone_BO_Pipeline_1.ipynb
 
 # Python
 __pycache__/
 *.pyc
 .venv/
 venv/
+
+# Local / scratch
+artifacts/
 *.pkl
 F1_y_scaled_personal.jpg
-_personal_f1_plot.py
-
-# Root scratch plots from run_week.py
-function_*_week*_analysis.png
+scripts/_personal_f1_plot.py
 
 # OS
 Thumbs.db

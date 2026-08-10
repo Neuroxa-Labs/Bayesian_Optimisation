@@ -9,7 +9,8 @@ import matplotlib.patches as mpatches
 from matplotlib.gridspec import GridSpec
 
 warnings.filterwarnings("ignore")
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
+DATA_ROOT = ROOT / "data"
 
 META = {
     1: ("Radiation Detection", 2, "COV", "0.5"),
@@ -267,8 +268,8 @@ for i, (col, txt) in enumerate(legend_items):
 ax7.text(0.02, 0.05, "Full interactive report: bbo_progress_report.html  |  GitHub: Neuroxa-Labs/Bayesian_Optimisation",
          fontsize=8.5, color="#2d6dc7", transform=ax7.transAxes)
 
-png = ROOT / "bbo_progress_report.png"
-jpg = ROOT / "bbo_progress_report.jpg"
+png = ROOT / "reports" / "progress" / "bbo_progress_report.png"
+jpg = ROOT / "reports" / "progress" / "bbo_progress_report.jpg"
 fig.savefig(png, dpi=160, bbox_inches="tight", facecolor="white")
 fig.savefig(jpg, dpi=160, bbox_inches="tight", facecolor="white", pil_kwargs={"quality": 92})
 plt.close(fig)

@@ -8,7 +8,8 @@ from sklearn.gaussian_process.kernels import ConstantKernel as C
 from sklearn.gaussian_process.kernels import Matern, WhiteKernel
 
 warnings.filterwarnings("ignore")
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
+DATA_ROOT = ROOT / "data"
 
 CFG = {
     1: dict(dim=2, n=10, a=1e-12, nu=0.5, white=False, m="COVERAGE", k=None),
@@ -158,8 +159,8 @@ def vec(x):
 
 for fn, c in CFG.items():
     dim, n0 = c["dim"], c["n"]
-    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 7]
-    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 7]
+    X = np.load(DATA_ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 7]
+    Y = np.load(DATA_ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 7]
     gp = fit(X, Y, c); ls = lscales(gp)
     w1_prev = float(Y[:n0].max()); cur_best = float(Y.max())
     bi = int(np.argmax(Y)); bx = X[bi]
@@ -319,7 +320,7 @@ dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain
 
 *See `analysis_F{fn}.png` in this folder for the full 9-panel visual analysis.*
 """
-    out = ROOT / f"function_{fn}" / f"EXPLANATION_F{fn}.md"
+    out = DATA_ROOT / f"function_{fn}" / f"EXPLANATION_F{fn}.md"
     out.write_text(doc, encoding="utf-8")
     print(f"F{fn}: wrote {out.relative_to(ROOT)}")
 

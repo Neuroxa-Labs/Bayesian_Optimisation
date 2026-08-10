@@ -3,8 +3,9 @@ import json
 import pickle
 from pathlib import Path
 
-ROOT = Path(__file__).parent
-nb = json.loads((ROOT / "BBO_Capstone_Optimized.ipynb").read_text(encoding="utf-8"))
+ROOT = Path(__file__).resolve().parent.parent
+DATA_ROOT = ROOT / "data"
+nb = json.loads((ROOT / "notebooks" / "BBO_Capstone_Optimized.ipynb").read_text(encoding="utf-8"))
 
 ns = {"__name__": "__main__"}
 for i, cell in enumerate(nb["cells"]):
