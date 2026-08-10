@@ -4,6 +4,8 @@
 > dashboard, or click [`bbo_progress_report.png`](bbo_progress_report.png) for the full image
 > (also available as [`bbo_progress_report.jpg`](bbo_progress_report.jpg)).
 
+> **Documentation (Module 21):** [`DATASHEET.md`](DATASHEET.md) (query history dataset) · [`MODEL_CARD.md`](MODEL_CARD.md) (optimisation approach)
+
 A Bayesian Optimisation (BO) pipeline for optimising **8 unknown black-box functions** (F1–F8,
 dimensions 2D–8D). The true functions are hidden: each week we submit **one query point `x` per
 function** and receive a single output `y`, which we add to our dataset and use to choose the next
@@ -64,6 +66,8 @@ capstone/
 ├── WEEK*_DISCUSSION.md            # Forum reflections
 ├── TECHNICAL_JUSTIFICATION.md     # Literature + library rationale
 ├── GITHUB_REPOSITORY_REFLECTION.md  # Repo structure & libraries (Module 16)
+├── DATASHEET.md                   # Dataset documentation (Mini-lesson 21.1)
+├── MODEL_CARD.md                  # Optimisation approach card (Mini-lesson 21.2)
 └── function_1/ … function_8/
     ├── initial_inputs.npy
     ├── initial_outputs.npy
@@ -93,6 +97,8 @@ python run_week.py 8
 
 | Path | Description |
 |------|-------------|
+| **`DATASHEET.md`** | **Dataset datasheet** — motivation, composition, collection, uses, maintenance |
+| **`MODEL_CARD.md`** | **Model card** — GP–BO approach, intended use, performance, limitations, ethics |
 | **`bbo_progress_report.html`** | **Main progress report** — interactive dashboard (Week 1/2 tables, per-function links) |
 | **`bbo_progress_report.png`** / **`.jpg`** | **Main report image** — click to view the full dashboard as a single picture |
 | `make_main_report_image.py` | Regenerates the main report PNG/JPG from current data |
