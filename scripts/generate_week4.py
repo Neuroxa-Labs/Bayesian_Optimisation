@@ -9,7 +9,8 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import ConstantKernel as C, Matern, WhiteKernel
 
 warnings.filterwarnings("ignore")
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
+DATA_ROOT = ROOT / "data"
 BUF = 0.02
 WEEK = 4
 
@@ -194,8 +195,8 @@ if __name__ == "__main__":
     print(f"=== WEEK {WEEK} PORTAL (peer-informed GP) ===\n")
     out = {}
     for fn in range(1, 9):
-        X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")
-        Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")
+        X = np.load(DATA_ROOT / f"function_{fn}" / "initial_inputs.npy")
+        Y = np.load(DATA_ROOT / f"function_{fn}" / "initial_outputs.npy")
         x = GENERATORS[fn](X, Y, FUNCTIONS[fn])
         s = fmt_sub(x)
         out[fn] = s

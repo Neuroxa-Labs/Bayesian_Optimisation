@@ -19,7 +19,8 @@ from sklearn.gaussian_process.kernels import ConstantKernel as C
 from sklearn.gaussian_process.kernels import Matern, WhiteKernel
 
 warnings.filterwarnings("ignore")
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
+DATA_ROOT = ROOT / "data"
 
 CFG = {
     1: dict(dim=2, n=10, a=1e-12, nu=0.5, white=False, m="UNC", k=None),
@@ -210,8 +211,8 @@ def fmt(v):
 def make_figure(fn):
     c = CFG[fn]
     dim, n0 = c["dim"], c["n"]
-    X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 7]
-    Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 7]
+    X = np.load(DATA_ROOT / f"function_{fn}" / "initial_inputs.npy")[: n0 + 7]
+    Y = np.load(DATA_ROOT / f"function_{fn}" / "initial_outputs.npy")[: n0 + 7]
     gp = fit(X, Y, c)
     ls = length_scales(gp)
     fb = float(Y.max())
@@ -378,7 +379,7 @@ def make_figure(fn):
     ax.set_title("(9) Observation history", fontsize=11, fontweight="bold")
     ax.set_xlabel("observation #"); ax.set_ylabel("y"); ax.legend(fontsize=6); ax.grid(alpha=0.25)
 
-    out = ROOT / f"function_{fn}" / f"analysis_F{fn}.png"
+    out = DATA_ROOT / f"function_{fn}" / f"analysis_F{fn}.png"
     fig.savefig(out, dpi=140, bbox_inches="tight")
     plt.close(fig)
     print(f"F{fn}: saved {out.relative_to(ROOT)} | best={fmt(fb)} | W7 y={fmt(w7y)}")

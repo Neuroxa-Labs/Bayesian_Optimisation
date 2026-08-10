@@ -68,16 +68,13 @@ tr:hover td{filter:brightness(0.97);}
   <p>
     Imperial College PCMLAI &nbsp;·&nbsp; Cohort IMP-PCMLAI-26-02 &nbsp;·&nbsp;
     <a href="https://github.com/Neuroxa-Labs/Bayesian_Optimisation">GitHub repo</a> &nbsp;·&nbsp;
-    <a href="README.md">README</a> &nbsp;·&nbsp;
-    <a href="WEEK1_REFLECTION.md">Week 1</a> &nbsp;·&nbsp;
-    <a href="WEEK2_REFLECTION.md">Week 2</a> &nbsp;·&nbsp;
-    <a href="WEEK3_REFLECTION.md">Week 3</a> &nbsp;·&nbsp;
-    <a href="WEEK4_REFLECTION.md">Week 4</a> &nbsp;·&nbsp;
-    <a href="WEEK5_REFLECTION.md">Week 5</a> &nbsp;·&nbsp;
-    <a href="WEEK6_REFLECTION.md">Week 6</a> &nbsp;·&nbsp;
-    <a href="WEEK7_REFLECTION.md">Week 7</a> &nbsp;·&nbsp;
-    <a href="WEEK8_STRATEGY.md">Week 8 strategy</a> &nbsp;·&nbsp;
-    <a href="TECHNICAL_JUSTIFICATION.md">Technical justification</a>
+    <a href="../../README.md">README</a> &nbsp;·&nbsp;
+    <a href="../../DATASHEET.md">Datasheet</a> &nbsp;·&nbsp;
+    <a href="../../MODEL_CARD.md">Model card</a> &nbsp;·&nbsp;
+    <a href="../../weeks/WEEK1_REFLECTION.md">Week 1</a> &nbsp;·&nbsp;
+    <a href="../../weeks/WEEK7_REFLECTION.md">Week 7</a> &nbsp;·&nbsp;
+    <a href="../../weeks/WEEK10_STRATEGY.md">Week 10</a> &nbsp;·&nbsp;
+    <a href="../../docs/TECHNICAL_JUSTIFICATION.md">Technical justification</a>
   </p>
   <p style="margin-top:6px;">
     Eight real-world black-box optimisation tasks (2D–8D). Each week we submit one query <code>x</code> per
@@ -493,11 +490,11 @@ function renderGrid(){
     g.innerHTML+=`<div class="fcard">
       <h3>F${fn} — ${m.name}</h3>
       <p>${m.world}</p>
-      <a href="function_${fn}/EXPLANATION_F${fn}.md">Explanation</a>
-      <a href="function_${fn}/analysis_F${fn}.png">Analysis figure</a>
-      <a href="BBO_Capstone_Optimized.ipynb">Notebook</a>
-      <a href="function_${fn}/analysis_F${fn}.png">
-        <img src="function_${fn}/analysis_F${fn}.png" alt="F${fn} analysis" loading="lazy">
+      <a href="../../data/function_${fn}/EXPLANATION_F${fn}.md">Explanation</a>
+      <a href="../../data/function_${fn}/analysis_F${fn}.png">Analysis figure</a>
+      <a href="../../notebooks/BBO_Capstone_Optimized.ipynb">Notebook</a>
+      <a href="../../data/function_${fn}/analysis_F${fn}.png">
+        <img src="../../data/function_${fn}/analysis_F${fn}.png" alt="F${fn} analysis" loading="lazy">
       </a>
     </div>`;
   });

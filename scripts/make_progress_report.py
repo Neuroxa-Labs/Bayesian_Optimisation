@@ -15,7 +15,8 @@ from sklearn.gaussian_process.kernels import ConstantKernel as C
 from sklearn.gaussian_process.kernels import Matern, WhiteKernel
 
 warnings.filterwarnings("ignore")
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
+DATA_ROOT = ROOT / "data"
 
 # ---- per-function config (matches the notebook) ----
 FUNCTIONS = {
@@ -200,8 +201,8 @@ for it in range(1, 8):
     iters[it] = {}
     wx, wy = WK_XY[it]
     for fn, cfg in FUNCTIONS.items():
-        X = np.load(ROOT / f"function_{fn}" / "initial_inputs.npy")
-        Y = np.load(ROOT / f"function_{fn}" / "initial_outputs.npy")
+        X = np.load(DATA_ROOT / f"function_{fn}" / "initial_inputs.npy")
+        Y = np.load(DATA_ROOT / f"function_{fn}" / "initial_outputs.npy")
         n0 = cfg["n_init"]
         Xi, Yi = X[: n0 + it - 1], Y[: n0 + it - 1]
         next_x = wx[fn]
@@ -295,8 +296,8 @@ for ax_idx, it in enumerate(range(1, 8)):
             cell.set_fontsize(8)
 
 plt.tight_layout(rect=[0, 0, 1, 0.97])
-png = ROOT / "progress_week7_report.png"
-jpg = ROOT / "progress_week7_report.jpg"
+png = ROOT / "reports" / "progress" / "progress_week7_report.png"
+jpg = ROOT / "reports" / "progress" / "progress_week7_report.jpg"
 plt.savefig(png, dpi=150, bbox_inches="tight")
 try:
     plt.savefig(jpg, dpi=150, bbox_inches="tight")

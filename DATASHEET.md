@@ -40,9 +40,9 @@
 | F7 | 6 | ~40 | Sharp local peak |
 | F8 | 8 | ~50 | Slow late gains |
 
-Exact counts live in `function_*/initial_inputs.npy` and `initial_outputs.npy` (plus weekly append scripts / strategy logs for portal rounds not yet merged into `.npy`).
+Exact counts live in `data/function_*/initial_inputs.npy` and `initial_outputs.npy` (plus weekly append scripts / strategy logs for portal rounds not yet merged into `.npy`).
 
-**Format.** NumPy `.npy` arrays; weekly portal strings in `WEEK*_STRATEGY.md` (`0.xxxxxx-...` to six decimal places); narrative in `EXPLANATION_F*.md` and reflections.
+**Format.** NumPy `.npy` arrays; weekly portal strings in `weeks/WEEK*_STRATEGY.md` (`0.xxxxxx-...` to six decimal places); narrative in `data/function_*/EXPLANATION_F*.md` and `weeks/` reflections.
 
 **Completeness / gaps.** No missing labels for submitted queries. **Spatial gaps** remain large: sampling is clustered near incumbents (especially F5 high face, F3 safe \(x_3\) band, F4/F6/F7/F8 basins). F1 is sparse with almost no usable signal. Higher-D boxes (F7/F8) are under-sampled relative to volume.
 
@@ -54,7 +54,7 @@ Exact counts live in `function_*/initial_inputs.npy` and `initial_outputs.npy` (
 
 ## 3. Collection process
 
-**Method.** Each week I propose one \(x\) per function via the capstone portal and receive one \(y\). Points are chosen by a Gaussian Process + acquisition pipeline (`BBO_Capstone_Optimized.ipynb`), with per-function constraints and occasional manual overrides documented in `WEEK*_STRATEGY.md`.
+**Method.** Each week I propose one \(x\) per function via the capstone portal and receive one \(y\). Points are chosen by a Gaussian Process + acquisition pipeline (`notebooks/BBO_Capstone_Optimized.ipynb`), with per-function constraints and occasional manual overrides documented in `weeks/WEEK*_STRATEGY.md`.
 
 **Sampling strategy.** Sequential, adaptive, **not** i.i.d. random. Early rounds more exploratory; later rounds increasingly trust-region exploitation around incumbents. F1 uses a trust gate (explore / narrow exploit when space-fill fails).
 
@@ -91,7 +91,7 @@ Raw portal \((x,y)\) pairs are preserved in strategy/reflection files and `.npy`
 
 ## 5. Distribution
 
-**Availability.** Public GitHub repository for this capstone (linked from the course discussion board). Primary paths: `function_*/`, `WEEK*_STRATEGY.md`, `WEEK*_REFLECTION.md`, dashboard `bbo_progress_report.html`.
+**Availability.** Public GitHub repository for this capstone (linked from the course discussion board). Primary paths: `data/function_*/`, `weeks/WEEK*_STRATEGY.md`, `weeks/WEEK*_REFLECTION.md`, dashboard `reports/progress/bbo_progress_report.html`.
 
 **License / terms.** Academic sharing for peer review and programme assessment. Redistribute with attribution; do not present portal outputs as proprietary production data.
 

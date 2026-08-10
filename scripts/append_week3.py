@@ -2,7 +2,8 @@
 from pathlib import Path
 import numpy as np
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
+DATA_ROOT = ROOT / "data"
 
 WK3_X = {
     1: [0.070000, 0.669525],
@@ -26,7 +27,7 @@ WK3_Y = {
 }
 
 for fn in range(1, 9):
-    base = ROOT / f"function_{fn}"
+    base = DATA_ROOT / f"function_{fn}"
     X = np.load(base / "initial_inputs.npy")
     Y = np.load(base / "initial_outputs.npy")
     x3 = np.array(WK3_X[fn], dtype=float)

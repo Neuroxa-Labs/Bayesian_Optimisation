@@ -10,7 +10,7 @@
 |-------|--------|
 | **Name** | GP–BO Capstone Pipeline (v5) |
 | **Type** | Bayesian optimisation with Gaussian Process surrogate and EI/UCB acquisition |
-| **Version** | v5 unified pipeline (`BBO_Capstone_Optimized.ipynb`) + weekly human-audited trust regions |
+| **Version** | v5 unified pipeline (`notebooks/BBO_Capstone_Optimized.ipynb`) + weekly human-audited trust regions |
 | **Task** | Maximise 8 unknown black-box functions, one query each per week |
 | **Developer** | Student researcher, PCMLAI BBO capstone |
 | **License** | Academic / course use via public GitHub repo |
@@ -56,7 +56,7 @@
 | Later | Trust-region exploit around incumbents; trust gate on F1; hyperparameter / LLM-module reflections mapped onto BO knobs (κ, radius, constraints) |
 | Weeks 8–9 | Confirmed gains on F4/F5/F8 (and F7 by W9); F2 remains noise-sensitive near \(x_1\approx 0.72\) |
 
-**Techniques used.** GP + EI/UCB; ARD; WhiteKernel; log transform; trust regions; signal thresholds; soft-signal / space-fill when GP untrusted; documented manual overrides in `WEEK*_STRATEGY.md`.
+**Techniques used.** GP + EI/UCB; ARD; WhiteKernel; log transform; trust regions; signal thresholds; soft-signal / space-fill when GP untrusted; documented manual overrides in `weeks/WEEK*_STRATEGY.md`.
 
 **Training data for the surrogate.** The growing evaluation history described in [`DATASHEET.md`](DATASHEET.md) — not an external public corpus.
 

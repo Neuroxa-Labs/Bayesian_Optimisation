@@ -6,8 +6,9 @@ from pathlib import Path
 
 WEEK = int(sys.argv[1]) if len(sys.argv) > 1 else 4
 
-ROOT = Path(__file__).parent
-nb = json.loads((ROOT / "BBO_Capstone_Optimized.ipynb").read_text(encoding="utf-8"))
+ROOT = Path(__file__).resolve().parent.parent
+DATA_ROOT = ROOT / "data"
+nb = json.loads((ROOT / "notebooks" / "BBO_Capstone_Optimized.ipynb").read_text(encoding="utf-8"))
 
 ns = {"__name__": "__main__"}
 for i, cell in enumerate(nb["cells"]):
@@ -27,5 +28,5 @@ for fn in range(1, 9):
     if fn in submission_strings:
         print(f"  Function {fn}: {submission_strings[fn]}")
 
-with open(ROOT / f"week{WEEK}_queries.pkl", "wb") as f:
+with open(ROOT / "artifacts" / f"week{WEEK}_queries.pkl", "wb") as f:
     pickle.dump({fn: submission_strings[fn] for fn in submission_strings}, f)
