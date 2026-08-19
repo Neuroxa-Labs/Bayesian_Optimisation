@@ -111,7 +111,7 @@ Week 8: 3/8 improved (F4, F5, F8). Week 9: 4/8 improved (F4, F5, F7, F8). Progre
 
 ## 6. Ethical considerations
 
-**Transparency.** Datasheet + this model card + public GitHub (`WEEK*` notes, notebook, reports) let peers reproduce decisions and challenge assumptions.
+**Transparency.** Datasheet + this model card + public GitHub (`weeks/` notes, notebook, reports) let peers reproduce decisions and challenge assumptions.
 
 **Reproducibility.** Seeds/restarts and human overrides should be read from weekly files; the notebook is the executable core. Adding endless card prose does not replace those artefacts — the current structure is sufficient if the repo links stay accurate.
 
