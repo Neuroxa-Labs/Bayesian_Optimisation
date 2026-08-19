@@ -20,11 +20,11 @@ Another researcher could largely reproduce my strategy from the repo notes: cumu
 
 **Key assumption and how it limits me**
 
-I assume each promising function has **one dominant smooth basin** (or one ridge on F5) that local BO can climb. That can fail if a sharp second peak sits far from my sampled clusters — especially on F4/F7/F8, where I now spend budget near the incumbent. On F1 I now make the parallel bet that any useful mass, if it exists, is near my best-so-far lobe rather than uniformly elsewhere; that can also trap me. The assumption speeds progress when true (Week 8–9 jumps) but can miss a distant global max.
+I assume each promising function has **one dominant smooth basin** (or one ridge on F5) that local BO can climb. That can fail if a sharp second peak sits far from my sampled clusters — especially on F4/F7/F8, where I now spend budget near the incumbent. On F1 I now bet on a peer-supported local peak near **`~0.64 / ~0.68`** rather than my null historical best near 0.73; that can also trap me if the true source is elsewhere. The assumption speeds progress when true (Week 8–9 jumps) but can miss a distant global max.
 
 **Gaps and sampling bias in the data**
 
-My dataset is clustered: F5 almost only on the high x₂–x₄ face; F3 mostly with x₃ near 0.4; F6/F7/F8 around recent bests; F2 along the low-x₂ line. Large volumes of each hypercube are untouched. I also bias against exact 0/1 corners because early GPs hallucinated boundaries — that removes some artefacts but can miss a true edge optimum. F1 was exploratory for many weeks; this round I intentionally bias toward the historical best lobe after space-fill failed — a deliberate remaining-budget bias, not proof that the peak is there.
+My dataset is clustered: F5 almost only on the high x₂–x₄ face; F3 mostly with x₃ near 0.4; F6/F7/F8 around recent bests; F2 along the low-x₂ line. Large volumes of each hypercube are untouched. I also bias against exact 0/1 corners because early GPs hallucinated boundaries — that removes some artefacts but can miss a true edge optimum. F1 was exploratory for many weeks; this round I bias toward a measurable peer basin near 0.64/0.68 after space-fill and the 0.73 lobe failed — a deliberate remaining-budget bias, not proof that the peak is there.
 
 **One significant limitation**
 

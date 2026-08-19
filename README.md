@@ -6,7 +6,7 @@ Imperial PCMLAI Stage 2: maximise **eight unknown black-box functions** (2D–8D
 |--|--|
 | **Surrogate** | Gaussian Process (Matérn + ARD; WhiteKernel on F2; log-y on F5) |
 | **Acquisition** | EI / UCB + trust-region exploit; trust gate when signal is absent (F1) |
-| **Status** | Through **Week 9** results; **Week 10** queries ready |
+| **Status** | **Week 10 submitted** — awaiting portal outputs; docs through W9 + W10 strategy/discussion online |
 
 ---
 

@@ -1,6 +1,6 @@
 # Week 10 Strategy — FINAL (peer-informed)
 
-*10th portal round. After Week 9 (4/8 improved: F4, F5, F7, F8).*
+*10th portal round. **Submitted** — awaiting `y` values. After Week 9 (4/8 improved: F4, F5, F7, F8).*
 
 ## Peer takeaways used
 
@@ -23,7 +23,7 @@
 | **F7** | 1.857 → **1.858** | **Yes** |
 | **F8** | 9.868 → **9.869** | **Yes** |
 
-## Portal queries (LOCKED)
+## Portal queries (SUBMITTED)
 
 ```
 Function 1:  0.640000-0.682000
@@ -36,4 +36,16 @@ Function 7:  0.070000-0.428000-0.303000-0.158000-0.346000-0.672000
 Function 8:  0.140000-0.064000-0.214000-0.046000-0.410000-0.510000-0.220000-0.910000
 ```
 
-Discussion: [WEEK10_DISCUSSION.md](WEEK10_DISCUSSION.md).
+| Fn | Why this x |
+|----|------------|
+| F1 | Peer basin ~0.64/0.68 (local radiation peak) |
+| F2 | Closer to historical 0.777 peak |
+| F3 | Safe x₃; toward −0.011 |
+| F4 | Micro from W9 best 0.642 |
+| F5 | Ridge continue x₁=0.42 |
+| F6 | Micro toward −0.240 |
+| F7 | Micro from W9 best 1.858 |
+| F8 | Light exploit from 9.869 |
+
+Discussion: [WEEK10_DISCUSSION.md](WEEK10_DISCUSSION.md).  
+Next: append portal `y` → [`WEEK10_REFLECTION.md`](WEEK10_REFLECTION.md) (when results arrive).
