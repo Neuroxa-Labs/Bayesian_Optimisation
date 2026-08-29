@@ -1,6 +1,6 @@
 # Week 10 Strategy — FINAL (peer-informed)
 
-*10th portal round. **Submitted** — awaiting `y` values. After Week 9 (4/8 improved: F4, F5, F7, F8).*
+*10th portal round. **Complete** — 5/8 improved (F4–F8). See [WEEK10_REFLECTION.md](WEEK10_REFLECTION.md).*
 
 ## Peer takeaways used
 
