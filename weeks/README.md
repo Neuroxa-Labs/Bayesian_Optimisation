@@ -11,4 +11,5 @@ Strategy, post-result reflections, and discussion-board posts for each query rou
 | Round | Status |
 |-------|--------|
 | Weeks 1–9 | Results + notes in this folder |
-| **Week 10** | **Submitted** — [WEEK10_STRATEGY.md](WEEK10_STRATEGY.md) · [WEEK10_DISCUSSION.md](WEEK10_DISCUSSION.md) · awaiting outputs |
+| **Week 10** | **Done (5/8 improved)** — [WEEK10_REFLECTION.md](WEEK10_REFLECTION.md) |
+| **Week 11** | **Ready** — [WEEK11_STRATEGY.md](WEEK11_STRATEGY.md) · [WEEK11_DISCUSSION.md](WEEK11_DISCUSSION.md) |
