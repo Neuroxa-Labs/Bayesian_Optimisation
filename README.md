@@ -16,7 +16,9 @@ Imperial PCMLAI Stage 2: maximise **eight unknown black-box functions** (2D–8D
 |----------|------|
 | **Datasheet** (Module 21) | [`DATASHEET.md`](DATASHEET.md) |
 | **Model card** (Module 21) | [`MODEL_CARD.md`](MODEL_CARD.md) |
+| **Cluster & progress gallery** | [`reports/analysis/cluster_gallery.html`](reports/analysis/cluster_gallery.html) |
 | **Interactive dashboard** | [`reports/progress/bbo_progress_report.html`](reports/progress/bbo_progress_report.html) |
+| **23.2 presentation draft** | [`docs/BBO_PRESENTATION_23_2.md`](docs/BBO_PRESENTATION_23_2.md) |
 | **Main pipeline** | [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) |
 | **Week 10 reflection** | [`weeks/WEEK10_REFLECTION.md`](weeks/WEEK10_REFLECTION.md) |
 | **Week 11 portal queries** | [`weeks/WEEK11_STRATEGY.md`](weeks/WEEK11_STRATEGY.md) |
@@ -31,18 +33,29 @@ Bayesian_Optimisation/
 ├── README.md                 # This file
 ├── DATASHEET.md              # Dataset documentation (stable Module 21 URL)
 ├── MODEL_CARD.md             # Optimisation approach card (stable Module 21 URL)
-├── docs/                     # Extra write-ups
-│   ├── TECHNICAL_JUSTIFICATION.md
-│   └── GITHUB_REPOSITORY_REFLECTION.md
+├── docs/                     # Extra write-ups + 23.2 presentation draft
 ├── weeks/                    # All weekly strategy / reflection / discussion notes
 ├── reports/
 │   ├── progress/             # Dashboard HTML + progress charts
-│   └── analysis/             # Weekly per-function analysis PNGs
+│   └── analysis/             # Cluster gallery + per-function PNGs
 ├── notebooks/                # GP + acquisition pipeline
 ├── scripts/                  # append / generate / make_* utilities
 └── data/
     └── function_1/ … function_8/   # .npy history, EXPLANATION_*, analysis_F*.png
 ```
+
+### Visual analysis (Week 10 data)
+
+KMeans hulls on ARD-selected axes + best-so-far trends (same idea as the Module 23 clustering / PCA discussion lens):
+
+| Figure | File |
+|--------|------|
+| 3D cluster gallery (F1–F8) | [`cluster_gallery_3d.png`](reports/analysis/cluster_gallery_3d.png) |
+| Best-so-far progress | [`progress_best_so_far.png`](reports/analysis/progress_best_so_far.png) |
+| Hull + progress pairs (F3/F5/F7) | [`cluster_progress_pairs.png`](reports/analysis/cluster_progress_pairs.png) |
+| HTML viewer | [`cluster_gallery.html`](reports/analysis/cluster_gallery.html) |
+
+Regenerate: `python scripts/make_cluster_gallery.py`
 
 ---
 
@@ -81,7 +94,8 @@ Latest: [`WEEK11_STRATEGY.md`](weeks/WEEK11_STRATEGY.md) · [`WEEK11_DISCUSSION.
 pip install numpy scikit-learn scipy matplotlib
 
 # From repo root:
-python scripts/run_week.py 10
+python scripts/append_weeks_8_10.py   # sync W8–W10 into data/ (idempotent)
+python scripts/make_cluster_gallery.py
 python scripts/make_progress_chart.py
 python scripts/make_function_analysis.py
 ```
