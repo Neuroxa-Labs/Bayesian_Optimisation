@@ -6,7 +6,7 @@ Imperial PCMLAI Stage 2: maximise **eight unknown black-box functions** (2D–8D
 |--|--|
 | **Surrogate** | Gaussian Process (Matérn + ARD; WhiteKernel on F2; log-y on F5) |
 | **Acquisition** | EI / UCB + trust-region exploit; trust gate when signal is absent (F1) |
-| **Status** | **Week 10 done (5/8 improved)** · **Week 11 ready** (clustering lens) |
+| **Status** | **Week 11 done (4/8 improved)** · **Week 12 ready** (PCA / ARD lens) |
 
 ---
 
@@ -20,9 +20,9 @@ Imperial PCMLAI Stage 2: maximise **eight unknown black-box functions** (2D–8D
 | **Interactive dashboard** | [`reports/progress/bbo_progress_report.html`](reports/progress/bbo_progress_report.html) |
 | **23.2 presentation draft** | [`docs/BBO_PRESENTATION_23_2.md`](docs/BBO_PRESENTATION_23_2.md) |
 | **Main pipeline** | [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) |
-| **Week 10 reflection** | [`weeks/WEEK10_REFLECTION.md`](weeks/WEEK10_REFLECTION.md) |
-| **Week 11 portal queries** | [`weeks/WEEK11_STRATEGY.md`](weeks/WEEK11_STRATEGY.md) |
-| **Week 11 discussion** | [`weeks/WEEK11_DISCUSSION.md`](weeks/WEEK11_DISCUSSION.md) |
+| **Week 11 reflection** | [`weeks/WEEK11_REFLECTION.md`](weeks/WEEK11_REFLECTION.md) |
+| **Week 12 portal queries** | [`weeks/WEEK12_STRATEGY.md`](weeks/WEEK12_STRATEGY.md) |
+| **Week 12 discussion** | [`weeks/WEEK12_DISCUSSION.md`](weeks/WEEK12_DISCUSSION.md) |
 
 ---
 
@@ -59,20 +59,20 @@ Regenerate: `python scripts/make_cluster_gallery.py`
 
 ---
 
-## Best so far (after Week 10)
+## Best so far (after Week 11)
 
 | Fn | Task | Dim | Best y (approx.) | Note |
 |----|------|-----|------------------|------|
-| F1 | Radiation | 2 | ~0 | Signal cluster ~0.64/0.68 (W10) |
-| F2 | Noisy ML | 2 | **0.777** | W10 recovered to 0.72 |
+| F1 | Radiation | 2 | ~0 | Signal lobe ~0.64/0.68 (W10–W11) |
+| F2 | Noisy ML | 2 | **0.777** | W11 miss 0.55; return to peak |
 | F3 | Drug side-effects | 3 | **−0.011** | Safe x₃ band |
-| F4 | Warehouse | 4 | **0.667** | W10 |
-| F5 | Chemical yield | 4 | **3779** | Ridge x₁→0.42 |
-| F6 | Cake recipe | 5 | **−0.136** | W10 jump |
-| F7 | HP tuning 6D | 6 | **1.863** | W10 |
-| F8 | 8-param ML | 8 | **9.871** | W10 |
+| F4 | Warehouse | 4 | **0.675** | W11 |
+| F5 | Chemical yield | 4 | **3790** | Ridge x₁→0.43 |
+| F6 | Cake recipe | 5 | **−0.136** | W10 still best (W11 −0.37) |
+| F7 | HP tuning 6D | 6 | **1.866** | W11 |
+| F8 | 8-param ML | 8 | **9.872** | W11 |
 
-**Week 8:** 3/8 · **Week 9:** 4/8 · **Week 10:** **5/8** (F4–F8).
+**Week 8:** 3/8 · **Week 9:** 4/8 · **Week 10:** 5/8 · **Week 11:** **4/8** (F4, F5, F7, F8).
 
 ---
 
@@ -84,7 +84,7 @@ All live under [`weeks/`](weeks/):
 - `WEEK*_REFLECTION.md` — post-result analysis  
 - `WEEK*_DISCUSSION.md` — forum posts  
 
-Latest: [`WEEK11_STRATEGY.md`](weeks/WEEK11_STRATEGY.md) · [`WEEK11_DISCUSSION.md`](weeks/WEEK11_DISCUSSION.md)
+Latest: [`WEEK12_STRATEGY.md`](weeks/WEEK12_STRATEGY.md) · [`WEEK12_DISCUSSION.md`](weeks/WEEK12_DISCUSSION.md) · [`WEEK11_REFLECTION.md`](weeks/WEEK11_REFLECTION.md)
 
 ---
 
