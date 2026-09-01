@@ -1,6 +1,6 @@
 # BBO Capstone Presentation (Component 23.2) — Fill-in text
 
-*Copy each section into the PDF template. First person. Updated after Week 11 (4/8 improved: F4, F5, F7, F8).*
+*Copy each section into the PDF template. First person. Updated after Week 11 results + Week 12 queries submitted (awaiting y).*
 
 ---
 
@@ -18,7 +18,7 @@ Early rounds were broad: one GP + acquisition style for most functions, with mor
 
 Data and failed weeks drove the change. Leaving a known good region without evidence hurt F2 and F6; micro-steps that were too large underperformed on F7; F1 stayed near zero until I stopped polishing a null lobe near (0.73, 0.73) and tested a peer-supported basin near (0.64, 0.68), which finally returned measurable readings (Week 10 ≈−0.008, Week 11 ≈−0.006). Wins on F4, F5 and F8 from Week 8 onward — and again on F4/F5/F7/F8 in Week 11 — rewarded tight local exploit. Week 11’s F6 drop (−0.136 → −0.372) after a small step off the Week 10 centroid reconfirmed that “nearby” is not enough on a sharp basin.
 
-Heuristics that now guide my queries: (1) stay inside a proven high-y cluster unless diagnostics say otherwise; (2) move only the sensitive dimensions (ARD length scales / PCA-style principal axes); (3) keep trust-region steps small late in the budget; (4) treat F1 with a trust gate — exploit only after non-null signal appears; (5) hard-return to the incumbent centroid after a failed neighbour step (F6).
+Heuristics that now guide my queries: (1) stay inside a proven high-y cluster unless diagnostics say otherwise; (2) move only the sensitive dimensions (ARD length scales / PCA-style principal axes); (3) keep trust-region steps small late in the budget; (4) treat F1 with a trust gate — exploit only after non-null signal appears; (5) hard-return to the incumbent centroid after a failed neighbour step (F6). Week 12 applies exactly this policy under a PCA/variance lens: climb the active axis on F5, micro-exploit new bests, and recover F2/F3/F6 to their true centroids.
 
 ---
 
@@ -26,7 +26,7 @@ Heuristics that now guide my queries: (1) stay inside a proven high-y cluster un
 
 The clearest trend is uneven but compounding progress on the mid/high-D functions when I stay local: Weeks 8–11 repeatedly lifted F4, F5, F7 and F8. Week 10 was the strongest single week (5/8); Week 11 added four more bests while F6 failed and F2 missed the 0.777 needle. F1’s signal cluster near (0.64, 0.68) is now validated twice.
 
-Variables that matter most differ by function. F5 is driven by x₁ along a high x₂–x₄ face (ridge climb 0.38→0.43→…). F2 lives on a sharp ridge near high x₁ and very low x₂. F3 is dominated by x₃ (safe vs toxic). F7/F8 behave like a few active coordinates plus flatter ones I largely freeze. That matches an ARD / “principal component” view of the box: not every input deserves equal movement.
+Variables that matter most differ by function. F5 is driven by x₁ along a high x₂–x₄ face (ridge climb 0.38→0.43, and Week 12 probes x₁=0.44). F2 lives on a sharp ridge near high x₁ and very low x₂. F3 is dominated by x₃ (safe vs toxic). F7/F8 behave like a few active coordinates plus flatter ones I largely freeze. That matches an ARD / “principal component” view of the box: not every input deserves equal movement.
 
 These observations changed how I see search: the unit hypercube is not eight independent knobs. It is a set of local basins and ridges. My job is to identify which cluster is real, compress the search around it, and stop spending queries on orthogonal noise.
 
@@ -44,7 +44,7 @@ When results disagree with expectation, I do not inflate the model’s confidenc
 
 ## 5. Next steps and reflection
 
-Next (Week 12 / toward Module 24) I continue the F5 ridge in small x₁ steps, micro-exploit the new F4/F7/F8 incumbents, pull F2 toward the historical 0.777 centroid, protect F3’s −0.011 coords, hard-return F6 to the Week 10 cake cluster, and stay inside F1’s signal lobe. For the final Module 24 round I plan near-pure exploitation if these recoveries and climbs hold, with only a one-step pivot to a secondary cluster if a subspace bet goes flat again.
+Week 12 queries are already submitted under a PCA/ARD lens and await portal returns. They encode the current policy explicitly: F1 stays in the signal lobe (`0.636–0.687`); F2 returns toward the historical 0.777 peak (`0.7179–0.0200`); F3 protects the −0.011 neighbourhood with x₃ locked; F4/F7/F8 take micro-steps from the Week 11 incumbents; F5 continues the ridge at x₁=`0.44` on the locked high face; F6 hard-returns toward the Week 10 cake centroid after the −0.372 miss. For Module 24’s final round I plan near-pure exploitation on these compressed neighbourhoods if Week 12 confirms the climbs and recoveries, with only a one-step pivot to a secondary cluster if a subspace bet goes flat again.
 
 In the wider ML landscape this project is sequential decision-making under a tiny data budget — the same setting as hyperparameter tuning, A/B tests, and experimental design. Gaussian Processes with acquisition functions are a standard tool when evaluations are expensive and uncertainty must drive the next trial.
 
