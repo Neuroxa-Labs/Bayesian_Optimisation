@@ -1,6 +1,6 @@
 # Week 11 Strategy — Clustering lens (11th round)
 
-*After Week 10 (5/8 improved). Queries chosen by targeting proven local clusters / basins.*
+*Complete — **4/8 improved** (F4, F5, F7, F8). See [`WEEK11_REFLECTION.md`](WEEK11_REFLECTION.md).*
 
 ## Cluster map (entering Week 11)
 
