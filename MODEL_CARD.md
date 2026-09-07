@@ -47,16 +47,16 @@
 4. Apply constraints: F3 \(x_3\) lock, F5 high-face ridge, boundary penalties, anti-duplicate.
 5. Submit six-decimal portal strings; append \(y\); repeat.
 
-**Evolution (≈ ten rounds)**
+**Evolution (through Week 12)**
 
 | Phase | What changed |
 |-------|----------------|
 | Early | Broad exploration; learn sign/scale; avoid 0/1 artefacts |
-| Mid | Per-function AF; WhiteKernel on F2; log-y on F5; degenerate length-scale locks |
-| Later | Trust-region exploit around incumbents; trust gate on F1; hyperparameter / LLM-module reflections mapped onto BO knobs (κ, radius, constraints) |
-| Weeks 8–9 | Confirmed gains on F4/F5/F8 (and F7 by W9); F2 remains noise-sensitive near \(x_1\approx 0.72\) |
+| Mid | Per-function AF; WhiteKernel on F2; log-y on F5; locks / trust regions |
+| Weeks 8–9 | Confirmed gains on F4/F5/F8 (and F7 by W9) |
+| Weeks 10–12 | Strong local exploit (W10: 5/8; W11–W12: 4/8 on F4/F5/F7/F8); F1 signal lobe; F6 hard-return after W11 collapse; PCA/ARD discussion lens |
 
-**Techniques used.** GP + EI/UCB; ARD; WhiteKernel; log transform; trust regions; signal thresholds; soft-signal / space-fill when GP untrusted; documented manual overrides in `weeks/WEEK*_STRATEGY.md`.
+**Techniques used.** GP + EI/UCB; ARD; WhiteKernel; log transform; trust regions; signal thresholds / F1 trust gate; documented manual overrides in `weeks/WEEK*_STRATEGY.md`.
 
 **Training data for the surrogate.** The growing evaluation history described in [`DATASHEET.md`](DATASHEET.md) — not an external public corpus.
 
@@ -70,20 +70,20 @@
 - Whether the weekly query **improves** the incumbent.
 - Qualitative diagnostics: length scales, boundary drift, trust-gate pass/fail.
 
-**Summary after Week 9 (best observed ≈)**
+**Summary after Week 12 (best observed ≈)**
 
 | Fn | Best \(y\) (approx.) | Comment |
 |----|----------------------|---------|
-| F1 | \(\sim 10^{-15}\)–\(0\) | No usable peak; trust-gate case |
-| F2 | **0.777** | Sharp/noisy ridge; later returns often lower |
-| F3 | **−0.011** | Safe \(x_3\) band; local moves mixed |
-| F4 | **0.642** | Strong Week 8–9 emergence in basin |
-| F5 | **3769** | Ridge climb \(x_1\): 0.38→0.40→0.41 |
-| F6 | **−0.240** | Sensitive to step size |
-| F7 | **1.858** | Local peak; small W9 gain |
-| F8 | **9.869** | Slow late improvements |
+| F1 | \(\sim 0\) (signal lobe open) | Non-null lobe ~0.64/0.68 validated W10–W12 |
+| F2 | **0.777** | Sharp/noisy ridge; late returns often ~0.54 |
+| F3 | **−0.011** | Safe \(x_3\) band |
+| F4 | **0.679** | Trust-region climb through W12 |
+| F5 | **3801** | Ridge climb \(x_1\): 0.38→0.44 |
+| F6 | **−0.136** | W10 incumbent; W11 collapse then partial W12 return |
+| F7 | **1.872** | Local peak; W12 gain |
+| F8 | **9.873** | Slow late improvements |
 
-Week 8: 3/8 improved (F4, F5, F8). Week 9: 4/8 improved (F4, F5, F7, F8). Progress is **uneven** — consistent with diminishing returns and occasional discontinuous jumps.
+Week 10: 5/8 improved. Weeks 11–12: 4/8 improved (F4, F5, F7, F8). Progress is **uneven** — consistent with diminishing returns, sharp ridges, and occasional discontinuous jumps.
 
 **Fairness metrics.** Not applicable (no demographic groups). “Fairness” here means not wasting budget on hallucinated corners and not over-claiming F1.
 

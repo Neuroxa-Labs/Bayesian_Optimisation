@@ -1,12 +1,19 @@
 # Black-Box Bayesian Optimisation — Capstone
 
-Imperial PCMLAI Stage 2: maximise **eight unknown black-box functions** (2D–8D) with **one query per function per week**.
+Imperial PCMLAI Stage 2 final deliverable: maximise **eight unknown black-box functions** (2D–8D) with **one query per function per week**.
 
 | | |
 |--|--|
 | **Surrogate** | Gaussian Process (Matérn + ARD; WhiteKernel on F2; log-y on F5) |
 | **Acquisition** | EI / UCB + trust-region exploit; trust gate when signal is absent (F1) |
-| **Status** | **Week 11 done (4/8 improved)** · **Week 12 ready** (PCA / ARD lens) |
+| **Status** | **Week 12 complete** · Final repository submission ready |
+| **Public repo** | https://github.com/Neuroxa-Labs/Bayesian_Optimisation |
+
+---
+
+## For a general audience (~100 words)
+
+We ran a careful series of experiments on eight hidden scoring problems (from finding a radiation source to tuning ML models and chemical recipes). Each week we could try only one setting per problem, so guessing at random would waste the budget. Instead we used past results to decide the next try: focus where scores were already improving, change course quickly when a region looked dead, and keep steps small near the best known settings. Over the project this raised several of the scores steadily — especially chemical yield and the warehouse / hyperparameter tasks — and left a clear public record of what we tried and why.
 
 ---
 
@@ -16,13 +23,14 @@ Imperial PCMLAI Stage 2: maximise **eight unknown black-box functions** (2D–8D
 |----------|------|
 | **Datasheet** (Module 21) | [`DATASHEET.md`](DATASHEET.md) |
 | **Model card** (Module 21) | [`MODEL_CARD.md`](MODEL_CARD.md) |
+| **Main pipeline (Jupyter)** | [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) |
+| **23.2 presentation text** | [`docs/BBO_PRESENTATION_23_2.md`](docs/BBO_PRESENTATION_23_2.md) |
+| **Final project reflection** | [`weeks/FINAL_CAPSTONE_REFLECTION.md`](weeks/FINAL_CAPSTONE_REFLECTION.md) |
+| **Successful strategies discussion** | [`weeks/SUCCESSFUL_STRATEGIES_DISCUSSION.md`](weeks/SUCCESSFUL_STRATEGIES_DISCUSSION.md) |
+| **Module 24 RL discussion** | [`weeks/MODULE24_DISCUSSION.md`](weeks/MODULE24_DISCUSSION.md) |
+| **Week 12 reflection** | [`weeks/WEEK12_REFLECTION.md`](weeks/WEEK12_REFLECTION.md) |
 | **Cluster & progress gallery** | [`reports/analysis/cluster_gallery.html`](reports/analysis/cluster_gallery.html) |
 | **Interactive dashboard** | [`reports/progress/bbo_progress_report.html`](reports/progress/bbo_progress_report.html) |
-| **23.2 presentation draft** | [`docs/BBO_PRESENTATION_23_2.md`](docs/BBO_PRESENTATION_23_2.md) |
-| **Main pipeline** | [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) |
-| **Week 11 reflection** | [`weeks/WEEK11_REFLECTION.md`](weeks/WEEK11_REFLECTION.md) |
-| **Week 12 portal queries** | [`weeks/WEEK12_STRATEGY.md`](weeks/WEEK12_STRATEGY.md) |
-| **Week 12 discussion** | [`weeks/WEEK12_DISCUSSION.md`](weeks/WEEK12_DISCUSSION.md) |
 
 ---
 
@@ -30,23 +38,23 @@ Imperial PCMLAI Stage 2: maximise **eight unknown black-box functions** (2D–8D
 
 ```text
 Bayesian_Optimisation/
-├── README.md                 # This file
-├── DATASHEET.md              # Dataset documentation (stable Module 21 URL)
-├── MODEL_CARD.md             # Optimisation approach card (stable Module 21 URL)
-├── docs/                     # Extra write-ups + 23.2 presentation draft
-├── weeks/                    # All weekly strategy / reflection / discussion notes
+├── README.md                 # This file (incl. non-technical summary)
+├── DATASHEET.md              # Dataset documentation (Module 21)
+├── MODEL_CARD.md             # Optimisation approach card (Module 21)
+├── docs/                     # Technical notes + 23.2 presentation draft
+├── weeks/                    # Strategy / reflection / discussion posts
 ├── reports/
 │   ├── progress/             # Dashboard HTML + progress charts
-│   └── analysis/             # Cluster gallery + per-function PNGs
-├── notebooks/                # GP + acquisition pipeline
+│   └── analysis/             # Cluster gallery + analysis PNGs
+├── notebooks/                # GP + acquisition pipeline (Jupyter)
 ├── scripts/                  # append / generate / make_* utilities
 └── data/
     └── function_1/ … function_8/   # .npy history, EXPLANATION_*, analysis_F*.png
 ```
 
-### Visual analysis (Week 10 data)
+**Data note.** Evaluation histories are small NumPy arrays in `data/function_*/` (course portal outputs). There is no large external dataset to host off-GitHub; counts and framing are documented in [`DATASHEET.md`](DATASHEET.md).
 
-KMeans hulls on ARD-selected axes + best-so-far trends (same idea as the Module 23 clustering / PCA discussion lens):
+### Visual analysis
 
 | Figure | File |
 |--------|------|
@@ -59,20 +67,20 @@ Regenerate: `python scripts/make_cluster_gallery.py`
 
 ---
 
-## Best so far (after Week 11)
+## Best so far (after Week 12)
 
 | Fn | Task | Dim | Best y (approx.) | Note |
 |----|------|-----|------------------|------|
-| F1 | Radiation | 2 | ~0 | Signal lobe ~0.64/0.68 (W10–W11) |
-| F2 | Noisy ML | 2 | **0.777** | W11 miss 0.55; return to peak |
+| F1 | Radiation | 2 | ~0 | Signal lobe ~0.64/0.68 (W10–W12) |
+| F2 | Noisy ML | 2 | **0.777** | Sharp ridge; late misses ~0.54 |
 | F3 | Drug side-effects | 3 | **−0.011** | Safe x₃ band |
-| F4 | Warehouse | 4 | **0.675** | W11 |
-| F5 | Chemical yield | 4 | **3790** | Ridge x₁→0.43 |
-| F6 | Cake recipe | 5 | **−0.136** | W10 still best (W11 −0.37) |
-| F7 | HP tuning 6D | 6 | **1.866** | W11 |
-| F8 | 8-param ML | 8 | **9.872** | W11 |
+| F4 | Warehouse | 4 | **0.679** | W12 |
+| F5 | Chemical yield | 4 | **3801** | Ridge x₁→0.44 |
+| F6 | Cake recipe | 5 | **−0.136** | W10 best; W12 partial return |
+| F7 | HP tuning 6D | 6 | **1.872** | W12 |
+| F8 | 8-param ML | 8 | **9.873** | W12 |
 
-**Week 8:** 3/8 · **Week 9:** 4/8 · **Week 10:** 5/8 · **Week 11:** **4/8** (F4, F5, F7, F8).
+**Week 8:** 3/8 · **Week 9:** 4/8 · **Week 10:** 5/8 · **Week 11:** 4/8 · **Week 12:** **4/8** (F4, F5, F7, F8).
 
 ---
 
@@ -82,9 +90,9 @@ All live under [`weeks/`](weeks/):
 
 - `WEEK*_STRATEGY.md` — portal queries + rationale  
 - `WEEK*_REFLECTION.md` — post-result analysis  
-- `WEEK*_DISCUSSION.md` — forum posts  
+- `WEEK*_DISCUSSION.md` / `MODULE24_*` / `FINAL_*` / `SUCCESSFUL_*` — forum posts  
 
-Latest: [`WEEK12_STRATEGY.md`](weeks/WEEK12_STRATEGY.md) · [`WEEK12_DISCUSSION.md`](weeks/WEEK12_DISCUSSION.md) · [`WEEK11_REFLECTION.md`](weeks/WEEK11_REFLECTION.md)
+Latest results: [`WEEK12_REFLECTION.md`](weeks/WEEK12_REFLECTION.md)
 
 ---
 
@@ -94,13 +102,12 @@ Latest: [`WEEK12_STRATEGY.md`](weeks/WEEK12_STRATEGY.md) · [`WEEK12_DISCUSSION.
 pip install numpy scikit-learn scipy matplotlib
 
 # From repo root:
-python scripts/append_weeks_8_10.py   # sync W8–W10 into data/ (idempotent)
+python scripts/append_week12.py          # ensure W12 in data/ (idempotent)
 python scripts/make_cluster_gallery.py
 python scripts/make_progress_chart.py
-python scripts/make_function_analysis.py
 ```
 
-Open `notebooks/BBO_Capstone_Optimized.ipynb` (expects `data/` beside `notebooks/`).
+Open [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) (expects `data/` at repo root).
 
 ---
 
@@ -108,7 +115,7 @@ Open `notebooks/BBO_Capstone_Optimized.ipynb` (expects `data/` beside `notebooks
 
 1. Fit a per-function GP on `data/function_*/`.  
 2. Score candidates with EI or UCB (κ/ξ and trust-region radius tuned by phase).  
-3. Apply constraints (F3 x₃ lock, F5 high face, boundary penalties).  
+3. Apply constraints (F3 x₃ lock, F5 high face, boundary penalties, F1 trust gate).  
 4. Submit one `0.xxxxxx-...` string per function; append `y`; repeat.
 
 Literature / tooling: [`docs/TECHNICAL_JUSTIFICATION.md`](docs/TECHNICAL_JUSTIFICATION.md).

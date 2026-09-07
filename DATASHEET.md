@@ -27,24 +27,24 @@
 
 **Real-world labels (course framing).** F1 radiation detection; F2 noisy ML log-likelihood; F3 drug side-effects; F4 warehouse placement; F5 chemical yield; F6 cake recipe; F7 6-D hyperparameter tuning; F8 8-D ML model score.
 
-**Size (after Week 9 / ~10 portal rounds + initial seed data).** Approximately:
+**Size (after Week 12 / ~12 portal rounds + initial seed data).** Approximately:
 
 | Function | Dim | Approx. observations | Notes |
 |----------|-----|----------------------|--------|
-| F1 | 2 | ~19 | Mostly near-zero outputs |
-| F2 | 2 | ~19 | Noisy; best ≈ 0.777 |
-| F3 | 3 | ~24 | Sensitive \(x_3\) |
-| F4 | 4 | ~40 | Strong recent gains |
-| F5 | 4 | ~30 | High-face ridge |
-| F6 | 5 | ~30 | Interior basin |
-| F7 | 6 | ~40 | Sharp local peak |
-| F8 | 8 | ~50 | Slow late gains |
+| F1 | 2 | ~22 | Sparse; signal lobe ~0.64/0.68 validated W10–W12 |
+| F2 | 2 | ~22 | Noisy ridge; best ≈ 0.777 |
+| F3 | 3 | ~26 | Sensitive \(x_3\); best ≈ −0.011 |
+| F4 | 4 | ~42 | Best ≈ 0.679 (W12) |
+| F5 | 4 | ~32 | High-face ridge; best ≈ 3801 (W12) |
+| F6 | 5 | ~32 | Interior basin; best ≈ −0.136 (W10) |
+| F7 | 6 | ~42 | Local peak; best ≈ 1.872 (W12) |
+| F8 | 8 | ~52 | Slow late gains; best ≈ 9.873 (W12) |
 
-Exact counts live in `data/function_*/initial_inputs.npy` and `initial_outputs.npy` (plus weekly append scripts / strategy logs for portal rounds not yet merged into `.npy`).
+Exact counts live in `data/function_*/initial_inputs.npy` and `initial_outputs.npy`. Weekly portal strings are in `weeks/WEEK*_STRATEGY.md`.
 
 **Format.** NumPy `.npy` arrays; weekly portal strings in `weeks/WEEK*_STRATEGY.md` (`0.xxxxxx-...` to six decimal places); narrative in `data/function_*/EXPLANATION_F*.md` and `weeks/` reflections.
 
-**Completeness / gaps.** No missing labels for submitted queries. **Spatial gaps** remain large: sampling is clustered near incumbents (especially F5 high face, F3 safe \(x_3\) band, F4/F6/F7/F8 basins). F1 is sparse with almost no usable signal. Higher-D boxes (F7/F8) are under-sampled relative to volume.
+**Completeness / gaps.** No missing labels for submitted queries. **Spatial gaps** remain large: sampling is clustered near incumbents (especially F5 high face, F3 safe \(x_3\) band, F4/F6/F7/F8 basins). F1 remains sparse under maximisation but now has a validated non-null lobe near (0.64, 0.68). Higher-D boxes (F7/F8) are under-sampled relative to volume.
 
 **Splits.** Not a supervised train/test product. Chronological rounds act as the natural sequence; leave-one-out style checks are used only as internal GP diagnostics when needed.
 
@@ -58,9 +58,11 @@ Exact counts live in `data/function_*/initial_inputs.npy` and `initial_outputs.n
 
 **Sampling strategy.** Sequential, adaptive, **not** i.i.d. random. Early rounds more exploratory; later rounds increasingly trust-region exploitation around incumbents. F1 uses a trust gate (explore / narrow exploit when space-fill fails).
 
-**Time frame.** Stage 2 weekly cycles across the module calendar (initial seed data from the course plus roughly ten query rounds through Week 9/10).
+**Time frame.** Stage 2 weekly cycles across the module calendar (initial seed data from the course plus twelve query rounds through Week 12).
 
 **Ethics.** Course-sanctioned academic use only; no human subjects; no IRB required.
+
+**Hosting.** Histories are small `.npy` files in this repository under `data/function_*/`. No large external dataset is required; if portal CSV/email attachments are kept privately, they are summarised here and in `weeks/` rather than re-hosted as bulk uploads.
 
 ---
 
