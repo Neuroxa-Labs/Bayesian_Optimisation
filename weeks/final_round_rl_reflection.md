@@ -1,12 +1,12 @@
-# Module 24 Discussion — RL lens (final round)
+# Final-round reflection — RL lens
 
-*Copy-paste for the discussion board. First person. Under 700 words. After Week 12 (4/8 improved).*
+*Discussion-board post for the final query round. First person. Under 700 words. After Week 12 (4/8 improved).*
 
 ---
 
 **Exploration vs exploitation (and how that balance evolved)**
 
-Early in the project I behaved like a high-exploration bandit: wide UCB/EI, space-fill moves, and occasional jumps into empty corners of the unit hypercube. That was rational when every arm (region) was uncertain and I had almost no reward history. As the dataset grew past ~20 points per function, the balance flipped. Proven high-reward neighbourhoods — F4/F5/F7/F8 basins, F5’s x₁ ridge, F1’s (0.64, 0.68) signal lobe — became the arms I pull almost every week. Exploration did not disappear; it shrank to places where the surrogate is still untrusted (historical F1) or where a sensitive coordinate is still climbing (F5). Week 12 confirmed the late-game policy: four new bests from local exploit, a partial F6 recovery after a failed neighbour step, and another F2 miss on a razor ridge. For the final Module 24 queries I therefore take almost pure exploitation inside compressed trust regions, with only tight recovery pulls on F2/F3/F6.
+Early in the project I behaved like a high-exploration bandit: wide UCB/EI, space-fill moves, and occasional jumps into empty corners of the unit hypercube. That was rational when every arm (region) was uncertain and I had almost no reward history. As the dataset grew past ~20 points per function, the balance flipped. Proven high-reward neighbourhoods — F4/F5/F7/F8 basins, F5’s x₁ ridge, F1’s (0.64, 0.68) signal lobe — became the arms I pull almost every week. Exploration did not disappear; it shrank to places where the surrogate is still untrusted (historical F1) or where a sensitive coordinate is still climbing (F5). Week 12 confirmed the late-game policy: four new bests from local exploit, a partial F6 recovery after a failed neighbour step, and another F2 miss on a razor ridge. For the final-round queries I therefore take almost pure exploitation inside compressed trust regions, with only tight recovery pulls on F2/F3/F6.
 
 **Feedback, reward expectations, and Q-style updates**
 

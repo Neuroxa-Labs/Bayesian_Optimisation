@@ -1,6 +1,6 @@
-# Datasheet — BBO Capstone Query History
+# Datasheet — BBO query history
 
-*Documentation for the black-box optimisation dataset (query inputs and function evaluations) used in the Imperial PCMLAI BBO capstone. Follows the Mini-lesson 21.1 datasheet framework.*
+*Transparency documentation for the black-box optimisation dataset (query inputs and function evaluations). Written for the Imperial PCMLAI BBO capstone and kept as a portfolio artefact.*
 
 ---
 

@@ -34,4 +34,4 @@
 
 ## Next
 
-Module 24 final round: [`MODULE24_DISCUSSION.md`](MODULE24_DISCUSSION.md) · near-pure exploit + recoveries.
+Final round: [`final_round_rl_reflection.md`](final_round_rl_reflection.md) · [`final_round_strategy.md`](final_round_strategy.md).

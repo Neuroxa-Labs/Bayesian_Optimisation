@@ -1,6 +1,6 @@
-# Model Card — BBO Capstone Optimisation Approach
+# Model card — BBO optimisation approach
 
-*Documentation for the optimisation “model” (surrogate + acquisition + weekly policy) used in the Imperial PCMLAI BBO capstone. Follows the Mini-lesson 21.2 model card framework.*
+*Transparency documentation for the optimisation “model” (surrogate + acquisition + weekly policy). Written for the Imperial PCMLAI BBO capstone and kept as a portfolio artefact.*
 
 ---
 

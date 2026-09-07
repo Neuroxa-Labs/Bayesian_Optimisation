@@ -1,6 +1,6 @@
-# BBO Capstone Presentation (Component 23.2) — Fill-in text
+# Approach presentation — fill-in text
 
-*Copy each section into the PDF template. First person. Updated after Week 12 results (4/8 improved: F4, F5, F7, F8).*
+*Portfolio write-up of the BBO method (also used for the course presentation component). First person. Updated after Week 12 results (4/8 improved: F4, F5, F7, F8).*
 
 ---
 
@@ -48,7 +48,7 @@ When results disagree with expectation, I shrink the step, return toward the inc
 
 ## 5. Next steps and reflection
 
-Week 12 is complete (4/8 improved). For Module 24’s final round I plan near-pure exploitation: continue the F5 ridge one more small x₁ step, micro-exploit the new F4/F7/F8 incumbents, pull F2 even closer to the historical [≈0.7179, 0.02] peak, protect F3’s −0.011 neighbourhood, finish F6’s return toward the Week 10 cake centroid, and stay inside F1’s signal lobe. I allow only a one-step pivot to a secondary cluster if a recovery goes flat; I will not reopen full-box exploration unless a function is still effectively null.
+Week 12 is complete (4/8 improved). For the **final round** I plan near-pure exploitation: continue the F5 ridge one more small x₁ step, micro-exploit the new F4/F7/F8 incumbents, pull F2 even closer to the historical [≈0.7179, 0.02] peak, protect F3’s −0.011 neighbourhood, finish F6’s return toward the Week 10 cake centroid, and stay inside F1’s signal lobe. I allow only a one-step pivot to a secondary cluster if a recovery goes flat; I will not reopen full-box exploration unless a function is still effectively null.
 
 In the wider machine-learning landscape this project is sequential decision-making under a tiny data budget — the same setting as hyperparameter tuning, A/B testing, and experimental design. Gaussian Processes with acquisition functions are a standard tool when each evaluation is expensive and uncertainty must drive the next trial. The ARD / principal-axis view also mirrors dimensionality-reduction practice: spend effort where the variance in outcomes actually lives.
 

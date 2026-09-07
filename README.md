@@ -1,13 +1,15 @@
 # Black-Box Bayesian Optimisation — Capstone
 
-Imperial PCMLAI Stage 2 final deliverable: maximise **eight unknown black-box functions** (2D–8D) with **one query per function per week**.
+Imperial PCMLAI Stage 2: maximise **eight unknown black-box functions** (2D–8D) with **one query per function per week**.
+
+This repository is both a **portfolio artefact** (clear method, results, and docs) and the **course submission** (all required materials linked below).
 
 | | |
 |--|--|
 | **Surrogate** | Gaussian Process (Matérn + ARD; WhiteKernel on F2; log-y on F5) |
 | **Acquisition** | EI / UCB + trust-region exploit; trust gate when signal is absent (F1) |
-| **Status** | **Week 12 complete** · Final repository submission ready |
-| **Public repo** | https://github.com/Neuroxa-Labs/Bayesian_Optimisation |
+| **Status** | **Week 12 complete** · Final-round queries ready · Public portfolio |
+| **Repo** | https://github.com/Neuroxa-Labs/Bayesian_Optimisation |
 
 ---
 
@@ -21,16 +23,18 @@ We ran a careful series of experiments on eight hidden scoring problems (from fi
 
 | Resource | Link |
 |----------|------|
-| **Datasheet** (Module 21) | [`DATASHEET.md`](DATASHEET.md) |
-| **Model card** (Module 21) | [`MODEL_CARD.md`](MODEL_CARD.md) |
+| **Datasheet** | [`DATASHEET.md`](DATASHEET.md) |
+| **Model card** | [`MODEL_CARD.md`](MODEL_CARD.md) |
 | **Main pipeline (Jupyter)** | [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) |
-| **23.2 presentation text** | [`docs/BBO_PRESENTATION_23_2.md`](docs/BBO_PRESENTATION_23_2.md) |
-| **Final project reflection** | [`weeks/FINAL_CAPSTONE_REFLECTION.md`](weeks/FINAL_CAPSTONE_REFLECTION.md) |
-| **Successful strategies discussion** | [`weeks/SUCCESSFUL_STRATEGIES_DISCUSSION.md`](weeks/SUCCESSFUL_STRATEGIES_DISCUSSION.md) |
-| **Module 24 RL discussion** | [`weeks/MODULE24_DISCUSSION.md`](weeks/MODULE24_DISCUSSION.md) |
-| **Week 12 reflection** | [`weeks/WEEK12_REFLECTION.md`](weeks/WEEK12_REFLECTION.md) |
+| **Approach presentation** | [`docs/approach_presentation.md`](docs/approach_presentation.md) |
+| **Project reflection** | [`weeks/project_reflection.md`](weeks/project_reflection.md) |
+| **Successful strategies** | [`weeks/successful_strategies_reflection.md`](weeks/successful_strategies_reflection.md) |
+| **Final-round RL reflection** | [`weeks/final_round_rl_reflection.md`](weeks/final_round_rl_reflection.md) |
+| **Final-round portal queries** | [`weeks/final_round_strategy.md`](weeks/final_round_strategy.md) |
+| **Week 12 results** | [`weeks/WEEK12_REFLECTION.md`](weeks/WEEK12_REFLECTION.md) |
 | **Cluster & progress gallery** | [`reports/analysis/cluster_gallery.html`](reports/analysis/cluster_gallery.html) |
 | **Interactive dashboard** | [`reports/progress/bbo_progress_report.html`](reports/progress/bbo_progress_report.html) |
+| **Course ↔ file map** | [`docs/COURSE_INDEX.md`](docs/COURSE_INDEX.md) |
 
 ---
 
@@ -38,21 +42,18 @@ We ran a careful series of experiments on eight hidden scoring problems (from fi
 
 ```text
 Bayesian_Optimisation/
-├── README.md                 # This file (incl. non-technical summary)
-├── DATASHEET.md              # Dataset documentation (Module 21)
-├── MODEL_CARD.md             # Optimisation approach card (Module 21)
-├── docs/                     # Technical notes + 23.2 presentation draft
-├── weeks/                    # Strategy / reflection / discussion posts
-├── reports/
-│   ├── progress/             # Dashboard HTML + progress charts
-│   └── analysis/             # Cluster gallery + analysis PNGs
-├── notebooks/                # GP + acquisition pipeline (Jupyter)
-├── scripts/                  # append / generate / make_* utilities
-└── data/
-    └── function_1/ … function_8/   # .npy history, EXPLANATION_*, analysis_F*.png
+├── README.md
+├── DATASHEET.md              # Data transparency
+├── MODEL_CARD.md             # Method transparency
+├── docs/                     # Technical notes, presentation, course index
+├── weeks/                    # Weekly strategy / reflection / discussions
+├── reports/                  # Dashboards + cluster gallery
+├── notebooks/                # GP + acquisition pipeline
+├── scripts/                  # Reproducible utilities
+└── data/function_1…8/        # .npy history + per-function notes
 ```
 
-**Data note.** Evaluation histories are small NumPy arrays in `data/function_*/` (course portal outputs). There is no large external dataset to host off-GitHub; counts and framing are documented in [`DATASHEET.md`](DATASHEET.md).
+**Data note.** Histories are small NumPy arrays in `data/function_*/` (course portal outputs). No large external dataset is hosted on GitHub; see [`DATASHEET.md`](DATASHEET.md).
 
 ### Visual analysis
 
@@ -62,8 +63,6 @@ Bayesian_Optimisation/
 | Best-so-far progress | [`progress_best_so_far.png`](reports/analysis/progress_best_so_far.png) |
 | Hull + progress pairs (F3/F5/F7) | [`cluster_progress_pairs.png`](reports/analysis/cluster_progress_pairs.png) |
 | HTML viewer | [`cluster_gallery.html`](reports/analysis/cluster_gallery.html) |
-
-Regenerate: `python scripts/make_cluster_gallery.py`
 
 ---
 
@@ -86,13 +85,7 @@ Regenerate: `python scripts/make_cluster_gallery.py`
 
 ## Weekly notes
 
-All live under [`weeks/`](weeks/):
-
-- `WEEK*_STRATEGY.md` — portal queries + rationale  
-- `WEEK*_REFLECTION.md` — post-result analysis  
-- `WEEK*_DISCUSSION.md` / `MODULE24_*` / `FINAL_*` / `SUCCESSFUL_*` — forum posts  
-
-Latest results: [`WEEK12_REFLECTION.md`](weeks/WEEK12_REFLECTION.md)
+Under [`weeks/`](weeks/): `WEEK*_STRATEGY.md`, `WEEK*_REFLECTION.md`, `WEEK*_DISCUSSION.md`, plus final-round and project-level reflections.
 
 ---
 
@@ -102,20 +95,19 @@ Latest results: [`WEEK12_REFLECTION.md`](weeks/WEEK12_REFLECTION.md)
 pip install numpy scikit-learn scipy matplotlib
 
 # From repo root:
-python scripts/append_week12.py          # ensure W12 in data/ (idempotent)
+python scripts/append_week12.py
 python scripts/make_cluster_gallery.py
-python scripts/make_progress_chart.py
 ```
 
-Open [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) (expects `data/` at repo root).
+Open [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb).
 
 ---
 
 ## Method (short)
 
 1. Fit a per-function GP on `data/function_*/`.  
-2. Score candidates with EI or UCB (κ/ξ and trust-region radius tuned by phase).  
-3. Apply constraints (F3 x₃ lock, F5 high face, boundary penalties, F1 trust gate).  
+2. Score candidates with EI or UCB (trust-region radius by phase).  
+3. Apply constraints (F3 x₃ lock, F5 high face, F1 trust gate).  
 4. Submit one `0.xxxxxx-...` string per function; append `y`; repeat.
 
-Literature / tooling: [`docs/TECHNICAL_JUSTIFICATION.md`](docs/TECHNICAL_JUSTIFICATION.md).
+Details: [`docs/TECHNICAL_JUSTIFICATION.md`](docs/TECHNICAL_JUSTIFICATION.md).

@@ -1,4 +1,4 @@
-# Week 13 / Module 24 Strategy — Final round
+# Final-round strategy — last portal queries
 
 *After Week 12 (4/8 improved: F4, F5, F7, F8). Near-pure exploitation + recoveries. Last portal submission.*
 
@@ -37,4 +37,4 @@ Function 8:  0.144000-0.060000-0.210000-0.050000-0.414000-0.510000-0.216000-0.91
 | F7 | Micro from W12 **1.872** |
 | F8 | Micro from W12 **9.873** |
 
-Discussion (RL): [`MODULE24_DISCUSSION.md`](MODULE24_DISCUSSION.md).
+Discussion (RL lens): [`final_round_rl_reflection.md`](final_round_rl_reflection.md).

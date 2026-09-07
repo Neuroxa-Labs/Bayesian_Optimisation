@@ -1,6 +1,6 @@
-# Successful Optimisation Strategies — Discussion
+# Successful optimisation strategies — reflection
 
-*Copy-paste for the discussion board. First person. Under 2000 words. Peer example: Matt (public Capstone repo / multi-model pipeline).*
+*Discussion-board post on what worked, why, and peer comparison. First person. Under 2000 words. Peer example: Matt (public Capstone repo / multi-model pipeline).*
 
 **Repository:** https://github.com/Neuroxa-Labs/Bayesian_Optimisation
 

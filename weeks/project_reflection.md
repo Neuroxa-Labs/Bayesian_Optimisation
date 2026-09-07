@@ -1,6 +1,6 @@
-# Final BBO Capstone Reflection
+# Project reflection — end of optimisation
 
-*Discussion-board post. First person. Under 2000 words. Structured like a full end-of-project reflection; content is our actual GP + trust-region pipeline (not peer ensembles/NN).*
+*Full end-of-project reflection for the discussion board. First person. Under 2000 words.*
 
 **Repository:** https://github.com/Neuroxa-Labs/Bayesian_Optimisation
 
@@ -28,7 +28,7 @@ The implementation developed considerably over the course of the project. Each b
 
 **Weeks 9–10.** I compressed steps further and treated ARD length scales as a PCA-style guide to which dimensions deserve movement. Week 10 was the strongest single round (**5/8** improved), including a large F6 jump to −0.136 and F1’s first measurable reading in the peer-supported (0.64, 0.68) lobe after months of near-zero returns near (0.73, 0.73). F1 also gained an explicit **trust gate**: refuse GP exploitation while every label is ~0; only exploit after a real signal cluster appears.
 
-**Weeks 11–12.** Clustering / PCA discussion lenses matched what the code already did — stay inside proven basins; move only sensitive axes. Week 11 improved F4/F5/F7/F8 again but **collapsed F6** (−0.136 → −0.372) after a small step off the Week 10 centroid; the code/policy response was a hard-return rule. Week 12 continued the F5 ridge (x₁=0.44 → ≈3801), micro-gains on F4/F7/F8, and a partial F6 recovery (−0.205), while F2 again missed the 0.777 needle. Repository work matured in parallel: Module 21 datasheet/model card, HTML dashboard, and an ARD-axis cluster gallery.
+**Weeks 11–12.** Clustering / PCA discussion lenses matched what the code already did — stay inside proven basins; move only sensitive axes. Week 11 improved F4/F5/F7/F8 again but **collapsed F6** (−0.136 → −0.372) after a small step off the Week 10 centroid; the code/policy response was a hard-return rule. Week 12 continued the F5 ridge (x₁=0.44 → ≈3801), micro-gains on F4/F7/F8, and a partial F6 recovery (−0.205), while F2 again missed the 0.777 needle. Repository work matured in parallel: datasheet and model card, HTML dashboard, and an ARD-axis cluster gallery.
 
 The changes with the greatest practical impact were **per-function GP policies**, **trust regions + locks**, **F1’s trust gate**, **F5’s ridge discipline**, **noise/log handling on F2/F5**, and the late-project rule **never leave a validated basin without evidence**. Diagnostics and weekly markdown (strategy / reflection / discussion) mattered almost as much as the optimiser, because they forced an evidence-based portal string instead of “whatever acquisition ranked first.”
 
