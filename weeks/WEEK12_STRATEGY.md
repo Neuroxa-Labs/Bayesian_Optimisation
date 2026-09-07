@@ -1,6 +1,6 @@
 # Week 12 Strategy — PCA / ARD lens (12th round)
 
-*After Week 11 (4/8 improved: F4, F5, F7, F8). Compress on principal / sensitive axes; recover F6.*
+*Complete — **4/8 improved** (F4, F5, F7, F8). See [`WEEK12_REFLECTION.md`](WEEK12_REFLECTION.md).*
 
 ## Policy
 
