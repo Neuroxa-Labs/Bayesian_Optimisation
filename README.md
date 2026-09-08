@@ -107,24 +107,15 @@ Full visual pack: [`reports/analysis/README.md`](reports/analysis/README.md).
 
 ---
 
-## Results — compact week comparison
+## Results — best-so-far by week
 
-Incumbent = best \(y\) seen so far. Few columns so the table stays readable. Bold = new best that week.
+Incumbent = best \(y\) seen so far. Compact chart below (small type) so **task**, **dimension**, and **Weeks 8–12** all fit. **Bold** cells = improved versus the previous column.
 
-| | Seed | W8 | W10 | W12 |
-|--|-----:|---:|----:|----:|
-| **F1** | **7.71e−16** | 7.71e−16 | 7.71e−16 | 7.71e−16 |
-| **F2** | 0.611 | **0.777** | 0.777 | 0.777 |
-| **F3** | −0.035 | **−0.011** | −0.011 | −0.011 |
-| **F4** | −4.03 | 0.572 | **0.667** | **0.679** |
-| **F5** | 1089 | 3760 | **3779** | **3801** |
-| **F6** | −0.714 | −0.240 | **−0.136** | −0.136 |
-| **F7** | 1.365 | 1.857 | **1.863** | **1.872** |
-| **F8** | 9.598 | 9.868 | **9.871** | **9.873** |
+![Best-so-far by week (Seed, W8–W12)](reports/analysis/results_by_week.png)
 
 **Queries that beat the previous best:** W8 3/8 · W9 4/8 · W10 **5/8** · W11 4/8 · W12 4/8 (F4, F5, F7, F8).
 
-**How to read this.** Seed = after the free starting data. W8 / W10 / W12 = after those weekly rounds. F5’s jump and F4/F7/F8’s late climb are the clearest “BO paid off” stories; F1/F2/F6 show how fragile sparse peaks and sharp basins can be.
+**How to read this.** Seed = after the free starting data. W8–W12 = after those weekly rounds. F5’s jump and F4/F7/F8’s late climb are the clearest gains; F1/F2/F6 show how fragile sparse peaks and sharp basins can be. F1’s absolute best remains **7.711×10⁻¹⁶**; Weeks 10–12 still opened a measurable lobe near (0.64, 0.68) with readings −0.00807 → −0.00623 → −0.00512.
 
 **Week 13 portal block** (final round — see [`WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md)):
 
