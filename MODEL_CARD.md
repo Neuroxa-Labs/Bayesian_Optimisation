@@ -47,7 +47,7 @@
 4. Apply constraints: F3 \(x_3\) lock, F5 high-face ridge, boundary penalties, anti-duplicate.
 5. Submit six-decimal portal strings; append \(y\); repeat.
 
-**Evolution (through Week 12)**
+**Evolution (through Week 13 queries)**
 
 | Phase | What changed |
 |-------|----------------|
@@ -55,6 +55,7 @@
 | Mid | Per-function AF; WhiteKernel on F2; log-y on F5; locks / trust regions |
 | Weeks 8–9 | Confirmed gains on F4/F5/F8 (and F7 by W9) |
 | Weeks 10–12 | Strong local exploit (W10: 5/8; W11–W12: 4/8 on F4/F5/F7/F8); F1 signal lobe; F6 hard-return after W11 collapse; PCA/ARD discussion lens |
+| Week 13 (final) | Near-pure exploit queries locked — see [`weeks/WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md); portal `y` pending |
 
 **Techniques used.** GP + EI/UCB; ARD; WhiteKernel; log transform; trust regions; signal thresholds / F1 trust gate; documented manual overrides in `weeks/WEEK*_STRATEGY.md`.
 

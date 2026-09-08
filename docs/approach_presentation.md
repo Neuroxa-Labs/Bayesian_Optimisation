@@ -48,7 +48,7 @@ When results disagree with expectation, I shrink the step, return toward the inc
 
 ## 5. Next steps and reflection
 
-Week 12 is complete (4/8 improved). For the **final round** I plan near-pure exploitation: continue the F5 ridge one more small x₁ step, micro-exploit the new F4/F7/F8 incumbents, pull F2 even closer to the historical [≈0.7179, 0.02] peak, protect F3’s −0.011 neighbourhood, finish F6’s return toward the Week 10 cake centroid, and stay inside F1’s signal lobe. I allow only a one-step pivot to a secondary cluster if a recovery goes flat; I will not reopen full-box exploration unless a function is still effectively null.
+Week 12 is complete (4/8 improved). **Week 13 / final-round queries are locked** under near-pure exploitation: F1 stays in the signal lobe (`0.635–0.688`); F2 returns toward the historical 0.777 peak (`0.717870–0.020000`); F3 protects the −0.011 neighbourhood with x₃ locked; F4/F7/F8 take micro-steps from the Week 12 incumbents; F5 continues the ridge at x₁=`0.45` on the locked high face; F6 hard-returns toward the Week 10 cake centroid. Portal returns for Week 13 are still pending. I will not reopen full-box exploration unless a function is still effectively null.
 
 In the wider machine-learning landscape this project is sequential decision-making under a tiny data budget — the same setting as hyperparameter tuning, A/B testing, and experimental design. Gaussian Processes with acquisition functions are a standard tool when each evaluation is expensive and uncertainty must drive the next trial. The ARD / principal-axis view also mirrors dimensionality-reduction practice: spend effort where the variance in outcomes actually lives.
 

@@ -34,4 +34,4 @@
 
 ## Next
 
-Final round: [`final_round_rl_reflection.md`](final_round_rl_reflection.md) · [`final_round_strategy.md`](final_round_strategy.md).
+Final round: [`WEEK13_STRATEGY.md`](WEEK13_STRATEGY.md) · [`final_round_strategy.md`](final_round_strategy.md) · [`final_round_rl_reflection.md`](final_round_rl_reflection.md).

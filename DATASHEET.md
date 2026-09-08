@@ -27,7 +27,7 @@
 
 **Real-world labels (course framing).** F1 radiation detection; F2 noisy ML log-likelihood; F3 drug side-effects; F4 warehouse placement; F5 chemical yield; F6 cake recipe; F7 6-D hyperparameter tuning; F8 8-D ML model score.
 
-**Size (after Week 12 / ~12 portal rounds + initial seed data).** Approximately:
+**Size (after Week 12 results; Week 13 queries submitted, `y` pending).** Approximately:
 
 | Function | Dim | Approx. observations | Notes |
 |----------|-----|----------------------|--------|
@@ -58,7 +58,7 @@ Exact counts live in `data/function_*/initial_inputs.npy` and `initial_outputs.n
 
 **Sampling strategy.** Sequential, adaptive, **not** i.i.d. random. Early rounds more exploratory; later rounds increasingly trust-region exploitation around incumbents. F1 uses a trust gate (explore / narrow exploit when space-fill fails).
 
-**Time frame.** Stage 2 weekly cycles across the module calendar (initial seed data from the course plus twelve query rounds through Week 12).
+**Time frame.** Stage 2 weekly cycles across the module calendar (initial seed data from the course plus twelve completed query rounds through Week 12, and Week 13 / final-round inputs documented in `weeks/WEEK13_STRATEGY.md` awaiting portal outputs).
 
 **Ethics.** Course-sanctioned academic use only; no human subjects; no IRB required.
 

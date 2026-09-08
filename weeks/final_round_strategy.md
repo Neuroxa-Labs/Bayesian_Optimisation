@@ -1,17 +1,10 @@
-# Final-round strategy — last portal queries
+# Final-round strategy — Week 13 portal queries
 
-*After Week 12 (4/8 improved: F4, F5, F7, F8). Near-pure exploitation + recoveries. Last portal submission.*
+*Portfolio alias for the last weekly submission. Canonical weekly file: [`WEEK13_STRATEGY.md`](WEEK13_STRATEGY.md).*
 
-## Policy
+After Week 12 (4/8 improved: F4, F5, F7, F8). Near-pure exploitation + recoveries.
 
-| Mode | Functions | Action |
-|------|-----------|--------|
-| **Ridge continue** | F5 | x₁ → 0.45 on locked high face |
-| **Micro on W12 best** | F4, F7, F8 | Tiny new offsets from incumbents |
-| **Hard return to historical best** | F2, F3, F6 | As close as allowed to verified peak (new coords) |
-| **Signal lobe** | F1 | Stay in ~0.64/0.68 |
-
-## Approved portal block
+## Portal block
 
 ```
 Function 1:  0.635000-0.688000
@@ -24,17 +17,5 @@ Function 7:  0.074000-0.424000-0.299000-0.158000-0.346000-0.672000
 Function 8:  0.144000-0.060000-0.210000-0.050000-0.414000-0.510000-0.216000-0.917000
 ```
 
-## One-line rationale
-
-| Fn | Why |
-|----|-----|
-| F1 | Signal lobe micro (W12 −0.005) |
-| F2 | Exact neighbourhood of historical **0.777** at [0.717869, 0.02] |
-| F3 | Exact neighbourhood of **−0.011** peak; x₃ locked |
-| F4 | Micro from W12 **0.679** |
-| F5 | Ridge continue x₁=**0.45** (W12 0.44 → 3801) |
-| F6 | Finish return to W10 **−0.136** centroid |
-| F7 | Micro from W12 **1.872** |
-| F8 | Micro from W12 **9.873** |
-
-Discussion (RL lens): [`final_round_rl_reflection.md`](final_round_rl_reflection.md).
+Full rationale: [`WEEK13_STRATEGY.md`](WEEK13_STRATEGY.md).  
+RL reflection: [`final_round_rl_reflection.md`](final_round_rl_reflection.md).

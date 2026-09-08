@@ -8,7 +8,7 @@ This repository is both a **portfolio artefact** (clear method, results, and doc
 |--|--|
 | **Surrogate** | Gaussian Process (Matérn + ARD; WhiteKernel on F2; log-y on F5) |
 | **Acquisition** | EI / UCB + trust-region exploit; trust gate when signal is absent (F1) |
-| **Status** | **Week 12 complete** · Final-round queries ready · Public portfolio |
+| **Status** | **Week 12 done** · **Week 13 / final-round queries locked** · Awaiting portal `y` |
 | **Repo** | https://github.com/Neuroxa-Labs/Bayesian_Optimisation |
 
 ---
@@ -29,8 +29,8 @@ We ran a careful series of experiments on eight hidden scoring problems (from fi
 | **Approach presentation** | [`docs/approach_presentation.md`](docs/approach_presentation.md) |
 | **Project reflection** | [`weeks/project_reflection.md`](weeks/project_reflection.md) |
 | **Successful strategies** | [`weeks/successful_strategies_reflection.md`](weeks/successful_strategies_reflection.md) |
+| **Final-round / Week 13 queries** | [`weeks/WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md) · [`weeks/final_round_strategy.md`](weeks/final_round_strategy.md) |
 | **Final-round RL reflection** | [`weeks/final_round_rl_reflection.md`](weeks/final_round_rl_reflection.md) |
-| **Final-round portal queries** | [`weeks/final_round_strategy.md`](weeks/final_round_strategy.md) |
 | **Week 12 results** | [`weeks/WEEK12_REFLECTION.md`](weeks/WEEK12_REFLECTION.md) |
 | **Cluster & progress gallery** | [`reports/analysis/cluster_gallery.html`](reports/analysis/cluster_gallery.html) |
 | **Interactive dashboard** | [`reports/progress/bbo_progress_report.html`](reports/progress/bbo_progress_report.html) |
@@ -79,7 +79,21 @@ Bayesian_Optimisation/
 | F7 | HP tuning 6D | 6 | **1.872** | W12 |
 | F8 | 8-param ML | 8 | **9.873** | W12 |
 
-**Week 8:** 3/8 · **Week 9:** 4/8 · **Week 10:** 5/8 · **Week 11:** 4/8 · **Week 12:** **4/8** (F4, F5, F7, F8).
+**Week 8:** 3/8 · **Week 9:** 4/8 · **Week 10:** 5/8 · **Week 11:** 4/8 · **Week 12:** **4/8** (F4, F5, F7, F8).  
+**Week 13:** final queries locked (see [`WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md)); results pending.
+
+### Week 13 portal queries (final round)
+
+```
+Function 1:  0.635000-0.688000
+Function 2:  0.717870-0.020000
+Function 3:  0.492580-0.691590-0.401000
+Function 4:  0.405000-0.412000-0.354000-0.414000
+Function 5:  0.450000-0.980000-0.980000-0.980000
+Function 6:  0.441200-0.249200-0.590800-0.728700-0.131200
+Function 7:  0.074000-0.424000-0.299000-0.158000-0.346000-0.672000
+Function 8:  0.144000-0.060000-0.210000-0.050000-0.414000-0.510000-0.216000-0.917000
+```
 
 ---
 
