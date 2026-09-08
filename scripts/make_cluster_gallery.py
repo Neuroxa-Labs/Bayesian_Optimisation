@@ -310,7 +310,8 @@ Regenerate: `python scripts/make_cluster_gallery.py`
 ![Pairs highlight](cluster_progress_pairs.png)
 
 > **GitHub tip:** This Markdown page is the gallery that renders online. HTML files (including [`cluster_gallery.html`](cluster_gallery.html)) do not execute in GitHub’s code browser — open them locally if needed.  
-> Early per-week snapshots (weeks 2–6) live under [`archive/`](archive/).
+> Weekly per-function snapshots through Week 12: [`archive/`](archive/).  
+> Compact incumbent table: [`results_by_week.png`](results_by_week.png).
 """
     p_md = OUT / "README.md"
     p_md.write_text(md, encoding="utf-8")

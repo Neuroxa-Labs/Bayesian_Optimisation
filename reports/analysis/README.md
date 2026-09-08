@@ -12,6 +12,8 @@ Regenerate: `python scripts/make_cluster_gallery.py`
 | `cluster_progress_pairs_1.png` | Hull + progress, F1–F4 |
 | `cluster_progress_pairs_2.png` | Hull + progress, F5–F8 |
 | `cluster_progress_pairs.png` | Highlight pair set (F3, F5, F7) |
+| `results_by_week.png` | Compact Seed / W8–W12 incumbent table |
+| `archive/` | Per-function weekly snapshots through Week 12 |
 
 ## 3D promising clusters (F1–F8)
 
@@ -36,4 +38,5 @@ Regenerate: `python scripts/make_cluster_gallery.py`
 ![Pairs highlight](cluster_progress_pairs.png)
 
 > **GitHub tip:** This Markdown page is the gallery that renders online. HTML files (including [`cluster_gallery.html`](cluster_gallery.html)) do not execute in GitHub’s code browser — open them locally if needed.  
-> Early per-week snapshots (weeks 2–6) live under [`archive/`](archive/).
+> Weekly per-function snapshots through Week 12: [`archive/`](archive/).  
+> Compact incumbent table: [`results_by_week.png`](results_by_week.png).
