@@ -53,22 +53,37 @@ Full visual pack (3D cluster hulls + pair panels): [`reports/analysis/README.md`
 
 ---
 
-## Results after Week 12
+## Results — best-so-far by week
 
-| Fn | Task | Dim | Best y | Note |
-|----|------|-----|--------|------|
-| F1 | Radiation | 2 | ~0 | Signal lobe ~0.64 / 0.68 |
-| F2 | Noisy ML | 2 | **0.777** | Sharp ridge |
-| F3 | Drug side-effects | 3 | **−0.011** | Safe x₃ band |
-| F4 | Warehouse | 4 | **0.679** | Week 12 |
-| F5 | Chemical yield | 4 | **3801** | Ridge x₁ → 0.44 |
-| F6 | Cake recipe | 5 | **−0.136** | Week 10 incumbent |
-| F7 | HP tuning | 6 | **1.872** | Week 12 |
-| F8 | 8-param ML | 8 | **9.873** | Week 12 |
+Values are the **incumbent** (running max of \(y\)) after each round. Bold = improved that week.
 
-Late streak: Week 10 **5/8** · Weeks 11–12 **4/8** each (F4, F5, F7, F8).
+### Late rounds (Weeks 8–12)
 
-Per-function 9-panel diagnostics and write-ups: `data/function_*/analysis_F*.png` and `EXPLANATION_F*.md`.
+| Fn | Task | Dim | Seed | W8 | W9 | W10 | W11 | W12 |
+|----|------|-----|------|----|----|-----|-----|-----|
+| F1 | Radiation | 2 | **7.711×10⁻¹⁶** | 7.711×10⁻¹⁶ | 7.711×10⁻¹⁶ | 7.711×10⁻¹⁶ | 7.711×10⁻¹⁶ | 7.711×10⁻¹⁶ |
+| F2 | Noisy ML | 2 | 0.611 | **0.777** | 0.777 | 0.777 | 0.777 | 0.777 |
+| F3 | Drug side-effects | 3 | −0.035 | **−0.011** | −0.011 | −0.011 | −0.011 | −0.011 |
+| F4 | Warehouse | 4 | −4.026 | 0.572 | **0.642** | **0.667** | **0.675** | **0.679** |
+| F5 | Chemical yield | 4 | 1089 | 3760 | **3769** | **3779** | **3790** | **3801** |
+| F6 | Cake recipe | 5 | −0.714 | −0.240 | −0.240 | **−0.136** | −0.136 | −0.136 |
+| F7 | HP tuning | 6 | 1.365 | 1.857 | **1.858** | **1.863** | **1.866** | **1.872** |
+| F8 | 8-param ML | 8 | 9.598 | 9.868 | **9.869** | **9.871** | **9.872** | **9.873** |
+
+**Improved count:** W8 **3/8** · W9 **4/8** · W10 **5/8** · W11 **4/8** · W12 **4/8** (F4, F5, F7, F8).
+
+### Notes on the incumbents
+
+| Fn | Detail |
+|----|--------|
+| **F1** | Absolute best remains the seed reading **7.711×10⁻¹⁶**. Weeks 10–12 opened a measurable signal lobe near (0.64, 0.68) with readings **−0.00807 → −0.00623 → −0.00512** (still below the seed max, but the first non-null basin). |
+| F2 | Sharp ridge peak **0.776645**; late neighbour steps often land ~0.54. |
+| F3 | Safe \(x_3\) band; best **−0.011366**. |
+| F4 / F7 / F8 | Trust-region micro-gains through Week 12. |
+| F5 | High-face ridge; \(x_1\) climb to ≈0.44 → **3800.74**. |
+| F6 | Week-10 basin **−0.136** still stands after a Week-11 collapse and partial return. |
+
+Per-function 9-panel diagnostics: `data/function_*/analysis_F*.png` · write-ups: `EXPLANATION_F*.md`.
 
 **Week 13 portal block** (final round — see [`WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md)):
 
