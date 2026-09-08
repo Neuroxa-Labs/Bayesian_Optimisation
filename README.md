@@ -32,9 +32,9 @@ Method write-up: [`docs/TECHNICAL_JUSTIFICATION.md`](docs/TECHNICAL_JUSTIFICATIO
 
 ---
 
-## The eight problems (plain English)
+## Eight black-box tasks
 
-Each “function” is a **hidden scoring machine**: you propose settings \(x\), the portal returns a score \(y\). Higher \(y\) is always better. You never see the formula — only the history of tries. That is why this is called **black-box** optimisation.
+Each function is an unknown scoring map: propose settings \(x\), receive a score \(y\) from the course portal. Higher \(y\) is always better. The true formula is hidden — only the evaluation history is observed. That is the black-box setting.
 
 | | Meaning |
 |--|--|
