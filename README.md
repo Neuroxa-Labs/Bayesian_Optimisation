@@ -159,7 +159,7 @@ Bayesian_Optimisation/
 ├── docs/                     # Presentation text, course index, technical notes
 ├── weeks/                    # Weekly strategy, reflections, discussions
 ├── reports/analysis/         # Current gallery (Markdown + PNG; GitHub-friendly)
-├── reports/progress/         # Early-weeks HTML log + snapshot images
+├── reports/progress/         # Progress dashboard through Week 12 (HTML + PNG)
 ├── notebooks/                # GP + acquisition pipeline
 ├── scripts/                  # Append results, regenerate figures
 └── data/function_1…8/        # Evaluation history (.npy) + analysis + notes
