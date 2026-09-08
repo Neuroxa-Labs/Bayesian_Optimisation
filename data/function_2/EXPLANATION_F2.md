@@ -1,101 +1,121 @@
-# F2 - Noisy ML Log-Likelihood (2-D) - Learn from Scratch
+# F2 — Noisy ML Log-Likelihood (2-D)
 
-## 1. The big picture: what is the problem?
+## 1. The big picture
 
 **Real world:** You are tuning a machine-learning model whose validation log-likelihood is measured with noise.
 
 - **x** = 2 model settings
 - **y** = a noisy log-likelihood score (higher = better)
 - **Goal:** maximise the (noisy) log-likelihood.
-- **Constraint:** every evaluation is expensive - only **one query per week**, ~13 weeks total. Choose wisely.
+- **Constraint:** one query per function per week (Stage 2 budget).
 
-This is a **black box**: we never see the formula, only "input x -> output y". That is exactly what
-Bayesian Optimisation is built for - finding the best of an expensive unknown function in few tries.
+This is a **black box**: we never see the formula, only input → output. Bayesian optimisation
+(GP + acquisition) is designed for exactly that setting.
 
-## 2. What we were given (10 initial points + 7 weekly queries = 17 observations)
+## 2. Data so far (10 seed points + 12 weekly queries = 22 observations)
 
 | # | x1 | x2 | y | note |
 |---|---|---|---|---|
 | 15 | 0.7179 | 0.0200 | 0.7766 | BEST |
+| 20 | 0.7175 | 0.0195 | 0.7200 |  |
 | 14 | 0.7000 | 0.0200 | 0.6599 |  |
-| 10 | 0.7026 | 0.9266 | 0.6112 |  |
 | 9 | 0.3386 | 0.2139 | -0.0139 |  |
 | 3 | 0.1427 | 0.3490 | -0.0656 | WORST |
 
 - **Best so far:** y = 0.7766 at x = [0.7179, 0.0200]
 
-## 3. What the GP learned (reading the length scales)
+## 3. What the GP learned (ARD length scales)
 
-The Gaussian Process fits one **length scale** per dimension - how fast y changes along that axis.
-A tiny length scale means "very sensitive"; a maxed-out one means "this dimension barely matters".
+- `x1`: length-scale = 0.1021 → **very sensitive** — small changes move y a lot
+- `x2`: length-scale = 10.0000 → **degenerate** — little effect (GP effectively locks it)
 
-- `x1`: length-scale = 0.0894 -> **very sensitive** - small changes move y a lot (take small steps)
-- `x2`: length-scale = 10.0000 -> **degenerate** - GP sees little effect from this dimension (it locks it)
+## 4. Acquisition / late policy: **EI**
 
-The GP also reports, for any point, a prediction **mu** and an uncertainty **sigma**. Where data is
-dense, sigma is small (confident); in unexplored gaps, sigma is large (uncertain).
+EI with a White noise kernel. The historical peak (~0.777) sits on a sharp ridge; late returns often land ~0.54 when the step is slightly off.
 
-## 4. Why this acquisition function: **EI**
-
-Because the signal is noisy, a single low reading does not mean a region is bad. **EI with a White noise kernel** is robust: it weighs both the probability and the size of an improvement, and the White kernel absorbs measurement noise so the GP is not fooled by it.
-
-## 5. Week 1 - what we sent and what happened
+## 5. Week 1 — what we sent and what happened
 
 - **Sent:** x = [0.6948, 0.9266]
 - **Received:** y = 0.4898
-- **Outcome:** did **not** improve over the previous best (0.6112) - but it is still information.
+- **Outcome:** did **not** improve over the previous best (0.6112).
 
-## 6. Week 2 - what we sent and what happened
+## 6. Week 2 — what we sent and what happened
 
 - **Sent:** x = [0.7343, 0.9266]
 - **Received:** y = 0.5706
 - **Outcome:** did **not** improve over the previous best (0.6112).
 
-## 7. Week 3 - what we sent and what happened
+## 7. Week 3 — what we sent and what happened
 
 - **Sent:** x = [0.7188, 0.9266]
 - **Received:** y = 0.6022
 - **Outcome:** did **not** improve over the previous best (0.6112).
 
-## 8. Week 4 - what we sent and what happened
+## 8. Week 4 — what we sent and what happened
 
 - **Sent:** x = [0.7000, 0.0200]
 - **Received:** y = 0.6599
-- **GP had expected:** mu = 0.6121, sigma = 0.0881
 - **Outcome:** **IMPROVED** over the previous best (0.6112).
 
-## 9. Week 5 - what we sent and what happened
+## 9. Week 5 — what we sent and what happened
 
 - **Sent:** x = [0.7179, 0.0200]
 - **Received:** y = 0.7766
-- **GP had expected:** mu = 0.6028, sigma = 0.0869
 - **Outcome:** **IMPROVED** over the previous best (0.6599).
 
-## 10. Week 6 - what we sent and what happened
+## 10. Week 6 — what we sent and what happened
 
 - **Sent:** x = [0.7500, 0.0200]
 - **Received:** y = 0.4035
-- **GP had expected:** mu = 0.4778, sigma = 0.0977
 - **Outcome:** did **not** improve over the previous best (0.7766).
 
-## 11. Week 7 - what we sent and what happened
+## 11. Week 7 — what we sent and what happened
 
 - **Sent:** x = [0.7200, 0.0200]
 - **Received:** y = 0.5074
-- **GP had expected:** mu = 0.5982, sigma = 0.0870
 - **Outcome:** did **not** improve over the previous best (0.7766).
 
-## 12. The lesson
+## 12. Week 8 — what we sent and what happened
 
-Treat noise as noise. Do not abandon a promising region after one unlucky sample - keep sampling near the known-good area.
+- **Sent:** x = [0.7120, 0.0150]
+- **Received:** y = 0.6270
+- **Outcome:** did **not** improve over the previous best (0.7766).
 
-## 13. Summary
+## 13. Week 9 — what we sent and what happened
+
+- **Sent:** x = [0.7160, 0.0180]
+- **Received:** y = 0.5240
+- **Outcome:** did **not** improve over the previous best (0.7766).
+
+## 14. Week 10 — what we sent and what happened
+
+- **Sent:** x = [0.7175, 0.0195]
+- **Received:** y = 0.7200
+- **Outcome:** did **not** improve over the previous best (0.7766).
+
+## 15. Week 11 — what we sent and what happened
+
+- **Sent:** x = [0.7178, 0.0198]
+- **Received:** y = 0.5482
+- **Outcome:** did **not** improve over the previous best (0.7766).
+
+## 16. Week 12 — what we sent and what happened
+
+- **Sent:** x = [0.7179, 0.0200]
+- **Received:** y = 0.5368
+- **Outcome:** did **not** improve over the previous best (0.7766).
+
+## 17. The lesson
+
+Treat noise as noise, but also respect razor ridges: hard-return toward the incumbent when neighbour steps keep missing.
+
+## 18. Summary
 
 | | Value |
 |---|---|
 | Real-world task | Noisy ML Log-Likelihood |
 | Dimensions | 2 |
-| Acquisition | EI (Matern nu=2.5) |
+| Acquisition | EI (Matérn ν=2.5) |
 | Best before W1 | 0.6112 |
 | Week 1 result | 0.4898 (no improvement) |
 | Week 2 result | 0.5706 (no improvement) |
@@ -104,6 +124,11 @@ Treat noise as noise. Do not abandon a promising region after one unlucky sample
 | Week 5 result | 0.7766 (improved) |
 | Week 6 result | 0.4035 (no improvement) |
 | Week 7 result | 0.5074 (no improvement) |
-| Current best | 0.7766 |
+| Week 8 result | 0.6270 (no improvement) |
+| Week 9 result | 0.5240 (no improvement) |
+| Week 10 result | 0.7200 (no improvement) |
+| Week 11 result | 0.5482 (no improvement) |
+| Week 12 result | 0.5368 (no improvement) |
+| Current best (through Week 12) | 0.7766 |
 
-*See `analysis_F2.png` in this folder for the full 9-panel visual analysis.*
+*See `analysis_F2.png` in this folder for the 9-panel visual analysis (regenerated through Week 12).*
