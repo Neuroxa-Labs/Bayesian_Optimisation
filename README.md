@@ -18,21 +18,38 @@ We ran a careful series of experiments on eight hidden scoring problems — from
 
 ---
 
-## Quick links
+## Approach in brief
 
-| What | Where |
-|------|--------|
-| Datasheet | [`DATASHEET.md`](DATASHEET.md) |
-| Model card | [`MODEL_CARD.md`](MODEL_CARD.md) |
-| Main notebook | [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) |
-| Approach presentation (PDF text) | [`docs/approach_presentation.md`](docs/approach_presentation.md) |
-| Visual gallery (renders on GitHub) | [`reports/analysis/README.md`](reports/analysis/README.md) |
-| Progress notes / early HTML | [`reports/progress/README.md`](reports/progress/README.md) |
-| Week 13 final queries | [`weeks/WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md) |
-| Project reflection | [`weeks/project_reflection.md`](weeks/project_reflection.md) |
-| Successful strategies | [`weeks/successful_strategies_reflection.md`](weeks/successful_strategies_reflection.md) |
-| Final-round RL reflection | [`weeks/final_round_rl_reflection.md`](weeks/final_round_rl_reflection.md) |
-| Course file map | [`docs/COURSE_INDEX.md`](docs/COURSE_INDEX.md) |
+1. Fit a **Matérn GP** with ARD length scales on the growing \((x, y)\) history.
+2. Score candidates with **EI** or **UCB**, then search globally and inside a **trust region** around the incumbent.
+3. Apply **per-function rules**: F1 trust gate (no exploit on a null map), F2 WhiteKernel, F3 safe \(x_3\), F5 high-face ridge + log-\(y\), boundary penalties, anti-duplicate.
+4. Submit one six-decimal portal string per function; append the returned \(y\); repeat.
+
+Late policy (Weeks 10–13): stay inside proven basins, move only sensitive axes, and hard-return after a failed neighbour step (especially F2 / F6).
+
+Executable pipeline: [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb).  
+Method write-up: [`docs/TECHNICAL_JUSTIFICATION.md`](docs/TECHNICAL_JUSTIFICATION.md) · presentation text: [`docs/approach_presentation.md`](docs/approach_presentation.md).
+
+---
+
+## Impact — best-so-far through Week 12
+
+Blue step = incumbent; grey points = each evaluation; red dashed line = first weekly BO query (after the seed set).
+
+![Best-so-far trends for F1–F8](reports/analysis/progress_best_so_far.png)
+
+| What the charts show | Takeaway |
+|----------------------|----------|
+| **F5** chemical yield | Large jump once the high face / \(x_1\) ridge was found (~3801) |
+| **F4 / F7 / F8** | Steady late climbs under trust-region exploit |
+| **F2** | Sharp ridge to **0.777**; later neighbour steps often miss |
+| **F6** | Strong Week-10 basin (−0.136); fragile to off-centroid steps |
+| **F1** | Long null phase; measurable lobe only late near (0.64, 0.68) |
+| **F3** | Safe band held near **−0.011** |
+
+Full visual pack (3D cluster hulls + pair panels): [`reports/analysis/README.md`](reports/analysis/README.md).
+
+![3D promising clusters F1–F8](reports/analysis/cluster_gallery_3d.png)
 
 ---
 
@@ -51,6 +68,8 @@ We ran a careful series of experiments on eight hidden scoring problems — from
 
 Late streak: Week 10 **5/8** · Weeks 11–12 **4/8** each (F4, F5, F7, F8).
 
+Per-function 9-panel diagnostics and write-ups: `data/function_*/analysis_F*.png` and `EXPLANATION_F*.md`.
+
 **Week 13 portal block** (final round — see [`WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md)):
 
 ```
@@ -63,6 +82,23 @@ Function 6:  0.441200-0.249200-0.590800-0.728700-0.131200
 Function 7:  0.074000-0.424000-0.299000-0.158000-0.346000-0.672000
 Function 8:  0.144000-0.060000-0.210000-0.050000-0.414000-0.510000-0.216000-0.917000
 ```
+
+---
+
+## Quick links
+
+| What | Where |
+|------|--------|
+| Datasheet | [`DATASHEET.md`](DATASHEET.md) |
+| Model card | [`MODEL_CARD.md`](MODEL_CARD.md) |
+| Main notebook | [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) |
+| Approach presentation (PDF text) | [`docs/approach_presentation.md`](docs/approach_presentation.md) |
+| Visual gallery | [`reports/analysis/README.md`](reports/analysis/README.md) |
+| Week 13 final queries | [`weeks/WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md) |
+| Project reflection | [`weeks/project_reflection.md`](weeks/project_reflection.md) |
+| Successful strategies | [`weeks/successful_strategies_reflection.md`](weeks/successful_strategies_reflection.md) |
+| Final-round RL reflection | [`weeks/final_round_rl_reflection.md`](weeks/final_round_rl_reflection.md) |
+| Course file map | [`docs/COURSE_INDEX.md`](docs/COURSE_INDEX.md) |
 
 ---
 
@@ -79,10 +115,8 @@ Bayesian_Optimisation/
 ├── reports/progress/         # Early-weeks HTML log + snapshot images
 ├── notebooks/                # GP + acquisition pipeline
 ├── scripts/                  # Append results, regenerate figures
-└── data/function_1…8/        # Evaluation history (.npy) + notes
+└── data/function_1…8/        # Evaluation history (.npy) + analysis + notes
 ```
-
-Evaluation histories are small NumPy files under `data/` (course portal outputs). There is no large external dataset to host off-GitHub.
 
 ---
 
@@ -91,8 +125,8 @@ Evaluation histories are small NumPy files under `data/` (course portal outputs)
 ```bash
 pip install numpy scikit-learn scipy matplotlib
 python scripts/make_cluster_gallery.py
+python scripts/make_function_analysis.py
+python scripts/make_explanations.py
 ```
 
 Open [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) from the repository root (it expects `data/` beside `notebooks/`).
-
-Weekly notes live under [`weeks/`](weeks/). Method detail: [`docs/TECHNICAL_JUSTIFICATION.md`](docs/TECHNICAL_JUSTIFICATION.md).
