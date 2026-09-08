@@ -32,58 +32,99 @@ Method write-up: [`docs/TECHNICAL_JUSTIFICATION.md`](docs/TECHNICAL_JUSTIFICATIO
 
 ---
 
+## The eight problems (plain English)
+
+Each “function” is a **hidden scoring machine**: you propose settings \(x\), the portal returns a score \(y\). Higher \(y\) is always better. You never see the formula — only the history of tries. That is why this is called **black-box** optimisation.
+
+| | Meaning |
+|--|--|
+| **\(x\)** | The knobs you choose (2 to 8 numbers, each between 0 and 1) |
+| **\(y\)** | The score the course portal returns for that choice |
+| **Budget** | One new try per function per week |
+
+### F1 — Radiation source (2 knobs)
+
+**Story.** Find a hidden radiation source on a map. Most places read almost zero; only a tiny region “lights up.”  
+**What we found.** The official best is still a near-zero seed reading (**7.711×10⁻¹⁶**). Weeks 10–12 finally hit a real signal area near \((0.64,\ 0.68)\) with readings **−0.00807 → −0.00623 → −0.00512** — still below the seed max, but the first usable basin to refine in the final round.
+
+### F2 — Noisy machine-learning score (2 knobs)
+
+**Story.** Tune two settings of an ML model when the score is **noisy** (the same \(x\) can look different by chance).  
+**What we found.** A sharp ridge peaks at **0.776645**. Steps that look “nearby” often fall to ~0.54, so late weeks hard-return toward the historical peak.
+
+### F3 — Drug mixture / side effects (3 knobs)
+
+**Story.** Mix three ingredients; \(y\) is a safety score (closer to zero = safer).  
+**What we found.** Best **−0.011366** once a safe band for the sensitive third ingredient (\(x_3\)) was locked and kept.
+
+### F4 — Warehouse layout (4 knobs)
+
+**Story.** Arrange warehouse factors to raise efficiency. Many local traps early on.  
+**What we found.** Climbed from a poor start to **0.6786** by Week 12 with small local steps inside a proven basin.
+
+### F5 — Chemical yield (4 knobs)
+
+**Story.** Maximise reaction yield. One strong “ridge” appears once the right face of the box is found.  
+**What we found.** Biggest success story: seed ~1089 → **3800.74** by locking high \(x_2\)–\(x_4\) and climbing \(x_1\) (≈0.44).
+
+### F6 — Cake recipe (5 knobs)
+
+**Story.** Five ingredient amounts; the judge scores how bad the cake is (we maximise the negative of badness, so nearer zero is better).  
+**What we found.** Best **−0.136** at Week 10. A small off-centre step collapsed the score in Week 11; later weeks return toward that basin.
+
+### F7 — Hyperparameter tuning (6 knobs)
+
+**Story.** Six ML training knobs; \(y\) is a validation score.  
+**What we found.** Slow, steady local gains to **1.872** by Week 12 — move sensitive axes, leave flat ones alone.
+
+### F8 — Eight-parameter ML model (8 knobs)
+
+**Story.** Largest search space; expect slow progress.  
+**What we found.** Incremental ticks to **9.8729** by Week 12 under a tight trust region.
+
+More detail per function: `data/function_*/EXPLANATION_F*.md` and `analysis_F*.png`.
+
+---
+
 ## Impact — best-so-far through Week 12
 
 Blue step = incumbent; grey points = each evaluation; red dashed line = first weekly BO query (after the seed set).
 
 ![Best-so-far trends for F1–F8](reports/analysis/progress_best_so_far.png)
 
-| What the charts show | Takeaway |
-|----------------------|----------|
-| **F5** chemical yield | Large jump once the high face / \(x_1\) ridge was found (~3801) |
+| Chart | Takeaway |
+|-------|----------|
+| **F5** | Large jump once the yield ridge was found (~3801) |
 | **F4 / F7 / F8** | Steady late climbs under trust-region exploit |
 | **F2** | Sharp ridge to **0.777**; later neighbour steps often miss |
 | **F6** | Strong Week-10 basin (−0.136); fragile to off-centroid steps |
 | **F1** | Long null phase; measurable lobe only late near (0.64, 0.68) |
 | **F3** | Safe band held near **−0.011** |
 
-Full visual pack (3D cluster hulls + pair panels): [`reports/analysis/README.md`](reports/analysis/README.md).
+Full visual pack: [`reports/analysis/README.md`](reports/analysis/README.md).
 
 ![3D promising clusters F1–F8](reports/analysis/cluster_gallery_3d.png)
 
 ---
 
-## Results — best-so-far by week
+## Results — compact week comparison
 
-Values are the **incumbent** (running max of \(y\)) after each round. Bold = improved that week.
+Incumbent = best \(y\) seen so far. Few columns so the table stays readable. Bold = new best that week.
 
-### Late rounds (Weeks 8–12)
+| | Seed | W8 | W10 | W12 |
+|--|-----:|---:|----:|----:|
+| **F1** | **7.71e−16** | 7.71e−16 | 7.71e−16 | 7.71e−16 |
+| **F2** | 0.611 | **0.777** | 0.777 | 0.777 |
+| **F3** | −0.035 | **−0.011** | −0.011 | −0.011 |
+| **F4** | −4.03 | 0.572 | **0.667** | **0.679** |
+| **F5** | 1089 | 3760 | **3779** | **3801** |
+| **F6** | −0.714 | −0.240 | **−0.136** | −0.136 |
+| **F7** | 1.365 | 1.857 | **1.863** | **1.872** |
+| **F8** | 9.598 | 9.868 | **9.871** | **9.873** |
 
-| Fn | Task | Dim | Seed | W8 | W9 | W10 | W11 | W12 |
-|----|------|-----|------|----|----|-----|-----|-----|
-| F1 | Radiation | 2 | **7.711×10⁻¹⁶** | 7.711×10⁻¹⁶ | 7.711×10⁻¹⁶ | 7.711×10⁻¹⁶ | 7.711×10⁻¹⁶ | 7.711×10⁻¹⁶ |
-| F2 | Noisy ML | 2 | 0.611 | **0.777** | 0.777 | 0.777 | 0.777 | 0.777 |
-| F3 | Drug side-effects | 3 | −0.035 | **−0.011** | −0.011 | −0.011 | −0.011 | −0.011 |
-| F4 | Warehouse | 4 | −4.026 | 0.572 | **0.642** | **0.667** | **0.675** | **0.679** |
-| F5 | Chemical yield | 4 | 1089 | 3760 | **3769** | **3779** | **3790** | **3801** |
-| F6 | Cake recipe | 5 | −0.714 | −0.240 | −0.240 | **−0.136** | −0.136 | −0.136 |
-| F7 | HP tuning | 6 | 1.365 | 1.857 | **1.858** | **1.863** | **1.866** | **1.872** |
-| F8 | 8-param ML | 8 | 9.598 | 9.868 | **9.869** | **9.871** | **9.872** | **9.873** |
+**Queries that beat the previous best:** W8 3/8 · W9 4/8 · W10 **5/8** · W11 4/8 · W12 4/8 (F4, F5, F7, F8).
 
-**Improved count:** W8 **3/8** · W9 **4/8** · W10 **5/8** · W11 **4/8** · W12 **4/8** (F4, F5, F7, F8).
-
-### Notes on the incumbents
-
-| Fn | Detail |
-|----|--------|
-| **F1** | Absolute best remains the seed reading **7.711×10⁻¹⁶**. Weeks 10–12 opened a measurable signal lobe near (0.64, 0.68) with readings **−0.00807 → −0.00623 → −0.00512** (still below the seed max, but the first non-null basin). |
-| F2 | Sharp ridge peak **0.776645**; late neighbour steps often land ~0.54. |
-| F3 | Safe \(x_3\) band; best **−0.011366**. |
-| F4 / F7 / F8 | Trust-region micro-gains through Week 12. |
-| F5 | High-face ridge; \(x_1\) climb to ≈0.44 → **3800.74**. |
-| F6 | Week-10 basin **−0.136** still stands after a Week-11 collapse and partial return. |
-
-Per-function 9-panel diagnostics: `data/function_*/analysis_F*.png` · write-ups: `EXPLANATION_F*.md`.
+**How to read this.** Seed = after the free starting data. W8 / W10 / W12 = after those weekly rounds. F5’s jump and F4/F7/F8’s late climb are the clearest “BO paid off” stories; F1/F2/F6 show how fragile sparse peaks and sharp basins can be.
 
 **Week 13 portal block** (final round — see [`WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md)):
 
