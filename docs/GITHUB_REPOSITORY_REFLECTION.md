@@ -1,6 +1,6 @@
 # GitHub Repository Reflection — BBO Capstone
 
-*Forum post for Module 16 repository organisation activity.*
+*Forum post for the repository-organisation activity (written mid-project). Paths below reflect the layout at that time; the live tree is documented in the root [`README.md`](../README.md) (`notebooks/`, `reports/`, `weeks/`, `data/`).*
 
 ---
 

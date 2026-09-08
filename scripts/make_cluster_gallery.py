@@ -1,14 +1,15 @@
-"""Cluster / progress gallery for GitHub (Module 23 clustering + PCA lens).
+"""Cluster / progress gallery for GitHub.
 
-Produces:
-  reports/analysis/cluster_gallery_3d.png     — F1–F8 3D hulls (ARD axes)
-  reports/analysis/progress_best_so_far.png   — best-y step charts
-  reports/analysis/cluster_progress_pairs.png — hull + progress pairs (F3,F5,F7)
-  reports/analysis/cluster_gallery.html       — lightweight viewer
+Produces under reports/analysis/:
+  cluster_gallery_3d.png
+  progress_best_so_far.png
+  cluster_progress_pairs.png          (F3/F5/F7 highlight)
+  cluster_progress_pairs_1.png        (F1–F4)
+  cluster_progress_pairs_2.png        (F5–F8)
+  README.md                           (GitHub-renderable gallery)
+  cluster_gallery.html                (local browser helper)
 
-Axes for 3D plots: top-3 ARD-sensitive dimensions from a Matérn GP (or all
-dims if d<=3; for d=2 pad with a dummy z=0 plane note). Hulls = ConvexHull
-per KMeans cluster when a cluster has >=4 non-coplanar points.
+Axes: top ARD-sensitive dimensions from a Matérn GP.
 """
 from __future__ import annotations
 
@@ -239,7 +240,23 @@ def main():
     plt.close(fig)
     print("wrote", p2)
 
-    # --- pairs (like peer blog: hull | progress) ---
+    # --- pairs for all functions (two pages of 4) ---
+    for batch, fns in enumerate([(1, 2, 3, 4), (5, 6, 7, 8)], start=1):
+        fig = plt.figure(figsize=(12, 14), facecolor="white")
+        for row, fn in enumerate(fns):
+            X, Y = load_xy(fn)
+            ax3 = fig.add_subplot(4, 2, 2 * row + 1, projection="3d")
+            plot_one_3d(ax3, fn, X, Y)
+            axp = fig.add_subplot(4, 2, 2 * row + 2)
+            plot_progress(axp, Y, f"F{fn} progress", n_init_guess=n_init[fn])
+        fig.suptitle(f"Cluster view + progress (F{fns[0]}–F{fns[-1]})", fontsize=13)
+        fig.tight_layout(rect=[0, 0, 1, 0.97])
+        p3 = OUT / f"cluster_progress_pairs_{batch}.png"
+        fig.savefig(p3, dpi=150, bbox_inches="tight")
+        plt.close(fig)
+        print("wrote", p3)
+
+    # Keep a compact highlight pairs file (F3/F5/F7) for README thumbnails
     fig = plt.figure(figsize=(12, 10), facecolor="white")
     for row, fn in enumerate([3, 5, 7]):
         X, Y = load_xy(fn)
@@ -249,32 +266,82 @@ def main():
         plot_progress(axp, Y, f"F{fn} progress", n_init_guess=n_init[fn])
     fig.suptitle("Cluster view + progress (F3, F5, F7)", fontsize=13)
     fig.tight_layout(rect=[0, 0, 1, 0.96])
-    p3 = OUT / "cluster_progress_pairs.png"
-    fig.savefig(p3, dpi=160, bbox_inches="tight")
+    p3b = OUT / "cluster_progress_pairs.png"
+    fig.savefig(p3b, dpi=160, bbox_inches="tight")
     plt.close(fig)
-    print("wrote", p3)
+    print("wrote", p3b)
 
-    # --- html viewer ---
-    html = f"""<!DOCTYPE html>
+    # --- Markdown gallery (renders on GitHub) ---
+    md = """# Cluster & progress gallery
+
+Visual diagnostics for the eight black-box functions after **Week 12**.  
+Axes are ARD-sensitive dimensions from a Matérn GP; gold ★ marks the incumbent.
+
+Regenerate: `python scripts/make_cluster_gallery.py`
+
+| File | What it shows |
+|------|----------------|
+| `cluster_gallery_3d.png` | 3D cluster hulls, F1–F8 |
+| `progress_best_so_far.png` | Best-y step charts |
+| `cluster_progress_pairs_1.png` | Hull + progress, F1–F4 |
+| `cluster_progress_pairs_2.png` | Hull + progress, F5–F8 |
+| `cluster_progress_pairs.png` | Highlight pair set (F3, F5, F7) |
+
+## 3D promising clusters (F1–F8)
+
+![3D cluster gallery](cluster_gallery_3d.png)
+
+## Best-so-far trends
+
+![Best-so-far progress](progress_best_so_far.png)
+
+## Cluster + progress pairs
+
+### F1–F4
+
+![Pairs F1-F4](cluster_progress_pairs_1.png)
+
+### F5–F8
+
+![Pairs F5-F8](cluster_progress_pairs_2.png)
+
+### Highlight (F3, F5, F7)
+
+![Pairs highlight](cluster_progress_pairs.png)
+
+> **GitHub tip:** This Markdown page is the gallery that renders online. HTML files (including [`cluster_gallery.html`](cluster_gallery.html)) do not execute in GitHub’s code browser — open them locally if needed.  
+> Early per-week snapshots (weeks 2–6) live under [`archive/`](archive/).
+"""
+    p_md = OUT / "README.md"
+    p_md.write_text(md, encoding="utf-8")
+    print("wrote", p_md)
+
+    # --- local HTML helper ---
+    html = """<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BBO cluster &amp; progress gallery</title>
 <style>
-body{{font-family:system-ui,sans-serif;max-width:1100px;margin:24px auto;padding:0 16px;color:#222;background:#f7f8fa}}
-h1{{font-size:1.35rem}} h2{{font-size:1.05rem;margin-top:1.6rem}}
-p{{color:#555;line-height:1.45;font-size:.95rem}}
-img{{width:100%;border:1px solid #ddd;border-radius:8px;background:#fff;margin:.6rem 0 1.2rem}}
-code{{background:#eee;padding:1px 5px;border-radius:3px;font-size:.85rem}}
+body{font-family:system-ui,sans-serif;max-width:1100px;margin:24px auto;padding:0 16px;color:#222;background:#f7f8fa}
+h1{font-size:1.35rem} h2{font-size:1.05rem;margin-top:1.6rem}
+p,.note{color:#555;line-height:1.45;font-size:.95rem}
+.note{background:#fff3cd;border:1px solid #ffe69c;padding:10px 12px;border-radius:6px}
+img{width:100%;border:1px solid #ddd;border-radius:8px;background:#fff;margin:.6rem 0 1.2rem}
+code{background:#eee;padding:1px 5px;border-radius:3px;font-size:.85rem}
 </style></head><body>
 <h1>Cluster &amp; progress gallery</h1>
+<p class="note"><strong>Open this file locally</strong> (double-click) or view the Markdown gallery on GitHub:
+<code>reports/analysis/README.md</code>. GitHub’s code view does not render HTML pages.</p>
 <p>KMeans hulls on ARD-selected axes (GP Matérn length scales). Gold star = incumbent.
-Generated by <code>scripts/make_cluster_gallery.py</code> from <code>data/function_*/</code> through Week 10.</p>
+Data through <strong>Week 12</strong>. Generated by <code>scripts/make_cluster_gallery.py</code>.</p>
 <h2>3D promising clusters (F1–F8)</h2>
 <img src="cluster_gallery_3d.png" alt="3D cluster gallery">
 <h2>Best-so-far trends</h2>
 <img src="progress_best_so_far.png" alt="Progress charts">
-<h2>Pairs — cluster + trend (F3, F5, F7)</h2>
-<img src="cluster_progress_pairs.png" alt="Cluster progress pairs">
+<h2>Pairs F1–F4</h2>
+<img src="cluster_progress_pairs_1.png" alt="Pairs F1-F4">
+<h2>Pairs F5–F8</h2>
+<img src="cluster_progress_pairs_2.png" alt="Pairs F5-F8">
 </body></html>
 """
     p4 = OUT / "cluster_gallery.html"

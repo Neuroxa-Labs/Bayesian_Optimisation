@@ -5,7 +5,7 @@ Strategy, post-result reflections, and discussion-board posts.
 | Type | Files |
 |------|--------|
 | Weekly strategy / reflection / discussion | `WEEK*_STRATEGY.md`, `WEEK*_REFLECTION.md`, `WEEK*_DISCUSSION.md` |
-| Week 13 / final-round queries | [`WEEK13_STRATEGY.md`](WEEK13_STRATEGY.md) · [`final_round_strategy.md`](final_round_strategy.md) |
+| Week 13 / final-round queries | [`WEEK13_STRATEGY.md`](WEEK13_STRATEGY.md) (alias: [`final_round_strategy.md`](final_round_strategy.md)) |
 | Final-round RL reflection | [`final_round_rl_reflection.md`](final_round_rl_reflection.md) |
 | Project reflection | [`project_reflection.md`](project_reflection.md) |
 | Successful strategies | [`successful_strategies_reflection.md`](successful_strategies_reflection.md) |

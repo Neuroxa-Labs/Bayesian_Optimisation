@@ -62,7 +62,7 @@ Exact counts live in `data/function_*/initial_inputs.npy` and `initial_outputs.n
 
 **Ethics.** Course-sanctioned academic use only; no human subjects; no IRB required.
 
-**Hosting.** Histories are small `.npy` files in this repository under `data/function_*/`. No large external dataset is required; if portal CSV/email attachments are kept privately, they are summarised here and in `weeks/` rather than re-hosted as bulk uploads.
+**Hosting.** Histories are small `.npy` files in this repository under `data/function_*/`. No large external dataset is required; if portal CSV/email attachments are kept privately, they are summarised here and in `weeks/` rather than re-hosted as bulk uploads. Figures for assessors: [`reports/analysis/README.md`](reports/analysis/README.md).
 
 ---
 
@@ -93,7 +93,7 @@ Raw portal \((x,y)\) pairs are preserved in strategy/reflection files and `.npy`
 
 ## 5. Distribution
 
-**Availability.** Public GitHub repository for this capstone (linked from the course discussion board). Primary paths: `data/function_*/`, `weeks/WEEK*_STRATEGY.md`, `weeks/WEEK*_REFLECTION.md`, dashboard `reports/progress/bbo_progress_report.html`.
+**Availability.** Public GitHub repository for this capstone (linked from the course discussion board). Primary paths: `data/function_*/`, `weeks/WEEK*_STRATEGY.md`, `weeks/WEEK*_REFLECTION.md`, visual gallery [`reports/analysis/README.md`](reports/analysis/README.md).
 
 **License / terms.** Academic sharing for peer review and programme assessment. Redistribute with attribution; do not present portal outputs as proprietary production data.
 
