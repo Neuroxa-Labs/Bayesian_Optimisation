@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 ROOT = Path(__file__).resolve().parent.parent
 DATA_ROOT = ROOT / "data"
 N_INIT = {1: 10, 2: 10, 3: 15, 4: 30, 5: 20, 6: 20, 7: 30, 8: 40}
-WEEK = 7
+WEEK = 12
 
 fig, ax = plt.subplots(figsize=(10, 5))
 labels, bests = [], []

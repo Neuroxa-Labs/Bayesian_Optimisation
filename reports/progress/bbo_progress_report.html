@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BBO Main Progress Report</title>
+<title>BBO Progress Report — through Week 12</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;background:#f0f2f5;color:#2d3436;padding:20px;line-height:1.45;}
@@ -13,51 +13,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 .hdr h1{font-size:18px;font-weight:700;margin-bottom:4px;color:#1a1a2e;}
 .hdr p{font-size:11px;color:#636e72;}
 .hdr a{color:#2d6dc7;text-decoration:none;}
-.hdr a:hover{text-decoration:underline;}
 .sum{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
-.sc{background:#f8f9fa;border-radius:6px;padding:10px 16px;text-align:center;border:1px solid #eee;min-width:90px;}
-.sc-n{font-size:22px;font-weight:700;}
-.sc-n.g{color:#00b894;}.sc-n.r{color:#e17055;}.sc-n.m{color:#636e72;}.sc-n.b{color:#2d6dc7;}
-.sc-l{font-size:10px;color:#636e72;margin-top:2px;}
-.week-lbl{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#636e72;padding:8px 0 4px;border-bottom:1px solid #eee;margin-bottom:4px;}
-table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:11.5px;}
-th{background:#f8f9fa;font-weight:600;font-size:10px;color:#636e72;text-transform:uppercase;letter-spacing:.05em;padding:7px 8px;border-bottom:1px solid #e0e0e0;text-align:left;white-space:nowrap;}
-th.r{text-align:right;}
-td{padding:7px 8px;border-bottom:1px solid #f0f0f0;vertical-align:middle;}
-td.r{text-align:right;font-variant-numeric:tabular-nums;font-family:ui-monospace,monospace;font-size:11px;}
+.sc{background:#f8f9fa;border-radius:6px;padding:10px 14px;text-align:center;border:1px solid #eee;min-width:78px;}
+.sc-n{font-size:20px;font-weight:700;}.sc-n.g{color:#00b894;}
+.sc-l{font-size:9px;color:#636e72;margin-top:2px;}
+.week-lbl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#636e72;padding:8px 0 4px;border-bottom:1px solid #eee;margin-bottom:8px;}
+table{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:11px;}
+th{background:#f8f9fa;font-weight:600;font-size:9px;color:#636e72;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid #e0e0e0;text-align:left;}
+th.r,td.r{text-align:right;font-variant-numeric:tabular-nums;font-family:ui-monospace,monospace;}
+td{padding:6px 8px;border-bottom:1px solid #f0f0f0;vertical-align:middle;}
 tr.imp td{background:#f0faf0;}
-tr.wor td{background:#fff5f5;}
+tr.wor td{background:#fffaf8;}
 tr.pend td{color:#636e72;}
-tr:hover td{filter:brightness(0.97);}
-.fn{font-weight:600;font-size:12px;color:#2d3436;}
-.sub{font-size:10px;color:#636e72;font-weight:400;display:block;margin-top:1px;}
-.badge{display:inline-block;font-size:9px;padding:2px 6px;border-radius:3px;font-weight:600;margin-right:2px;}
-.unc{background:#dfe6fb;color:#2d6dc7;}
-.cov{background:#fff3cd;color:#856404;}
-.ucb{background:#e8e4fb;color:#6c3fc7;}
-.ei{background:#d4f5e9;color:#0a7a50;}
-.up{color:#00b894;font-weight:600;}
-.dn{color:#e17055;font-weight:600;}
-.gray{color:#b2bec3;}
-.ls-wrap{display:flex;gap:2px;align-items:center;}
-.pip{width:7px;height:16px;border-radius:2px;}
-.pip.d{background:#e17055;}
-.pip.s{background:#fdcb6e;}
-.pip.n{background:#55efc4;}
-.legend{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;}
-.li{display:flex;align-items:center;gap:4px;font-size:10px;color:#636e72;}
-.li-dot{width:9px;height:9px;border-radius:2px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:8px;}
-.fcard{border:1px solid #eee;border-radius:8px;padding:12px;background:#fafbfc;}
-.fcard h3{font-size:12px;margin-bottom:4px;color:#1a1a2e;}
-.fcard p{font-size:10px;color:#636e72;margin-bottom:8px;}
-.fcard a{font-size:10px;color:#2d6dc7;text-decoration:none;margin-right:8px;}
-.fcard a:hover{text-decoration:underline;}
-.fcard img{width:100%;border-radius:4px;border:1px solid #eee;margin-top:6px;}
-.img-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
-.img-row img{width:100%;border-radius:6px;border:1px solid #e0e0e0;}
-@media(max-width:700px){.img-row{grid-template-columns:1fr;}}
+.fn{font-weight:600;}.sub{display:block;font-size:9px;color:#636e72;font-weight:400;}
 .note{font-size:11px;color:#636e72;background:#f8f9fa;border-left:3px solid #2d6dc7;padding:10px 12px;border-radius:0 6px 6px 0;margin:12px 0;}
+img{width:100%;border-radius:6px;border:1px solid #e0e0e0;margin-top:8px;}
+.img-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:700px){.img-row{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -66,459 +38,200 @@ tr:hover td{filter:brightness(0.97);}
 <div class="card hdr">
   <h1>BBO Main Progress Report</h1>
   <p>
-    Imperial College PCMLAI &nbsp;·&nbsp; Cohort IMP-PCMLAI-26-02 &nbsp;·&nbsp;
-    <a href="https://github.com/Neuroxa-Labs/Bayesian_Optimisation">GitHub repo</a> &nbsp;·&nbsp;
-    <a href="../../README.md">README</a> &nbsp;·&nbsp;
-    <a href="../../DATASHEET.md">Datasheet</a> &nbsp;·&nbsp;
-    <a href="../../MODEL_CARD.md">Model card</a> &nbsp;·&nbsp;
-    <a href="../analysis/README.md">Current gallery (Week 12)</a> &nbsp;·&nbsp;
-    <a href="../../weeks/WEEK13_STRATEGY.md">Week 13 queries</a> &nbsp;·&nbsp;
-    <a href="../../docs/TECHNICAL_JUSTIFICATION.md">Technical justification</a>
+    Imperial College PCMLAI · through <strong>Week 12</strong> ·
+    <a href="https://github.com/Neuroxa-Labs/Bayesian_Optimisation">GitHub</a> ·
+    <a href="../../README.md">README</a> ·
+    <a href="../analysis/README.md">Visual gallery</a> ·
+    <a href="../../weeks/WEEK13_STRATEGY.md">Week 13 queries</a>
   </p>
   <p style="margin-top:6px;">
-    Eight real-world black-box optimisation tasks (2D–8D). Each week we submit one query <code>x</code> per
-    function and receive a single output <code>y</code>. A Gaussian Process surrogate plus a per-function
-    acquisition function decides where to look next.
+    Eight black-box tasks (2D–8D). One query per function per week.
+    Surrogate: Gaussian Process (Matérn + ARD) with EI / UCB and trust-region exploit.
   </p>
 </div>
 
 <div class="card" style="border-left:4px solid #2d6dc7;">
-  <div class="week-lbl">Status after Week 12 · Week 13 queries locked</div>
+  <div class="week-lbl">Status</div>
   <p class="note" style="margin:0;">
-    This HTML page retains the detailed <strong>Weeks 1–7</strong> interactive tables and snapshot image.
-    For up-to-date best-so-far charts and cluster hulls, open the Markdown gallery:
-    <a href="../analysis/README.md"><strong>reports/analysis/README.md</strong></a>
-    (renders on GitHub). Current bests ≈ F2 <strong>0.777</strong> · F3 <strong>−0.011</strong> · F4 <strong>0.679</strong> ·
-    F5 <strong>3801</strong> · F6 <strong>−0.136</strong> · F7 <strong>1.872</strong> · F8 <strong>9.873</strong>
-    (F1 signal lobe ~0.64/0.68). Late streak: W10 5/8 · W11–W12 4/8 each.
-  </p>
-</div>
-
-<div class="card">
-  <div class="week-lbl">Report preview — click to open full image</div>
-  <a href="bbo_progress_report.png" target="_blank" title="Open full-size report image">
-    <img src="bbo_progress_report.png" alt="BBO Main Progress Report — full dashboard image"
-         style="width:100%;border-radius:8px;border:1px solid #e0e0e0;cursor:pointer;margin-bottom:4px;">
-  </a>
-  <p style="font-size:10px;color:#636e72;text-align:center;">
-    Click the image above to open the full-resolution PNG &nbsp;·&nbsp;
-    <a href="bbo_progress_report.jpg">JPG version</a>
+    Data-driven rebuild through <strong>Week 12</strong>.
+    Current bests: F1 7.711e-16 · F2 0.7766 · F3 -0.0114 · F4 0.6786 · F5 3800.7 · F6 -0.1360 · F7 1.8722 · F8 9.8729.
+    Week 13 final queries are locked (portal <code>y</code> pending).
+    Markdown gallery (renders on GitHub): <a href="../analysis/README.md">reports/analysis/README.md</a>.
   </p>
 </div>
 
 <div class="card">
   <div class="sum">
-    <div class="sc"><div class="sc-n g">5</div><div class="sc-l">Week 1 improved</div></div>
-    <div class="sc"><div class="sc-n g">1</div><div class="sc-l">Week 2 improved</div></div>
-    <div class="sc"><div class="sc-n g">2</div><div class="sc-l">Week 3 improved</div></div>
-    <div class="sc"><div class="sc-n g">4</div><div class="sc-l">Week 4 improved</div></div>
-    <div class="sc"><div class="sc-n g">3</div><div class="sc-l">Week 5 improved</div></div>
-    <div class="sc"><div class="sc-n g">3</div><div class="sc-l">Week 6 improved</div></div>
-    <div class="sc"><div class="sc-n g">1</div><div class="sc-l">Week 7 improved</div></div>
-    <div class="sc"><div class="sc-n b">8</div><div class="sc-l">Week 8 ready</div></div>
-  </div>
-  <div class="note">
-    <strong>Week 1:</strong> 5/8 improved (F4–F8); F5 standout 1089 → 2497.
-    <strong>Week 2:</strong> only <strong>F3</strong> improved (−0.168 → −0.020) after narrow-bounds fix.
-    <strong>Week 3:</strong> <strong>2/8</strong> — F5 → 3108, F7 → 1.525.
-    <strong>Week 4:</strong> <strong>4/8</strong> — F5 → 3744, F7 → 1.857, F2 → 0.660.
-    <strong>Week 5:</strong> <strong>3/8</strong> — F2 → 0.777, F6 → −0.265, F8 → 9.864.
-    <strong>Week 6:</strong> <strong>3/8</strong> — F3 → −0.011, F4 → 0.470, F6 → −0.240.
-    <strong>Week 7:</strong> <strong>1/8</strong> — F8 → <strong>9.865</strong>; F5 ridge re-confirmed at 3744; F1 B+ soft-signal still ~0.
-    Current bests: F2 0.777 · F3 −0.011 · F4 0.470 · F5 3744 · F6 −0.240 · F7 1.857 · F8 9.865.
+    <div class="sc"><div class="sc-n g">5</div><div class="sc-l">Week 1 improved</div></div><div class="sc"><div class="sc-n g">1</div><div class="sc-l">Week 2 improved</div></div><div class="sc"><div class="sc-n g">2</div><div class="sc-l">Week 3 improved</div></div><div class="sc"><div class="sc-n g">4</div><div class="sc-l">Week 4 improved</div></div><div class="sc"><div class="sc-n g">4</div><div class="sc-l">Week 5 improved</div></div><div class="sc"><div class="sc-n g">2</div><div class="sc-l">Week 6 improved</div></div><div class="sc"><div class="sc-n g">1</div><div class="sc-l">Week 7 improved</div></div><div class="sc"><div class="sc-n g">3</div><div class="sc-l">Week 8 improved</div></div><div class="sc"><div class="sc-n g">4</div><div class="sc-l">Week 9 improved</div></div><div class="sc"><div class="sc-n g">5</div><div class="sc-l">Week 10 improved</div></div><div class="sc"><div class="sc-n g">4</div><div class="sc-l">Week 11 improved</div></div><div class="sc"><div class="sc-n g">4</div><div class="sc-l">Week 12 improved</div></div>
   </div>
 </div>
 
 <div class="card">
-  <div class="week-lbl">Iteration 1 — Week 1 (results received)</div>
-  <table>
-    <thead><tr>
-      <th>Function</th><th>Method</th><th>ν</th>
-      <th class="r">Best before</th><th class="r">Acq. score</th>
-      <th class="r">Actual result</th><th class="r">Δ improvement</th>
-      <th>Length scales</th>
-    </tr></thead>
-    <tbody id="tb1"></tbody>
-  </table>
-</div>
-
-<div class="card">
-  <div class="week-lbl">Iteration 2 — Week 2 (results received)</div>
-  <table>
-    <thead><tr>
-      <th>Function</th><th>Method</th><th>ν</th>
-      <th class="r">Best before</th><th class="r">Acq. score</th>
-      <th class="r">Query x</th>
-      <th class="r">Actual result</th><th class="r">Δ improvement</th>
-      <th>Length scales</th>
-    </tr></thead>
-    <tbody id="tb2"></tbody>
-  </table>
-</div>
-
-<div class="card">
-  <div class="week-lbl">Iteration 3 — Week 3 (results received)</div>
-  <table>
-    <thead><tr>
-      <th>Function</th><th>Method</th><th>ν</th>
-      <th class="r">Best before</th><th class="r">Acq. score</th>
-      <th class="r">Query x</th>
-      <th class="r">Actual result</th><th class="r">Δ improvement</th>
-      <th>Length scales</th>
-    </tr></thead>
-    <tbody id="tb3"></tbody>
-  </table>
-</div>
-
-<div class="card">
-  <div class="week-lbl">Iteration 4 — Week 4 (results received)</div>
-  <table>
-    <thead><tr>
-      <th>Function</th><th>Method</th><th>ν</th>
-      <th class="r">Best before</th><th class="r">Acq. score</th>
-      <th class="r">Query x</th>
-      <th class="r">Actual result</th><th class="r">Δ improvement</th>
-      <th>Length scales</th>
-    </tr></thead>
-    <tbody id="tb4"></tbody>
-  </table>
-</div>
-
-<div class="card">
-  <div class="week-lbl">Iteration 5 — Week 5 (results received)</div>
-  <table>
-    <thead><tr>
-      <th>Function</th><th>Method</th><th>ν</th>
-      <th class="r">Best before</th><th class="r">Acq. score</th>
-      <th class="r">Query x</th>
-      <th class="r">Actual result</th><th class="r">Δ improvement</th>
-      <th>Length scales</th>
-    </tr></thead>
-    <tbody id="tb5"></tbody>
-  </table>
-</div>
-
-<div class="card">
-  <div class="week-lbl">Iteration 6 — Week 6 (results received)</div>
-  <table>
-    <thead><tr>
-      <th>Function</th><th>Method</th><th>ν</th>
-      <th class="r">Best before</th><th class="r">Acq. score</th>
-      <th class="r">Query x</th>
-      <th class="r">Actual result</th><th class="r">Δ improvement</th>
-      <th>Length scales</th>
-    </tr></thead>
-    <tbody id="tb6"></tbody>
-  </table>
-</div>
-
-<div class="card">
-  <div class="week-lbl">Iteration 7 — Week 7 (results received)</div>
-  <table>
-    <thead><tr>
-      <th>Function</th><th>Method</th><th>ν</th>
-      <th class="r">Best before</th><th class="r">Acq. score</th>
-      <th class="r">Query x</th>
-      <th class="r">Actual result</th><th class="r">Δ improvement</th>
-      <th>Length scales</th>
-    </tr></thead>
-    <tbody id="tb7"></tbody>
-  </table>
-</div>
-
-<div class="card">
-  <div class="week-lbl">Visual summary</div>
-  <div class="img-row">
+  <div class="week-lbl">Dashboard preview</div>
+  <a href="bbo_progress_report.png"><img src="bbo_progress_report.png" alt="BBO progress dashboard"></a>
+  <div class="img-row" style="margin-top:12px;">
     <div>
-      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
-      <a href="progress_week7_report.png"><img src="progress_week7_report.png" alt="Progress report table"></a>
+      <div class="week-lbl">Latest week bars</div>
+      <a href="progress_week12.png"><img src="progress_week12.png" alt="Week 12 bests"></a>
     </div>
     <div>
-      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Best observed output by function</p>
-      <a href="progress_week7.png"><img src="progress_week7.png" alt="Best observed progress chart"></a>
+      <div class="week-lbl">Late incumbent table</div>
+      <a href="progress_week12_report.png"><img src="progress_week12_report.png" alt="Late report table"></a>
     </div>
   </div>
 </div>
 
-<div class="card">
-  <div class="week-lbl">Visual summary (archive W5)</div>
-  <div class="img-row">
-    <div>
-      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
-      <a href="progress_week5_report.png"><img src="progress_week5_report.png" alt="Progress report table"></a>
-    </div>
-    <div>
-      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Best observed output by function</p>
-      <a href="progress_week5.png"><img src="progress_week5.png" alt="Best observed progress chart"></a>
-    </div>
-  </div>
-</div>
 
 <div class="card">
-  <div class="week-lbl">Visual summary (archive W4)</div>
-  <div class="img-row">
-    <div>
-      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Iteration diagnostics table</p>
-      <a href="progress_week4_report.png"><img src="progress_week4_report.png" alt="Progress report table"></a>
-    </div>
-    <div>
-      <p style="font-size:10px;color:#636e72;margin-bottom:6px;">Best observed output by function</p>
-      <a href="progress_week4.png"><img src="progress_week4.png" alt="Best observed progress chart"></a>
-    </div>
-  </div>
+  <div class="week-lbl">Week 1 — results (5/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.196386-0.970701</td><td class="r">4.846e-214</td><td class="r">-7.711e-16</td><td>—</td></tr><tr class="wor"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.6112</td><td class="r" style="font-size:10px">0.694835-0.926564</td><td class="r">0.4898</td><td class="r">-0.1214</td><td>—</td></tr><tr class="wor"><td class="fn">F3<span class="sub">Drug / adverse · 3D</span></td><td class="r">-0.0348</td><td class="r" style="font-size:10px">0.492581-0.020000-0.648182</td><td class="r">-0.1685</td><td class="r">-0.1336</td><td>—</td></tr><tr class="imp"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">-4.0255</td><td class="r" style="font-size:10px">0.403955-0.407959-0.338079-0.437525</td><td class="r">0.2575</td><td class="r">+4.2830</td><td>UP</td></tr><tr class="imp"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">1088.9</td><td class="r" style="font-size:10px">0.224189-0.846480-0.980000-0.980000</td><td class="r">2497.3</td><td class="r">+1408.5</td><td>UP</td></tr><tr class="imp"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.7143</td><td class="r" style="font-size:10px">0.465618-0.243059-0.577549-0.980000-0.020000</td><td class="r">-0.4775</td><td class="r">+0.2367</td><td>UP</td></tr><tr class="imp"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.3650</td><td class="r" style="font-size:10px">0.020000-0.491672-0.247422-0.217425-0.377957-0.746469</td><td class="r">1.4506</td><td class="r">+0.0857</td><td>UP</td></tr><tr class="imp"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.5985</td><td class="r" style="font-size:10px">0.020000-0.020000-0.188724-0.038786-0.403935-0.486768-0.020000-0.893085</td><td class="r">9.7956</td><td class="r">+0.1971</td><td>UP</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="week-lbl">Week 2 — results (1/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.421062-0.463562</td><td class="r">-0.0066</td><td class="r">-0.0066</td><td>—</td></tr><tr class="wor"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.6112</td><td class="r" style="font-size:10px">0.734317-0.926564</td><td class="r">0.5706</td><td class="r">-0.0406</td><td>—</td></tr><tr class="imp"><td class="fn">F3<span class="sub">Drug / adverse · 3D</span></td><td class="r">-0.0348</td><td class="r" style="font-size:10px">0.492581-0.691593-0.401268</td><td class="r">-0.0203</td><td class="r">+0.0145</td><td>UP</td></tr><tr class="wor"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">0.2575</td><td class="r" style="font-size:10px">0.460385-0.434644-0.203056-0.431758</td><td class="r">-3.3056</td><td class="r">-3.5631</td><td>—</td></tr><tr class="wor"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">2497.3</td><td class="r" style="font-size:10px">0.074189-0.696480-0.980000-0.980000</td><td class="r">1811.1</td><td class="r">-686.259</td><td>—</td></tr><tr class="wor"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.4775</td><td class="r" style="font-size:10px">0.517086-0.282151-0.771390-0.980000-0.207535</td><td class="r">-0.5782</td><td class="r">-0.1007</td><td>—</td></tr><tr class="wor"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.4506</td><td class="r" style="font-size:10px">0.020000-0.491672-0.247422-0.214597-0.377195-0.806097</td><td class="r">1.2983</td><td class="r">-0.1523</td><td>—</td></tr><tr class="wor"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.7956</td><td class="r" style="font-size:10px">0.070000-0.070000-0.020000-0.038786-0.403935-0.070000-0.070000-0.893085</td><td class="r">9.6374</td><td class="r">-0.1582</td><td>—</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="week-lbl">Week 3 — results (2/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.070000-0.669525</td><td class="r">-1.764e-130</td><td class="r">-7.711e-16</td><td>—</td></tr><tr class="wor"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.6112</td><td class="r" style="font-size:10px">0.718765-0.926564</td><td class="r">0.6022</td><td class="r">-0.0090</td><td>—</td></tr><tr class="wor"><td class="fn">F3<span class="sub">Drug / adverse · 3D</span></td><td class="r">-0.0203</td><td class="r" style="font-size:10px">0.642581-0.691593-0.478715</td><td class="r">-0.0227</td><td class="r">-0.0024</td><td>—</td></tr><tr class="wor"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">0.2575</td><td class="r" style="font-size:10px">0.343955-0.453869-0.398079-0.433861</td><td class="r">-0.1262</td><td class="r">-0.3837</td><td>—</td></tr><tr class="imp"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">2497.3</td><td class="r" style="font-size:10px">0.150000-0.926480-0.980000-0.980000</td><td class="r">3108.5</td><td class="r">+611.172</td><td>UP</td></tr><tr class="wor"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.4775</td><td class="r" style="font-size:10px">0.524058-0.360869-0.413794-0.897694-0.020000</td><td class="r">-0.5377</td><td class="r">-0.0601</td><td>—</td></tr><tr class="imp"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.4506</td><td class="r" style="font-size:10px">0.070000-0.491672-0.247422-0.167429-0.353878-0.715603</td><td class="r">1.5253</td><td class="r">+0.0747</td><td>UP</td></tr><tr class="wor"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.7956</td><td class="r" style="font-size:10px">0.070000-0.070000-0.020000-0.038786-0.403935-0.930000-0.020000-0.893085</td><td class="r">9.6064</td><td class="r">-0.1892</td><td>—</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="week-lbl">Week 4 — results (4/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.661537-0.436390</td><td class="r">3.213e-28</td><td class="r">-7.711e-16</td><td>—</td></tr><tr class="imp"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.6112</td><td class="r" style="font-size:10px">0.700000-0.020000</td><td class="r">0.6599</td><td class="r">+0.0487</td><td>UP</td></tr><tr class="wor"><td class="fn">F3<span class="sub">Drug / adverse · 3D</span></td><td class="r">-0.0203</td><td class="r" style="font-size:10px">0.592581-0.771593-0.436323</td><td class="r">-0.0434</td><td class="r">-0.0231</td><td>—</td></tr><tr class="wor"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">0.2575</td><td class="r" style="font-size:10px">0.414097-0.385945-0.378079-0.441536</td><td class="r">0.1660</td><td class="r">-0.0915</td><td>—</td></tr><tr class="imp"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">3108.5</td><td class="r" style="font-size:10px">0.380000-0.980000-0.980000-0.980000</td><td class="r">3743.8</td><td class="r">+635.341</td><td>UP</td></tr><tr class="wor"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.4775</td><td class="r" style="font-size:10px">0.365618-0.143059-0.477549-0.930000-0.120000</td><td class="r">-0.6062</td><td class="r">-0.1287</td><td>—</td></tr><tr class="imp"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.5253</td><td class="r" style="font-size:10px">0.070000-0.431672-0.307422-0.158929-0.347393-0.672154</td><td class="r">1.8575</td><td class="r">+0.3321</td><td>UP</td></tr><tr class="imp"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.7956</td><td class="r" style="font-size:10px">0.020000-0.020000-0.188184-0.038786-0.403935-0.486122-0.020000-0.893085</td><td class="r">9.7958</td><td class="r">+1.719e-04</td><td>UP</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="week-lbl">Week 5 — results (4/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.662502-0.070000</td><td class="r">-4.778e-128</td><td class="r">-7.711e-16</td><td>—</td></tr><tr class="imp"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.6599</td><td class="r" style="font-size:10px">0.717869-0.020000</td><td class="r">0.7766</td><td class="r">+0.1168</td><td>UP</td></tr><tr class="imp"><td class="fn">F3<span class="sub">Drug / adverse · 3D</span></td><td class="r">-0.0203</td><td class="r" style="font-size:10px">0.492581-0.691593-0.401000</td><td class="r">-0.0114</td><td class="r">+0.0089</td><td>UP</td></tr><tr class="wor"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">0.2575</td><td class="r" style="font-size:10px">0.425820-0.439559-0.381148-0.436983</td><td class="r">0.2403</td><td class="r">-0.0172</td><td>—</td></tr><tr class="wor"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">3743.8</td><td class="r" style="font-size:10px">0.280000-0.980000-0.980000-0.980000</td><td class="r">3692.5</td><td class="r">-51.309</td><td>—</td></tr><tr class="imp"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.4775</td><td class="r" style="font-size:10px">0.430000-0.240000-0.580000-0.720000-0.120000</td><td class="r">-0.2654</td><td class="r">+0.2121</td><td>UP</td></tr><tr class="wor"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.8575</td><td class="r" style="font-size:10px">0.070000-0.376096-0.307422-0.107492-0.323741-0.648355</td><td class="r">1.8161</td><td class="r">-0.0413</td><td>—</td></tr><tr class="imp"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.7958</td><td class="r" style="font-size:10px">0.126155-0.070000-0.224493-0.038786-0.403935-0.497424-0.228063-0.893085</td><td class="r">9.8645</td><td class="r">+0.0687</td><td>UP</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="week-lbl">Week 6 — results (2/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.755000-0.710000</td><td class="r">-1.273e-16</td><td class="r">-8.984e-16</td><td>—</td></tr><tr class="wor"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.7766</td><td class="r" style="font-size:10px">0.750000-0.020000</td><td class="r">0.4035</td><td class="r">-0.3732</td><td>—</td></tr><tr class="wor"><td class="fn">F3<span class="sub">Drug / adverse · 3D</span></td><td class="r">-0.0114</td><td class="r" style="font-size:10px">0.485000-0.685000-0.401000</td><td class="r">-0.0145</td><td class="r">-0.0031</td><td>—</td></tr><tr class="imp"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">0.2575</td><td class="r" style="font-size:10px">0.400838-0.413498-0.376688-0.406083</td><td class="r">0.4695</td><td class="r">+0.2120</td><td>UP</td></tr><tr class="wor"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">3743.8</td><td class="r" style="font-size:10px">0.360000-0.980000-0.980000-0.980000</td><td class="r">3729.8</td><td class="r">-13.992</td><td>—</td></tr><tr class="imp"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.2654</td><td class="r" style="font-size:10px">0.440000-0.250000-0.590000-0.730000-0.130000</td><td class="r">-0.2404</td><td class="r">+0.0250</td><td>UP</td></tr><tr class="wor"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.8575</td><td class="r" style="font-size:10px">0.070000-0.416628-0.307422-0.136908-0.324592-0.654726</td><td class="r">1.8471</td><td class="r">-0.0103</td><td>—</td></tr><tr class="wor"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.8645</td><td class="r" style="font-size:10px">0.070000-0.272853-0.209858-0.038786-0.403935-0.545195-0.198456-0.893085</td><td class="r">9.8625</td><td class="r">-0.0019</td><td>—</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="week-lbl">Week 7 — results (1/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.760000-0.760000</td><td class="r">5.184e-25</td><td class="r">-7.711e-16</td><td>—</td></tr><tr class="wor"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.7766</td><td class="r" style="font-size:10px">0.720000-0.020000</td><td class="r">0.5074</td><td class="r">-0.2693</td><td>—</td></tr><tr class="wor"><td class="fn">F3<span class="sub">Drug / adverse · 3D</span></td><td class="r">-0.0114</td><td class="r" style="font-size:10px">0.498000-0.698000-0.398000</td><td class="r">-0.0260</td><td class="r">-0.0146</td><td>—</td></tr><tr class="wor"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">0.4695</td><td class="r" style="font-size:10px">0.395000-0.420000-0.380000-0.410000</td><td class="r">0.4637</td><td class="r">-0.0058</td><td>—</td></tr><tr class="wor"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">3743.8</td><td class="r" style="font-size:10px">0.380000-0.980000-0.980000-0.980000</td><td class="r">3743.8</td><td class="r">+0.0000</td><td>—</td></tr><tr class="wor"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.2404</td><td class="r" style="font-size:10px">0.445000-0.255000-0.595000-0.735000-0.135000</td><td class="r">-0.2672</td><td class="r">-0.0268</td><td>—</td></tr><tr class="wor"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.8575</td><td class="r" style="font-size:10px">0.070000-0.435000-0.310000-0.160000-0.350000-0.675000</td><td class="r">1.8468</td><td class="r">-0.0106</td><td>—</td></tr><tr class="imp"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.8645</td><td class="r" style="font-size:10px">0.130000-0.070000-0.220000-0.040000-0.400000-0.500000-0.230000-0.890000</td><td class="r">9.8652</td><td class="r">+7.188e-04</td><td>UP</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="week-lbl">Week 8 — results (3/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.670000-0.450000</td><td class="r">1.000e-20</td><td class="r">-7.711e-16</td><td>—</td></tr><tr class="wor"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.7766</td><td class="r" style="font-size:10px">0.712000-0.015000</td><td class="r">0.6270</td><td class="r">-0.1496</td><td>—</td></tr><tr class="wor"><td class="fn">F3<span class="sub">Drug / adverse · 3D</span></td><td class="r">-0.0114</td><td class="r" style="font-size:10px">0.495000-0.695000-0.400000</td><td class="r">-0.0240</td><td class="r">-0.0126</td><td>—</td></tr><tr class="imp"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">0.4695</td><td class="r" style="font-size:10px">0.397000-0.420000-0.365000-0.405000</td><td class="r">0.5720</td><td class="r">+0.1025</td><td>UP</td></tr><tr class="imp"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">3743.8</td><td class="r" style="font-size:10px">0.400000-0.980000-0.980000-0.980000</td><td class="r">3760.0</td><td class="r">+16.171</td><td>UP</td></tr><tr class="wor"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.2404</td><td class="r" style="font-size:10px">0.460000-0.230000-0.610000-0.750000-0.120000</td><td class="r">-0.2830</td><td class="r">-0.0426</td><td>—</td></tr><tr class="wor"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.8575</td><td class="r" style="font-size:10px">0.055000-0.420000-0.312000-0.155000-0.350000-0.668000</td><td class="r">1.8560</td><td class="r">-0.0015</td><td>—</td></tr><tr class="imp"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.8652</td><td class="r" style="font-size:10px">0.135000-0.068000-0.218000-0.042000-0.405000-0.505000-0.225000-0.900000</td><td class="r">9.8680</td><td class="r">+0.0028</td><td>UP</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="week-lbl">Week 9 — results (4/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.550000-0.320000</td><td class="r">1.000e-20</td><td class="r">-7.711e-16</td><td>—</td></tr><tr class="wor"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.7766</td><td class="r" style="font-size:10px">0.716000-0.018000</td><td class="r">0.5240</td><td class="r">-0.2526</td><td>—</td></tr><tr class="wor"><td class="fn">F3<span class="sub">Drug / adverse · 3D</span></td><td class="r">-0.0114</td><td class="r" style="font-size:10px">0.493000-0.692000-0.401000</td><td class="r">-0.0190</td><td class="r">-0.0076</td><td>—</td></tr><tr class="imp"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">0.5720</td><td class="r" style="font-size:10px">0.400000-0.418000-0.360000-0.408000</td><td class="r">0.6420</td><td class="r">+0.0700</td><td>UP</td></tr><tr class="imp"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">3760.0</td><td class="r" style="font-size:10px">0.410000-0.980000-0.980000-0.980000</td><td class="r">3769.0</td><td class="r">+9.0000</td><td>UP</td></tr><tr class="wor"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.2404</td><td class="r" style="font-size:10px">0.442000-0.248000-0.592000-0.728000-0.132000</td><td class="r">-0.2520</td><td class="r">-0.0116</td><td>—</td></tr><tr class="imp"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.8575</td><td class="r" style="font-size:10px">0.068000-0.430000-0.305000-0.160000-0.348000-0.674000</td><td class="r">1.8580</td><td class="r">+5.441e-04</td><td>UP</td></tr><tr class="imp"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.8680</td><td class="r" style="font-size:10px">0.138000-0.066000-0.216000-0.044000-0.408000-0.508000-0.222000-0.905000</td><td class="r">9.8690</td><td class="r">+1.000e-03</td><td>UP</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="week-lbl">Week 10 — results (5/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.640000-0.682000</td><td class="r">-0.0081</td><td class="r">-0.0081</td><td>—</td></tr><tr class="wor"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.7766</td><td class="r" style="font-size:10px">0.717500-0.019500</td><td class="r">0.7200</td><td class="r">-0.0566</td><td>—</td></tr><tr class="wor"><td class="fn">F3<span class="sub">Drug / adverse · 3D</span></td><td class="r">-0.0114</td><td class="r" style="font-size:10px">0.492580-0.691600-0.401000</td><td class="r">-0.0267</td><td class="r">-0.0153</td><td>—</td></tr><tr class="imp"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">0.6420</td><td class="r" style="font-size:10px">0.402000-0.416000-0.358000-0.410000</td><td class="r">0.6670</td><td class="r">+0.0250</td><td>UP</td></tr><tr class="imp"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">3769.0</td><td class="r" style="font-size:10px">0.420000-0.980000-0.980000-0.980000</td><td class="r">3779.0</td><td class="r">+10.000</td><td>UP</td></tr><tr class="imp"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.2404</td><td class="r" style="font-size:10px">0.441000-0.249000-0.591000-0.729000-0.131000</td><td class="r">-0.1360</td><td class="r">+0.1044</td><td>UP</td></tr><tr class="imp"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.8580</td><td class="r" style="font-size:10px">0.070000-0.428000-0.303000-0.158000-0.346000-0.672000</td><td class="r">1.8630</td><td class="r">+0.0050</td><td>UP</td></tr><tr class="imp"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.8690</td><td class="r" style="font-size:10px">0.140000-0.064000-0.214000-0.046000-0.410000-0.510000-0.220000-0.910000</td><td class="r">9.8710</td><td class="r">+0.0020</td><td>UP</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="week-lbl">Week 11 — results (4/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.638000-0.685000</td><td class="r">-0.0062</td><td class="r">-0.0062</td><td>—</td></tr><tr class="wor"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.7766</td><td class="r" style="font-size:10px">0.717800-0.019800</td><td class="r">0.5482</td><td class="r">-0.2284</td><td>—</td></tr><tr class="wor"><td class="fn">F3<span class="sub">Drug / adverse · 3D</span></td><td class="r">-0.0114</td><td class="r" style="font-size:10px">0.492600-0.691500-0.401000</td><td class="r">-0.0194</td><td class="r">-0.0081</td><td>—</td></tr><tr class="imp"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">0.6670</td><td class="r" style="font-size:10px">0.403000-0.414000-0.356000-0.412000</td><td class="r">0.6752</td><td class="r">+0.0082</td><td>UP</td></tr><tr class="imp"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">3779.0</td><td class="r" style="font-size:10px">0.430000-0.980000-0.980000-0.980000</td><td class="r">3789.5</td><td class="r">+10.507</td><td>UP</td></tr><tr class="wor"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.1360</td><td class="r" style="font-size:10px">0.443000-0.247000-0.593000-0.727000-0.129000</td><td class="r">-0.3722</td><td class="r">-0.2362</td><td>—</td></tr><tr class="imp"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.8630</td><td class="r" style="font-size:10px">0.072000-0.426000-0.301000-0.156000-0.344000-0.670000</td><td class="r">1.8665</td><td class="r">+0.0035</td><td>UP</td></tr><tr class="imp"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.8710</td><td class="r" style="font-size:10px">0.142000-0.062000-0.212000-0.048000-0.412000-0.512000-0.218000-0.915000</td><td class="r">9.8722</td><td class="r">+0.0012</td><td>UP</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <div class="week-lbl">Week 12 — results (4/8 improved)</div>
+  <table>
+    <thead><tr>
+      <th>Function</th><th class="r">Best before</th><th class="r">Query x</th>
+      <th class="r">Actual y</th><th class="r">Δ</th><th>New best?</th>
+    </tr></thead>
+    <tbody>
+      <tr class="wor"><td class="fn">F1<span class="sub">Radiation · 2D</span></td><td class="r">7.711e-16</td><td class="r" style="font-size:10px">0.636000-0.687000</td><td class="r">-0.0051</td><td class="r">-0.0051</td><td>—</td></tr><tr class="wor"><td class="fn">F2<span class="sub">Noisy ML · 2D</span></td><td class="r">0.7766</td><td class="r" style="font-size:10px">0.717900-0.020000</td><td class="r">0.5368</td><td class="r">-0.2398</td><td>—</td></tr><tr class="pend"><td class="fn">F3<span class="sub">Drug / adverse</span></td><td colspan="5">No observation for this week in data/</td></tr><tr class="imp"><td class="fn">F4<span class="sub">Warehouse · 4D</span></td><td class="r">0.6752</td><td class="r" style="font-size:10px">0.404000-0.413000-0.355000-0.413000</td><td class="r">0.6786</td><td class="r">+0.0034</td><td>UP</td></tr><tr class="imp"><td class="fn">F5<span class="sub">Chem. yield · 4D</span></td><td class="r">3789.5</td><td class="r" style="font-size:10px">0.440000-0.980000-0.980000-0.980000</td><td class="r">3800.7</td><td class="r">+11.232</td><td>UP</td></tr><tr class="wor"><td class="fn">F6<span class="sub">Cake recipe · 5D</span></td><td class="r">-0.1360</td><td class="r" style="font-size:10px">0.440000-0.250000-0.590000-0.728000-0.132000</td><td class="r">-0.2054</td><td class="r">-0.0694</td><td>—</td></tr><tr class="imp"><td class="fn">F7<span class="sub">HP tuning · 6D</span></td><td class="r">1.8665</td><td class="r" style="font-size:10px">0.073000-0.425000-0.300000-0.157000-0.345000-0.671000</td><td class="r">1.8722</td><td class="r">+0.0057</td><td>UP</td></tr><tr class="imp"><td class="fn">F8<span class="sub">8-param ML · 8D</span></td><td class="r">9.8722</td><td class="r" style="font-size:10px">0.143000-0.061000-0.211000-0.049000-0.413000-0.511000-0.217000-0.916000</td><td class="r">9.8729</td><td class="r">+7.624e-04</td><td>UP</td></tr>
+    </tbody>
+  </table>
 </div>
 
 <div class="card">
-  <div class="week-lbl">Per-function deep dives (real-world tasks)</div>
-  <div class="grid" id="fn-grid"></div>
-</div>
-
-<div class="card">
-  <div class="legend">
-    <div class="li"><div class="li-dot" style="background:#e17055"></div>Degenerate (ls ≥ 4.5)</div>
-    <div class="li"><div class="li-dot" style="background:#fdcb6e"></div>Sensitive (ls &lt; 0.2)</div>
-    <div class="li"><div class="li-dot" style="background:#55efc4"></div>Normal</div>
-    <div class="li"><div class="li-dot" style="background:#f0faf0;border:1px solid #00b894"></div>Improved row</div>
-    <div class="li"><div class="li-dot" style="background:#fff5f5;border:1px solid #e17055"></div>Worsened row</div>
-  </div>
+  <div class="week-lbl">Archive — earlier weekly snapshots</div>
+  <p class="note">Weeks 1–7 snapshot images remain in this folder (<code>progress_weekN.png</code> / <code>_report.png</code>) for audit. This HTML is the live log through Week 12.</p>
 </div>
 
 </div>
-
-<script>
-const META = {
-  1:{name:"Radiation Detection",dim:2,world:"Locate a hidden radiation source on a 2-D map (Geiger counter)."},
-  2:{name:"Noisy ML Log-Likelihood",dim:2,world:"Tune a noisy ML model's log-likelihood."},
-  3:{name:"Drug Side-Effects",dim:3,world:"Minimise adverse drug reactions from 3 component ratios."},
-  4:{name:"Warehouse Placement",dim:4,world:"Optimise warehouse item placement (multimodal)."},
-  5:{name:"Chemical Yield",dim:4,world:"Maximise chemical reaction yield (single broad peak)."},
-  6:{name:"Cake Recipe",dim:5,world:"Find the best cake recipe (5 ingredients)."},
-  7:{name:"ML Hyperparameters",dim:6,world:"Tune 6 ML hyperparameters."},
-  8:{name:"8-Param ML Model",dim:8,world:"Optimise an 8-parameter ML model."},
-};
-
-const W1=[
-  {fn:1,m:'UNC',nu:'0.5',best:7.71e-16,acq:0.00109,actual:4.85e-214,ls:[0.0126,10]},
-  {fn:2,m:'EI', nu:'2.5',best:0.6112,  acq:0.0150,  actual:0.4898,  ls:[0.0717,10]},
-  {fn:3,m:'UCB',nu:'1.5',best:-0.0348, acq:0.1448, actual:-0.1685, ls:[10,2.58,0.0736]},
-  {fn:4,m:'UCB',nu:'2.5',best:-4.0255, acq:0.6343, actual:0.2575,  ls:[1.838,1.628,1.846,1.789]},
-  {fn:5,m:'UCB',nu:'2.5',best:1088.86, acq:1617.8, actual:2497.32, ls:[10,9.319,0.762,0.426]},
-  {fn:6,m:'EI', nu:'2.5',best:-0.7143, acq:0.4907, actual:-0.4775, ls:[0.601,1.091,1.317,1.506,1.131]},
-  {fn:7,m:'EI', nu:'2.5',best:1.3650,  acq:0.0296, actual:1.4506,  ls:[1.056,10,10,0.359,0.195,0.245]},
-  {fn:8,m:'UCB',nu:'1.5',best:9.5985,  acq:10.599, actual:9.7956,  ls:[3.573,5.687,2.643,9.045,10,7.201,3.709,10]},
-];
-
-const W2=[
-  {fn:1,m:'COV',nu:'0.5',best:7.71e-16,acq:0.27,
-   x:[0.421062,0.463562],actual:-0.006627,ls:[0.0123,10]},
-  {fn:2,m:'EI', nu:'2.5',best:0.6112,  acq:0.0126,
-   x:[0.734317,0.926564],actual:0.5706,ls:[0.0691,10]},
-  {fn:3,m:'UCB',nu:'1.5',best:-0.0348, acq:0.12,
-   x:[0.492581,0.691593,0.401268],actual:-0.0203,ls:[10,2.54,0.0713]},
-  {fn:4,m:'UCB',nu:'2.5',best:0.2575,  acq:1.365,
-   x:[0.460385,0.434644,0.203056,0.431758],actual:-3.306,ls:[1.600,1.458,1.634,1.462]},
-  {fn:5,m:'UCB',nu:'2.5',best:2497.32, acq:2530.8,
-   x:[0.074189,0.696480,0.980000,0.980000],actual:1811.06,ls:[10,10,1.146,0.328]},
-  {fn:6,m:'EI', nu:'2.5',best:-0.4775, acq:0.0538,
-   x:[0.517086,0.282151,0.771390,0.980000,0.207535],actual:-0.5782,ls:[0.538,0.981,1.15,1.247,0.997]},
-  {fn:7,m:'EI', nu:'2.5',best:1.4506,  acq:0.0182,
-   x:[0.020000,0.491672,0.247422,0.214597,0.377195,0.806097],actual:1.2983,ls:[1.06,10,10,0.378,0.22,0.251]},
-  {fn:8,m:'UCB',nu:'1.5',best:9.7956,  acq:10.31,
-   x:[0.070000,0.070000,0.020000,0.038786,0.403935,0.070000,0.070000,0.893085],actual:9.6374,ls:[3.6,5.703,2.663,9.301,10,7.346,3.75,10]},
-];
-
-const W3=[
-  {fn:1,m:'COV',nu:'0.5',best:7.71e-16,acq:7.44e-05,
-   x:[0.070000,0.669525],actual:-1.76e-130,ls:[10,0.0183]},
-  {fn:2,m:'EI', nu:'2.5',best:0.6112,  acq:0.0114,
-   x:[0.718765,0.926564],actual:0.6022,ls:[0.0819,10]},
-  {fn:3,m:'UCB',nu:'1.5',best:-0.0203, acq:0.0897,
-   x:[0.642581,0.691593,0.478715],actual:-0.0227,ls:[0.572,10,0.165]},
-  {fn:4,m:'UCB',nu:'2.5',best:0.2575,  acq:1.517,
-   x:[0.343955,0.453869,0.398079,0.433861],actual:-0.1262,ls:[1.388,1.254,1.194,1.245]},
-  {fn:5,m:'EI', nu:'2.5',best:2497.32, acq:1.893,
-   x:[0.150000,0.926480,0.980000,0.980000],actual:3108.49,ls:[0.235,10,10,0.165]},
-  {fn:6,m:'EI', nu:'2.5',best:-0.4775, acq:0.0540,
-   x:[0.524058,0.360869,0.413794,0.897694,0.020000],actual:-0.5377,ls:[0.559,1.010,1.14,1.279,1.165]},
-  {fn:7,m:'EI', nu:'2.5',best:1.4506,  acq:0.0215,
-   x:[0.070000,0.491672,0.247422,0.167429,0.353878,0.715603],actual:1.5253,ls:[1.041,10,10,0.379,0.216,0.207]},
-  {fn:8,m:'UCB',nu:'1.5',best:9.7956,  acq:10.26,
-   x:[0.070000,0.070000,0.020000,0.038786,0.403935,0.930000,0.020000,0.893085],actual:9.6064,ls:[3.665,5.741,2.690,9.727,10,7.318,3.832,10]},
-];
-
-const W4=[
-  {fn:1,m:'COV',nu:'0.5',best:7.71e-16,acq:3.25e-04,
-   x:[0.661537,0.436390],actual:3.21e-28,ls:[0.129,0.0143]},
-  {fn:2,m:'MAN',nu:'—',  best:0.6112,  acq:0.0297,
-   x:[0.700000,0.020000],actual:0.6599,ls:[0.025,1.22]},
-  {fn:3,m:'EI', nu:'2.5',best:-0.0203, acq:0.0098,
-   x:[0.592581,0.771593,0.436323],actual:-0.0434,ls:[10,2.57,0.116]},
-  {fn:4,m:'EI', nu:'2.5',best:0.2575,  acq:0.290,
-   x:[0.414097,0.385945,0.378079,0.441536],actual:0.1660,ls:[1.348,1.324,1.181,1.278]},
-  {fn:5,m:'EI', nu:'2.5',best:3108.49, acq:61.64,
-   x:[0.380000,0.980000,0.980000,0.980000],actual:3743.83,ls:[2.026,0.744,0.319,10]},
-  {fn:6,m:'EI', nu:'2.5',best:-0.4775, acq:0.0295,
-   x:[0.365618,0.143059,0.477549,0.930000,0.120000],actual:-0.6062,ls:[0.728,0.962,1.215,1.485,1.059]},
-  {fn:7,m:'EI', nu:'2.5',best:1.5253,  acq:0.0145,
-   x:[0.070000,0.431672,0.307422,0.158929,0.347393,0.672154],actual:1.8575,ls:[1.054,2.92,10,0.449,0.227,0.254]},
-  {fn:8,m:'UCB',nu:'1.5',best:9.7956,  acq:9.804,
-   x:[0.020000,0.020000,0.188184,0.038786,0.403935,0.486122,0.020000,0.893085],actual:9.7958,ls:[3.704,5.743,2.692,9.745,10,7.069,3.837,10]},
-];
-
-const W5=[
-  {fn:1,m:'COV',nu:'0.5',best:7.71e-16,acq:4.40e-04,
-   x:[0.662502,0.070000],actual:-4.78e-128,ls:[0.0447,0.01]},
-  {fn:2,m:'EI', nu:'2.5',best:0.6599,  acq:0.0231,
-   x:[0.717869,0.020000],actual:0.7766,ls:[0.0954,3.697]},
-  {fn:3,m:'EI', nu:'2.5',best:-0.0203, acq:2.07e-04,
-   x:[0.492581,0.691593,0.401000],actual:-0.0223,ls:[10,2.685,0.111]},
-  {fn:4,m:'UCB',nu:'2.5',best:0.2575,  acq:0.492,
-   x:[0.425820,0.439559,0.381148,0.436983],actual:0.2403,ls:[1.358,1.243,1.085,1.258]},
-  {fn:5,m:'EI', nu:'2.5',best:3743.83, acq:0.00689,
-   x:[0.280000,0.980000,0.980000,0.980000],actual:3692.52,ls:[10,0.749,0.612,4.482]},
-  {fn:6,m:'EI', nu:'2.5',best:-0.4775, acq:2.55e-04,
-   x:[0.430000,0.240000,0.580000,0.720000,0.120000],actual:-0.2654,ls:[0.526,1.270,1.264,1.772,2.258]},
-  {fn:7,m:'EI', nu:'2.5',best:1.8575,  acq:0.115,
-   x:[0.070000,0.376096,0.307422,0.107492,0.323741,0.648355],actual:1.8161,ls:[0.779,0.284,10,0.732,0.367,0.389]},
-  {fn:8,m:'UCB',nu:'1.5',best:9.7958,  acq:9.928,
-   x:[0.126155,0.070000,0.224493,0.038786,0.403935,0.497424,0.228063,0.893085],actual:9.8645,ls:[3.717,5.763,2.701,9.802,10,7.091,3.850,10]},
-];
-
-const W6=[
-  {fn:1,m:'MAN',nu:'0.5',best:7.71e-16,acq:1e-4,
-   x:[0.755000,0.710000],actual:-1.27e-16,ls:[0.04,0.01]},
-  {fn:2,m:'EI', nu:'2.5',best:0.7766,  acq:0.01,
-   x:[0.750000,0.020000],actual:0.4035,ls:[0.09,3.5]},
-  {fn:3,m:'EI', nu:'2.5',best:-0.0203, acq:1e-3,
-   x:[0.492581,0.691593,0.401000],actual:-0.0114,ls:[10,2.5,0.11]},
-  {fn:4,m:'UCB',nu:'2.5',best:0.2575,  acq:0.40,
-   x:[0.400838,0.413498,0.376688,0.406083],actual:0.4695,ls:[1.3,1.2,1.1,1.2]},
-  {fn:5,m:'EI', nu:'2.5',best:3743.83, acq:0.01,
-   x:[0.360000,0.980000,0.980000,0.980000],actual:3729.84,ls:[8.0,0.75,0.6,4.0]},
-  {fn:6,m:'EI', nu:'2.5',best:-0.2654, acq:1e-3,
-   x:[0.440000,0.250000,0.590000,0.730000,0.130000],actual:-0.2404,ls:[0.5,1.2,1.2,1.7,2.0]},
-  {fn:7,m:'EI', nu:'2.5',best:1.8575,  acq:0.05,
-   x:[0.070000,0.416628,0.307422,0.136908,0.324592,0.654726],actual:1.8471,ls:[0.8,0.3,10,0.7,0.4,0.4]},
-  {fn:8,m:'UCB',nu:'1.5',best:9.8645,  acq:9.90,
-   x:[0.070000,0.272853,0.209858,0.038786,0.403935,0.545195,0.198456,0.893085],actual:9.8625,ls:[3.7,5.7,2.7,9.8,10,7.1,3.8,10]},
-];
-
-const W7=[
-  {fn:1,m:'SVM',nu:'0.5',best:7.71e-16,acq:1e-4,
-   x:[0.760000,0.760000],actual:5.18e-25,ls:[0.04,0.01]},
-  {fn:2,m:'EI', nu:'2.5',best:0.7766,  acq:0.01,
-   x:[0.720000,0.020000],actual:0.5074,ls:[0.09,3.5]},
-  {fn:3,m:'EI', nu:'2.5',best:-0.0114, acq:1e-3,
-   x:[0.485000,0.685000,0.401000],actual:-0.0145,ls:[10,2.5,0.11]},
-  {fn:4,m:'UCB',nu:'2.5',best:0.4695,  acq:0.20,
-   x:[0.395000,0.420000,0.380000,0.410000],actual:0.4637,ls:[1.3,1.2,1.1,1.2]},
-  {fn:5,m:'EI', nu:'2.5',best:3743.83, acq:0.01,
-   x:[0.380000,0.980000,0.980000,0.980000],actual:3743.83,ls:[2.0,0.75,0.3,10]},
-  {fn:6,m:'EI', nu:'2.5',best:-0.2404, acq:1e-3,
-   x:[0.445000,0.255000,0.595000,0.735000,0.135000],actual:-0.2672,ls:[0.5,1.2,1.2,1.7,2.0]},
-  {fn:7,m:'EI', nu:'2.5',best:1.8575,  acq:0.05,
-   x:[0.070000,0.435000,0.310000,0.160000,0.350000,0.675000],actual:1.8468,ls:[0.8,0.3,10,0.7,0.4,0.4]},
-  {fn:8,m:'UCB',nu:'1.5',best:9.8645,  acq:9.90,
-   x:[0.130000,0.070000,0.220000,0.040000,0.400000,0.500000,0.230000,0.890000],actual:9.8652,ls:[3.7,5.7,2.7,9.8,10,7.1,3.8,10]},
-];
-
-function fmt(v){
-  if(v===null||v===undefined) return '—';
-  const a=Math.abs(v);
-  if(a<1e-100) return '≈ 0';
-  if(a>=10000) return v.toFixed(0);
-  if(a>=10)    return v.toFixed(2);
-  if(a<0.001)  return v.toExponential(2);
-  return v.toFixed(4);
-}
-function pc(v){return v>=4.5?'d':v<0.2?'s':'n';}
-
-function fnCell(fn){
-  const m=META[fn];
-  return `<td><span class="fn">F${fn}</span><span class="sub">${m.name} (${m.dim}D)</span></td>`;
-}
-
-function renderW1(data,id){
-  const tb=document.getElementById(id);
-  data.forEach(d=>{
-    const imp=d.actual===null?null:d.actual-d.best;
-    const rc=d.actual===null?'pend':imp>0?'imp':'wor';
-    const bc=d.m==='UNC'?'unc':(d.m==='COV'||d.m==='MAN'||d.m==='SVM')?'cov':d.m==='EI'?'ei':'ucb';
-    const pips=d.ls.map((v,i)=>
-      `<div class="pip ${pc(v)}" title="x${i+1}=${v.toFixed(3)}"></div>`).join('');
-    const aCell=d.actual===null
-      ?'<span class="gray">pending</span>'
-      :`<span class="${imp>0?'up':'dn'}">${fmt(d.actual)}</span>`;
-    const iCell=d.actual===null
-      ?'<span class="gray">pending</span>'
-      :`<span class="${imp>0?'up':'dn'}">${imp>0?'+':''}${fmt(imp)}</span>`;
-    tb.innerHTML+=`<tr class="${rc}">
-      ${fnCell(d.fn)}
-      <td><span class="badge ${bc}">${d.m}</span></td>
-      <td class="gray">${d.nu}</td>
-      <td class="r">${fmt(d.best)}</td>
-      <td class="r">${fmt(d.acq)}</td>
-      <td class="r">${aCell}</td>
-      <td class="r">${iCell}</td>
-      <td><div class="ls-wrap">${pips}</div></td>
-    </tr>`;
-  });
-}
-
-function renderW2(data,id){
-  const tb=document.getElementById(id);
-  data.forEach(d=>{
-    const imp=d.actual===null?null:d.actual-d.best;
-    const rc=d.actual===null?'pend':imp>0?'imp':'wor';
-    const bc=d.m==='UNC'?'unc':(d.m==='COV'||d.m==='MAN'||d.m==='SVM')?'cov':d.m==='EI'?'ei':'ucb';
-    const pips=d.ls.map((v,i)=>
-      `<div class="pip ${pc(v)}" title="x${i+1}=${v.toFixed(3)}"></div>`).join('');
-    const xStr=d.x.map(v=>v.toFixed(4)).join(' · ');
-    const aCell=d.actual===null
-      ?'<span class="gray">pending</span>'
-      :`<span class="${imp>0?'up':'dn'}">${fmt(d.actual)}</span>`;
-    const iCell=d.actual===null
-      ?'<span class="gray">pending</span>'
-      :`<span class="${imp>0?'up':'dn'}">${imp>0?'+':''}${fmt(imp)}</span>`;
-    tb.innerHTML+=`<tr class="${rc}">
-      ${fnCell(d.fn)}
-      <td><span class="badge ${bc}">${d.m}</span></td>
-      <td class="gray">${d.nu}</td>
-      <td class="r">${fmt(d.best)}</td>
-      <td class="r">${fmt(d.acq)}</td>
-      <td class="r" style="font-size:10px;max-width:180px;word-break:break-all;">${xStr}</td>
-      <td class="r">${aCell}</td>
-      <td class="r">${iCell}</td>
-      <td><div class="ls-wrap">${pips}</div></td>
-    </tr>`;
-  });
-}
-
-function renderGrid(){
-  const g=document.getElementById('fn-grid');
-  Object.keys(META).forEach(k=>{
-    const fn=+k, m=META[fn];
-    g.innerHTML+=`<div class="fcard">
-      <h3>F${fn} — ${m.name}</h3>
-      <p>${m.world}</p>
-      <a href="../../data/function_${fn}/EXPLANATION_F${fn}.md">Explanation</a>
-      <a href="../../data/function_${fn}/analysis_F${fn}.png">Analysis figure</a>
-      <a href="../../notebooks/BBO_Capstone_Optimized.ipynb">Notebook</a>
-      <a href="../../data/function_${fn}/analysis_F${fn}.png">
-        <img src="../../data/function_${fn}/analysis_F${fn}.png" alt="F${fn} analysis" loading="lazy">
-      </a>
-    </div>`;
-  });
-}
-
-renderW1(W1,'tb1');
-renderW2(W2,'tb2');
-renderW2(W3,'tb3');
-renderW2(W4,'tb4');
-renderW2(W5,'tb5');
-renderW2(W6,'tb6');
-renderW2(W7,'tb7');
-renderGrid();
-</script>
 </body>
 </html>

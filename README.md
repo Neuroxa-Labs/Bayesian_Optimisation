@@ -174,6 +174,7 @@ pip install numpy scikit-learn scipy matplotlib
 python scripts/make_cluster_gallery.py
 python scripts/make_function_analysis.py
 python scripts/make_explanations.py
+python scripts/make_progress_through_week12.py
 ```
 
 Open [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) from the repository root (it expects `data/` beside `notebooks/`).
