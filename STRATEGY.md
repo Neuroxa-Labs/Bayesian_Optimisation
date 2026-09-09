@@ -80,158 +80,149 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 
 ## 2. Acquisition functions — formulas & effects
 
-The portal black box is an unknown map \(f : [0,1]^d \rightarrow \mathbb{R}\). We never recover a closed form for \(f\). After observing data \(\mathcal{D}_n = \{(x_i, y_i)\}_{i=1}^n\) with \(y_i = f(x_i)\), we fit a Gaussian process and work only with the posterior
+Portal black box: unknown map **f : [0,1]ᵈ → ℝ**. We do **not** recover a closed form for **f**.  
+We only observe pairs **(x, y)** with **y = f(x)**, fit a Gaussian process, and pick the next **x** by maximising an acquisition score **a(x)**.
 
-\[
-f(x) \mid \mathcal{D}_n \;\sim\; \mathcal{N}\big(\mu_n(x),\; \sigma_n^2(x)\big).
-\]
+Notation used below:
 
-An **acquisition function** \(a(\cdot)\) turns \((\mu_n,\sigma_n)\) into a score. The next query (before locks / penalties) is
+| Symbol | Meaning |
+|--------|---------|
+| **x** | candidate input in [0,1]ᵈ |
+| **y** | portal score (= f(x), unknown formula) |
+| **y★** | best score seen so far (incumbent) |
+| **μₙ(x)** | GP predictive mean at **x** after n points |
+| **σₙ(x)** | GP predictive standard deviation at **x** |
+| **ℓⱼ** | ARD length scale for dimension j |
+| **κ** | UCB exploration weight |
+| **φ, Φ** | standard normal pdf and cdf |
 
-\[
-x_{n+1} \;=\; \arg\max_{x \in [0,1]^d} a(x).
-\]
+---
 
-Changing \(a\) changes *where* we sample; it does not change the unknown \(f\).
+### 2.1 Gaussian process posterior
 
-### Gaussian process surrogate (shared)
+After data Dₙ = {(xᵢ, yᵢ)}ᵢ₌₁…ₙ:
 
-We use a zero-mean (after `normalize_y`) Matérn GP with ARD length scales \(\ell = (\ell_1,\ldots,\ell_d)\). The Matérn kernel with smoothness \(\nu\) is
+> **f(x) | Dₙ  ~  𝒩( μₙ(x) , σₙ²(x) )**
 
-\[
-k(x,x')
-\;=\;
-\sigma_f^2\,
-\frac{2^{1-\nu}}{\Gamma(\nu)}
-\big(\sqrt{2\nu}\, r\big)^{\nu}
-K_{\nu}\big(\sqrt{2\nu}\, r\big),
-\qquad
-r
-\;=\;
-\sqrt{\sum_{j=1}^{d}\left(\frac{x_j-x'_j}{\ell_j}\right)^2}.
-\]
+Meaning: at any new **x**, the model’s belief about **f(x)** is a normal distribution with mean **μₙ** and variance **σₙ²**. Acquisition functions are built only from **μₙ** and **σₙ**, never from a known formula for **f**.
 
-On noisy problems (notably F2) we add a WhiteKernel noise term so the covariance is \(k(x,x') + \sigma_{\varepsilon}^2\,\mathbf{1}_{x=x'}\). On F5 we fit the GP to \(\log y\) (positive yields) and map predictions back when scoring.
+Next query (before locks / penalties):
 
-Let \(y^\star = \max_i y_i\) be the incumbent (best observed value). Write \(\phi\) and \(\Phi\) for the standard normal pdf and cdf.
+> **xₙ₊₁  =  arg max_{x ∈ [0,1]ᵈ}  a(x)**
 
-### Expected Improvement (EI)
+---
 
-Improvement over the incumbent:
+### 2.2 Matérn kernel with ARD (what the GP uses)
 
-\[
-I(x) \;=\; \max\big(0,\; f(x) - y^\star\big).
-\]
+Smoothness parameter **ν**; signal variance **σ_f²**; per-dimension length scales **ℓ₁,…,ℓ_d**.
 
-Expected Improvement under the GP posterior:
+Distance with ARD:
 
-\[
-a_{\mathrm{EI}}(x)
-\;=\;
-\mathbb{E}\big[I(x) \mid \mathcal{D}_n\big]
-\;=\;
-\mathbb{E}\big[\max(0,\; f(x)-y^\star) \mid \mathcal{D}_n\big].
-\]
+> **r  =  √[ Σⱼ₌₁ᵈ  ((xⱼ − x′ⱼ) / ℓⱼ)² ]**
 
-Analytic form (noise-free GP predictive; \(z\) uses \(\mu_n,\sigma_n\)):
+Matérn covariance:
 
-\[
-a_{\mathrm{EI}}(x)
-\;=\;
-\begin{cases}
-\displaystyle
-(\mu_n(x)-y^\star)\,\Phi(z)
-\;+\;
-\sigma_n(x)\,\phi(z),
-& \sigma_n(x) > 0, \\[0.75em]
-\displaystyle
-\max\big(0,\; \mu_n(x)-y^\star\big),
-& \sigma_n(x) = 0,
-\end{cases}
-\qquad
-z
-\;=\;
-\frac{\mu_n(x)-y^\star}{\sigma_n(x)}.
-\]
+> **k(x, x′)  =  σ_f² · (2^{1−ν} / Γ(ν)) · (√(2ν) · r)^ν · K_ν(√(2ν) · r)**
 
-**Effect of choosing EI.** Prefers points that are likely to *beat* \(y^\star\). Exploration enters through \(\sigma_n(x)\) in the second term; there is no separate \(\kappa\) dial. In this project EI worked well on F2 / F6 / F7 once a basin existed, but the same EI could propose “nearby” points that still missed a razor ridge — hence hard-return overrides.
+where **Γ** is the gamma function and **K_ν** is the modified Bessel function of the second kind.
 
-### Upper Confidence Bound (UCB)
+**What this means.** Small **ℓⱼ** ⇒ dimension j is sensitive (small moves change **y** a lot). Large **ℓⱼ** ⇒ flat / less important (we often lock that coordinate).
 
-\[
-a_{\mathrm{UCB}}(x)
-\;=\;
-\mu_n(x) \;+\; \kappa\,\sigma_n(x),
-\qquad \kappa > 0.
-\]
+Extras in this project:
 
-**Effect of the dial \(\kappa\).**
+- **F2:** add WhiteKernel noise → **k(x,x′) + σ_ε²** when **x = x′** (noisy observations).
+- **F5:** fit the GP on **log y**, then use the predictive surface for acquisition.
 
-- Large \(\kappa\) (we used \(\approx 2.5\)–\(3\), and \(\kappa_{\mathrm{expl}}=3\) on F1): chase high \(\sigma_n\) — more exploration, second-mode hunting; can waste queries on bad regions (seen on F4 early).
-- Small \(\kappa\) (we used \(\approx 0.5\)–\(1.5\) late): trust \(\mu_n\) — local climb; if \(\mu_n\) is wrong, reinforces a bad neighbourhood.
+Default **ν = 2.5**; overrides: F1 **ν = 0.5**, F3/F8 **ν = 1.5**.
 
-Common project settings: \(\kappa = 2.576\) (roughly a high normal quantile) on F3 / F8 explore; \(\kappa \approx 1.5\) light exploit on F8; F5 signal-triggered exploit used a low \(\kappa\) once \(y\) cleared a threshold.
+---
 
-### Uncertainty sampling (pure \(\sigma\))
+### 2.3 Expected Improvement (EI)
 
-\[
-a_{\sigma}(x) \;=\; \sigma_n(x)
-\qquad\text{(equivalently maximise predictive variance \(\sigma_n^2(x)\))}.
-\]
+Improvement random variable:
 
-**Effect.** Ignores \(\mu_n\); spreads queries into poorly mapped regions. Used on F1 while labels were near null, when trusting \(\mu_n\) would invent fake peaks.
+> **I(x)  =  max( 0 , f(x) − y★ )**
 
-### Coverage / space-fill (when the GP is untrusted)
+Acquisition (expectation under the GP):
 
-Not a GP posterior functional in closed form. With past inputs \(\{x_i\}\), a typical score is distance to the nearest observation (optionally with a boundary penalty \(P(x)\)):
+> **a_EI(x)  =  E[ I(x) | Dₙ ]  =  E[ max(0, f(x) − y★) | Dₙ ]**
 
-\[
-a_{\mathrm{cov}}(x)
-\;=\;
-\min_{i=1,\ldots,n}\,\|x - x_i\|_2
-\;-\;
-\lambda\, P(x).
-\]
+Closed form with **μₙ**, **σₙ**:
 
-**Effect.** Forces geometric coverage of \([0,1]^d\) when \(\mu_n,\sigma_n\) are not trusted (F1 trust-gate weeks). Alone it does not optimise \(y\); it only prepares the map for a later exploit mode.
+> **z  =  (μₙ(x) − y★) / σₙ(x)**
 
-### Decision rule we actually run
+> **a_EI(x)  =  (μₙ(x) − y★) · Φ(z)  +  σₙ(x) · φ(z)**   when **σₙ(x) > 0**
 
-\[
-x_{n+1}
-\;=\;
-\arg\max_{x \in \mathcal{X}_{\mathrm{feasible}}}
-\Big(
-a(x) \;-\; \lambda_{\mathrm{bound}}\, P_{\mathrm{bound}}(x)
-\Big),
-\]
+> **a_EI(x)  =  max(0, μₙ(x) − y★)**   when **σₙ(x) = 0**
 
-where \(\mathcal{X}_{\mathrm{feasible}}\) may freeze degenerate ARD dimensions, lock coordinates (e.g. F3 \(x_3\), F5 high face), restrict to a trust region around the incumbent, or — under the F1 trust gate — refuse exploit-style \(a\) entirely until a measurable signal cluster appears.
+**Effect of choosing EI.**  
+Pushes toward points that can beat **y★**. The term **σₙ·φ(z)** is the exploration piece; there is no separate **κ**.  
+In this project: found F2’s ridge (**y ≈ 0.777**); also caused some “nearby” misses on sharp ridges (F2 W6, F6 W11) → we overrode with hard-return.
 
-### What changes when you pick each AF (effects)
+---
 
-| Choice | Query behaviour | Upside we saw | Downside we saw |
-|--------|-----------------|---------------|-----------------|
-| EI | Balance beat-\(y^\star\) vs \(\sigma_n\) | F2 ridge; F6/F7 local gains | F2 W6 overshoot; F6 W11 off-centroid miss |
-| UCB, high \(\kappa\) | Pull to high \(\sigma_n\) | F4 early basin; F3/F8 map | F4 W2 deep negatives |
-| UCB, low \(\kappa\) | Stay near high \(\mu_n\) | F8 slow ticks; F5 exploit | Wrong \(\mu_n\) can lock a bad basin |
-| \(a_\sigma\) / coverage | Spread / fill space | F1 null-map safety | Does not raise \(y\) by itself |
-| Switch EI \(\leftrightarrow\) UCB | Re-aim after structure appears | F3/F4/F5 explore→exploit | Switch too early or too late wastes budget |
+### 2.4 Upper Confidence Bound (UCB)
 
-### AF path → effect on each function
+> **a_UCB(x)  =  μₙ(x)  +  κ · σₙ(x)**    with **κ > 0**
+
+**Effect of κ.**
+
+- **Large κ** (≈ 2.5–3; F1 explore κ = 3): chase uncertainty → more exploration, can find new basins (F4 early) but also burn queries on bad regions (F4 W2).
+- **Small κ** (≈ 0.5–1.5 late): trust the mean → local climb (F8 slow ticks; F5 exploit). If **μₙ** is wrong, it reinforces a bad neighbourhood.
+
+Settings we used: **κ = 2.576** on F3/F8 explore; **κ ≈ 1.5** light exploit on F8.
+
+---
+
+### 2.5 Uncertainty sampling (pure σ)
+
+> **a_σ(x)  =  σₙ(x)**  
+> (same idea: maximise predictive variance **σₙ²(x)**)
+
+**Effect.** Ignores **μₙ**; spreads queries into unknown regions. Used on **F1** while almost all labels were ~0, so that exploiting **μₙ** would invent fake peaks (trust gate).
+
+---
+
+### 2.6 Coverage / space-fill (when GP is untrusted)
+
+With past points {xᵢ} and optional boundary penalty **P(x)**:
+
+> **a_cov(x)  =  minᵢ ‖x − xᵢ‖₂  −  λ · P(x)**
+
+**Effect.** Geometric coverage of the box when **μₙ / σₙ** are not trusted (F1 trust-gate weeks). Does not raise **y** by itself; prepares for a later exploit mode.
+
+---
+
+### 2.7 Decision rule used in the notebook
+
+> **xₙ₊₁  =  arg max_{x ∈ X_feasible}  [ a(x) − λ_bound · P_bound(x) ]**
+
+**X_feasible** may: lock flat ARD dimensions, freeze coordinates (F3 **x₃**, F5 high face **x₂=x₃=x₄=0.98**), stay inside a trust region around the incumbent, or — under the F1 trust gate — refuse exploit-style **a** until a real signal lobe appears.
+
+---
+
+### 2.8 Effects summary (which AF → what happened)
+
+| Choice | Behaviour | Upside we saw | Downside we saw |
+|--------|-----------|---------------|-----------------|
+| EI | Beat **y★** vs **σₙ** | F2 ridge; F6/F7 local gains | F2 overshoot; F6 off-centroid miss |
+| UCB, high **κ** | Pull to high **σₙ** | F4 basin; F3/F8 map | F4 deep negatives |
+| UCB, low **κ** | Stay near high **μₙ** | F8 ticks; F5 exploit | Wrong **μₙ** can stick |
+| **a_σ** / coverage | Fill space | F1 null-map safety | Does not raise **y** alone |
+| Switch EI ↔ UCB | Re-aim after structure | F3/F4/F5 explore→exploit | Switch timing matters |
 
 | Fn | AF path | Practical effect |
 |----|---------|------------------|
-| F1 | \(a_\sigma\) / coverage → trust gate → lobe micro | Stopped null-map fake exploit; late geometry, not free AF roaming |
-| F2 | EI + WhiteKernel | Found \(y\approx 0.777\); later EI neighbours failed → hard-return |
-| F3 | UCB (\(\kappa\approx 2.576\)) → EI + \(x_3\) lock | Mapped risk then safe-band refine |
-| F4 | High-\(\kappa\) UCB → local EI | Basin find then climb \(0.47\rightarrow 0.68\) |
-| F5 | UCB + threshold → EI on \(\log y\) + face lock | Yield jump then 1-D walk on \(x_1\) |
-| F6 | EI + interior penalty | To \(-0.136\); then hard-return after collapse |
-| F7 | EI + ARD locks | Steady 6-D gains on sensitive axes only |
-| F8 | UCB \(\kappa\approx 2.576\) → \(\kappa\approx 1.5\) | Map then slow \(\sim 0.001\) ticks, less edge-\(\sigma\) chase |
+| F1 | **a_σ** / coverage → trust gate → lobe micro | No fake null-map exploit; late local geometry |
+| F2 | EI + WhiteKernel | Found **y≈0.777**; later hard-return after EI misses |
+| F3 | UCB (**κ≈2.576**) → EI + **x₃** lock | Map risk, then safe-band refine |
+| F4 | High-**κ** UCB → local EI | Basin then climb **0.47 → 0.68** |
+| F5 | UCB + threshold → EI on **log y** + face lock | Yield jump then 1-D walk on **x₁** |
+| F6 | EI + interior penalty | To **−0.136**; then hard-return |
+| F7 | EI + ARD locks | Steady gains on sensitive axes only |
+| F8 | UCB **κ≈2.576 → 1.5** | Map then slow **~0.001** ticks |
 
-**Takeaway.** The formulas above are the *scoring rules*. On a one-query-per-week budget, the biggest gains came from pairing them with locks, trust regions, log-\(y\), and hard-return so \(a(x)\) is not maximised on a wrong GP belief.
+**Takeaway.** These are the **scoring formulas**. The unknown portal **f(x)** stays unknown; we only ever update **μₙ, σₙ** from observed **(x, y)**. Locks / trust regions / hard-return stop **a(x)** from acting on a wrong GP belief.
 
 ---
 
