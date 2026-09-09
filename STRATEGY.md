@@ -157,7 +157,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 
 **Incumbent (official max):** \(y = 7.711\times10^{-16}\) at `[0.731024, 0.733000]` (seed) — never beaten. Late lobe is the first **usable basin**, not the absolute max.
 
-**Detail:** [`data/function_1/EXPLANATION_F1.md`](data/function_1/EXPLANATION_F1.md) · `analysis_F1.png`
+**Detail:** [`EXPLANATION_F1.md`](data/function_1/EXPLANATION_F1.md) · [`analysis_F1.png`](data/function_1/analysis_F1.png)
 
 ---
 
@@ -194,7 +194,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 
 **Incumbent:** \(y = 0.776645\) (Week 5) — held; never reclaimed after misses.
 
-**Detail:** [`data/function_2/EXPLANATION_F2.md`](data/function_2/EXPLANATION_F2.md) · `analysis_F2.png`
+**Detail:** [`EXPLANATION_F2.md`](data/function_2/EXPLANATION_F2.md) · [`analysis_F2.png`](data/function_2/analysis_F2.png)
 
 ---
 
@@ -230,7 +230,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 
 **Incumbent:** \(y = -0.011366\) at `[0.492581, 0.691593, 0.401000]` (≈ Week 6).
 
-**Detail:** [`data/function_3/EXPLANATION_F3.md`](data/function_3/EXPLANATION_F3.md) · `analysis_F3.png`
+**Detail:** [`EXPLANATION_F3.md`](data/function_3/EXPLANATION_F3.md) · [`analysis_F3.png`](data/function_3/analysis_F3.png)
 
 ---
 
@@ -267,7 +267,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 
 **Incumbent:** \(y = 0.678600\) (Week 12).
 
-**Detail:** [`data/function_4/EXPLANATION_F4.md`](data/function_4/EXPLANATION_F4.md) · `analysis_F4.png`
+**Detail:** [`EXPLANATION_F4.md`](data/function_4/EXPLANATION_F4.md) · [`analysis_F4.png`](data/function_4/analysis_F4.png)
 
 ---
 
@@ -306,7 +306,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 
 **Incumbent:** \(y = 3800.74\) at `[0.44, 0.98, 0.98, 0.98]` — clearest sustained success (seed ~1089 → ~3801).
 
-**Detail:** [`data/function_5/EXPLANATION_F5.md`](data/function_5/EXPLANATION_F5.md) · `analysis_F5.png`
+**Detail:** [`EXPLANATION_F5.md`](data/function_5/EXPLANATION_F5.md) · [`analysis_F5.png`](data/function_5/analysis_F5.png)
 
 ---
 
@@ -341,7 +341,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 
 **Incumbent:** \(y = -0.136\) (Week 10) at `[0.441, 0.249, 0.591, 0.729, 0.131]`.
 
-**Detail:** [`data/function_6/EXPLANATION_F6.md`](data/function_6/EXPLANATION_F6.md) · `analysis_F6.png`
+**Detail:** [`EXPLANATION_F6.md`](data/function_6/EXPLANATION_F6.md) · [`analysis_F6.png`](data/function_6/analysis_F6.png)
 
 ---
 
@@ -376,7 +376,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 
 **Incumbent:** \(y = 1.872233\) (Week 12).
 
-**Detail:** [`data/function_7/EXPLANATION_F7.md`](data/function_7/EXPLANATION_F7.md) · `analysis_F7.png`
+**Detail:** [`EXPLANATION_F7.md`](data/function_7/EXPLANATION_F7.md) · [`analysis_F7.png`](data/function_7/analysis_F7.png)
 
 ---
 
@@ -411,7 +411,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 
 **Incumbent:** \(y = 9.872928\) (Week 12) — slow ~0.001 ticks late.
 
-**Detail:** [`data/function_8/EXPLANATION_F8.md`](data/function_8/EXPLANATION_F8.md) · `analysis_F8.png`
+**Detail:** [`EXPLANATION_F8.md`](data/function_8/EXPLANATION_F8.md) · [`analysis_F8.png`](data/function_8/analysis_F8.png)
 
 ---
 
