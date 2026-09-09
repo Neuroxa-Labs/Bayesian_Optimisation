@@ -11,24 +11,27 @@ Imperial College London · PCMLAI Stage 2 · Black-Box Bayesian Optimisation
 | **Weekly detail files** | [`weeks/WEEK*_STRATEGY.md`](weeks/) (portal strings + that week’s rationale) |
 | **Evidence pack** | [`docs/final_report.md`](docs/final_report.md) · [`docs/final_report.pdf`](docs/final_report.pdf) |
 
-This file answers, **for every function**: what structures we used, which hyperparameters / locks applied, and how the approach progressed week by week.
+This file answers, **for every function**: what structures we used, which hyperparameters / locks applied, how acquisition-function (AF) choices behaved, and how the approach progressed week by week.
+
+**Not in scope:** recovering a closed-form \(f(x)\). The portal is a black box; we only ever observe \((x,y)\). The GP supplies a **surrogate** \(\mu(x),\sigma(x)\), not the true formula.
 
 ---
 
 ## Contents
 
 1. [Shared pipeline & global hyperparameters](#1-shared-pipeline--global-hyperparameters)
-2. [Quick map (all eight)](#2-quick-map-all-eight)
-3. [F1 — Radiation](#3-f1--radiation-source-2d)
-4. [F2 — Noisy ML](#4-f2--noisy-ml-score-2d)
-5. [F3 — Drug / adverse](#5-f3--drug--adverse-3d)
-6. [F4 — Warehouse](#6-f4--warehouse-4d)
-7. [F5 — Chemical yield](#7-f5--chemical-yield-4d)
-8. [F6 — Cake recipe](#8-f6--cake-recipe-5d)
-9. [F7 — HP tuning](#9-f7--hyperparameter-tuning-6d)
-10. [F8 — 8-param ML](#10-f8--eight-parameter-ml-8d)
-11. [Late policy (W10–13)](#11-late-policy-weeks-1013)
-12. [Week file index](#12-week-file-index)
+2. [Acquisition functions — formulas & effects](#2-acquisition-functions--formulas--effects)
+3. [Quick map (all eight)](#3-quick-map-all-eight)
+4. [F1 — Radiation](#4-f1--radiation-source-2d)
+5. [F2 — Noisy ML](#5-f2--noisy-ml-score-2d)
+6. [F3 — Drug / adverse](#6-f3--drug--adverse-3d)
+7. [F4 — Warehouse](#7-f4--warehouse-4d)
+8. [F5 — Chemical yield](#8-f5--chemical-yield-4d)
+9. [F6 — Cake recipe](#9-f6--cake-recipe-5d)
+10. [F7 — HP tuning](#10-f7--hyperparameter-tuning-6d)
+11. [F8 — 8-param ML](#11-f8--eight-parameter-ml-8d)
+12. [Late policy (W10–13)](#12-late-policy-weeks-1013)
+13. [Week file index](#13-week-file-index)
 
 ---
 
@@ -75,7 +78,49 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 
 ---
 
-## 2. Quick map (all eight)
+## 2. Acquisition functions — formulas & effects
+
+The GP posterior at a candidate \(x\) is summarised by mean \(\mu(x)\) and std \(\sigma(x)\). An **acquisition function** turns that into a score; we pick \(\arg\max_x a(x)\) (then apply locks / penalties). Changing the AF changes *where* the next query lands — not the black-box \(f\) itself.
+
+### Formulas (what we maximise)
+
+| AF | Score (conceptually) | Dial |
+|----|----------------------|------|
+| **EI** (Expected Improvement) | \(a_{\mathrm{EI}}(x) = \mathbb{E}\big[\max(0,\ f(x)-y^\star)\big]\) under the GP — prefers points likely to beat the incumbent \(y^\star\) | Implicit explore/exploit via \(\sigma\); no κ |
+| **UCB** (Upper Confidence Bound) | \(a_{\mathrm{UCB}}(x) = \mu(x) + \kappa\,\sigma(x)\) | **κ large** → chase uncertainty (explore); **κ small** → trust \(\mu\) (exploit) |
+| **Uncertainty / σ** | \(a(x) \propto \sigma(x)\) (or related coverage heuristics) | Pure exploration — ignore \(\mu\) |
+| **Coverage / space-fill** | Prefer candidates far from past \(x\) (plus boundary penalty) | Exploration when the GP is untrusted |
+
+We never write down a closed form for the true \(f_i(x)\). After each portal return we only update the dataset and refit \(\mu,\sigma\).
+
+### What changes when you pick each AF
+
+| If you choose… | Typical query behaviour | Upside | Downside we actually saw |
+|----------------|-------------------------|--------|---------------------------|
+| **EI** | Balances “beat best” vs uncertainty; often near the incumbent once a peak exists | Good on noisy / sharp ridges (F2) and interior cake steps (F6); natural for “improve \(y^\star\)” | Can overshoot a razor ridge (F2 W6) or step just off a sharp basin (F6 W11) |
+| **UCB, high κ** (~2.5–3) | Pulls toward high-\(\sigma\) regions / second modes | Escapes local traps early (F4 W1 basin discovery; F3/F8 early map) | Expensive bad samples on multimodal maps (F4 W2 deep negatives) |
+| **UCB, low κ** (~0.5–1.5) | Stays near high \(\mu\) | Stable late climb (F8 light exploit; F5 signal-triggered exploit) | If \(\mu\) is wrong, reinforces a bad neighbourhood |
+| **Uncertainty / coverage** | Spreads queries; ignores peak hunting | Necessary on F1 while all labels ~null (trust gate) | Alone never “solves” a sparse peak — needs a later exploit mode once signal appears |
+| **Switch EI ↔ UCB mid-project** | Re-aims the search when landscape knowledge changes | F3/F4/F5: explore with UCB, then EI (or low-κ UCB) once a basin/ridge is proven | Switching too early freezes on a weak basin; switching too late wastes budget |
+
+### AF → effect on each function (summary)
+
+| Fn | AF path | What that AF choice did in practice |
+|----|---------|-------------------------------------|
+| **F1** | Uncertainty / coverage early → **refuse GP AF exploit** (trust gate) → late **local micro** in signal lobe | High-σ / coverage stopped wasted “null-map exploit”. Once a lobe appeared (~0.64/0.68), AF no longer drove global jumps — geometry + trust gate did. |
+| **F2** | **EI** + WhiteKernel all the way | EI found the sharp ridge (W5, \(y≈0.777\)). Same EI later proposed “nearby” points that missed (~0.54) → we added **hard-return**, i.e. overrode AF when neighbour EI was unsafe. |
+| **F3** | **UCB** (κ≈2.576) → **EI** + \(x_3\) lock | UCB mapped sensitive \(x_3\); EI + lock tightened to \(y≈-0.011\). Without the lock, AF alone kept drifting \(x_3\) into unsafe bands. |
+| **F4** | High-κ **UCB** → local **EI** / low-radius trust region | High κ found a usable basin (costly misses early). Local EI produced the late climb 0.47→0.68; global UCB would have kept jumping. |
+| **F5** | **UCB** + signal threshold → **EI + log-\(y\)** + face lock | UCB/threshold got the first big yield jump; log-y EI + locked \(x_2..x_4\) turned AF into a **1D ridge walk on \(x_1\)** (3744→3801). |
+| **F6** | **EI** + interior / boundary penalty | EI improved toward −0.136 (W10). After W11 collapse, hard-return overrode AF — EI’s “local improve” proposal was too wide for a razor basin. |
+| **F7** | **EI** + boundary soft + ARD locks | EI gave steady 6D gains; degenerate dims removed from the AF search so budget stayed on sensitive axes (late 1.857→1.872). |
+| **F8** | **UCB** κ≈2.576 → κ≈1.5 light exploit | High κ mapped 8D early; lowering κ turned AF into slow ~0.001 ticks (9.86→9.87) instead of edge-chasing σ artefacts. |
+
+**Takeaway.** AF choice sets the *default* explore/exploit bias. On this budget, the largest gains often came from **pairing** AF with structures (trust gate, locks, log-\(y\), hard-return) that stop the AF from acting on a wrong GP belief.
+
+---
+
+## 3. Quick map (all eight)
 
 | Fn | \(d\) | Seed `n_init` | Profile | Key structures | Best \(y\) (W12) |
 |----|------:|--------------:|---------|----------------|------------------|
@@ -90,7 +135,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 
 ---
 
-## 3. F1 — Radiation source (2D)
+## 4. F1 — Radiation source (2D)
 
 ### Structures & hyperparameters
 
@@ -105,6 +150,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 | `signal_thr` | 1e−4 |
 | WhiteKernel / log-\(y\) | No |
 | **Special structure** | **Trust gate** — refuse GP exploit while labels are ~null |
+| **AF effect here** | Uncertainty/coverage stops null-map “fake peaks”; after W10 lobe, queries are lobe micro-steps (AF not free to roam) |
 
 ### Weekly progress
 
@@ -127,7 +173,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 
 ---
 
-## 4. F2 — Noisy ML score (2D)
+## 5. F2 — Noisy ML score (2D)
 
 ### Structures & hyperparameters
 
@@ -141,6 +187,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 | **WhiteKernel** | **True** (noise model) |
 | AF | **EI** throughout |
 | **Special structure** | Sharp ridge + **hard-return** after neighbour misses |
+| **AF effect here** | EI discovered the W5 ridge; the same EI later proposed unsafe neighbours → hard-return overrides AF |
 
 ### Weekly progress
 
@@ -163,7 +210,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 
 ---
 
-## 5. F3 — Drug / adverse (3D)
+## 6. F3 — Drug / adverse (3D)
 
 ### Structures & hyperparameters
 
@@ -177,6 +224,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 | Notebook AF | **UCB** κ = 2.576 (early); practice shifted to **EI** + locks mid-project |
 | **Special structure** | **Safe \(x_3\) lock ≈ 0.401** (from Week 5) |
 | Data note | 11 weekly rows in `data/` (no fabricated W12 point) |
+| **AF effect here** | UCB mapped \(x_3\) risk; EI+lock converted AF into safe-band refine (without lock, AF drifted \(x_3\)) |
 
 ### Weekly progress
 
@@ -198,7 +246,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 
 ---
 
-## 6. F4 — Warehouse (4D)
+## 7. F4 — Warehouse (4D)
 
 ### Structures & hyperparameters
 
@@ -212,6 +260,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 | Notebook AF | **UCB** κ ≈ 2.5 |
 | Practice AF | High-κ UCB early → **local EI** + trust region late |
 | **Special structure** | Shrinking **trust-region micro-steps** once basin proven |
+| **AF effect here** | High-κ UCB found a basin (paid with bad samples); local EI produced the late 0.47→0.68 climb |
 
 ### Weekly progress
 
@@ -234,7 +283,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 
 ---
 
-## 7. F5 — Chemical yield (4D)
+## 8. F5 — Chemical yield (4D)
 
 ### Structures & hyperparameters
 
@@ -248,6 +297,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 | Notebook AF | UCB explore κ=2.576 → UCB exploit κ=0.5 when \(y\) > `signal_thr` = 2000 |
 | Practice AF | Shifted to **EI + log-\(y\)** once ridge found |
 | **Special structure** | Lock high face \(x_2=x_3=x_4=0.98\); climb **\(x_1\)** only |
+| **AF effect here** | UCB/threshold opened the yield jump; log-y EI + face lock reduced AF to a 1D \(x_1\) ridge walk |
 
 ### Weekly progress
 
@@ -272,7 +322,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 
 ---
 
-## 8. F6 — Cake recipe (5D)
+## 9. F6 — Cake recipe (5D)
 
 ### Structures & hyperparameters
 
@@ -285,6 +335,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 | Matérn `nu` | default 2.5 |
 | AF | **EI** throughout |
 | **Special structures** | Interior policy (avoid edges) · **hard-return** to W10 centroid after W11 collapse |
+| **AF effect here** | EI improved to −0.136; after W11 miss, hard-return overrides EI’s too-wide local proposal |
 
 ### Weekly progress
 
@@ -306,7 +357,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 
 ---
 
-## 9. F7 — Hyperparameter tuning (6D)
+## 10. F7 — Hyperparameter tuning (6D)
 
 ### Structures & hyperparameters
 
@@ -319,6 +370,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 | Matérn `nu` | default 2.5 |
 | AF | **EI** throughout |
 | **Special structures** | Soft **boundary penalty** · degenerate lock on flat dims · late **ARD-sensitive micro-steps** only |
+| **AF effect here** | EI + locking flat dims keeps acquisition on sensitive axes → slow compound late gains |
 
 ### Weekly progress
 
@@ -340,7 +392,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 
 ---
 
-## 10. F8 — Eight-parameter ML (8D)
+## 11. F8 — Eight-parameter ML (8D)
 
 ### Structures & hyperparameters
 
@@ -353,6 +405,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 | Matérn `nu` | **1.5** |
 | AF | **UCB** κ = 2.576 early → **κ ≈ 1.5** light exploit from Week 5 |
 | **Special structures** | **Boundary penalty** · degenerate locks · trust-region ticks on sensitive axes only |
+| **AF effect here** | High-κ UCB explores 8D; lowering κ ≈1.5 turns AF into slow ticks instead of edge-σ chase |
 
 ### Weekly progress
 
@@ -374,7 +427,7 @@ Neural nets / Optuna / TuRBO were **not** the primary weekly portal decider. The
 
 ---
 
-## 11. Late policy (Weeks 10–13)
+## 12. Late policy (Weeks 10–13)
 
 | Mode | Functions | Action |
 |------|-----------|--------|
@@ -389,7 +442,7 @@ Full Week-13 block + rationale: [`weeks/WEEK13_STRATEGY.md`](weeks/WEEK13_STRATE
 
 ---
 
-## 12. Week file index
+## 13. Week file index
 
 | Week | Strategy | Reflection |
 |------|----------|------------|
@@ -413,4 +466,4 @@ Folder guide: [`weeks/README.md`](weeks/README.md).
 | [`MODEL_CARD.md`](MODEL_CARD.md) | Method transparency |
 | [`docs/COURSE_INDEX.md`](docs/COURSE_INDEX.md) | Course activity map |
 
-*Version: v2 — full per-function weekly arcs through locked Week 13 queries. Update best-\(y\) cells when portal results arrive.*
+*Version: v3 — adds AF formulas, choice→effect tables, and per-function AF-effect notes. Update best-\(y\) cells when portal results arrive.*
