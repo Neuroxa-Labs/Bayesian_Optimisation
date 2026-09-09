@@ -7,6 +7,7 @@ Portfolio-facing filenames are descriptive. This page maps **PCMLAI Stage 2 acti
 | Transparency / datasheet | [`../DATASHEET.md`](../DATASHEET.md) |
 | Transparency / model card | [`../MODEL_CARD.md`](../MODEL_CARD.md) |
 | Approach presentation (PDF fill-in text) | [`approach_presentation.md`](approach_presentation.md) |
+| Final research report (evidence pack) | [`final_report.md`](final_report.md) |
 | Final-round / Week 13 portal queries | [`../weeks/WEEK13_STRATEGY.md`](../weeks/WEEK13_STRATEGY.md) |
 | Final-round RL discussion | [`../weeks/final_round_rl_reflection.md`](../weeks/final_round_rl_reflection.md) |
 | End-of-project reflection | [`../weeks/project_reflection.md`](../weeks/project_reflection.md) |

@@ -28,7 +28,7 @@ We ran a careful series of experiments on eight hidden scoring problems — from
 Late policy (Weeks 10–13): stay inside proven basins, move only sensitive axes, and hard-return after a failed neighbour step (especially F2 / F6).
 
 Executable pipeline: [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb).  
-Method write-up: [`docs/TECHNICAL_JUSTIFICATION.md`](docs/TECHNICAL_JUSTIFICATION.md) · presentation text: [`docs/approach_presentation.md`](docs/approach_presentation.md).
+Method write-up: [`docs/TECHNICAL_JUSTIFICATION.md`](docs/TECHNICAL_JUSTIFICATION.md) · presentation text: [`docs/approach_presentation.md`](docs/approach_presentation.md) · **final report:** [`docs/final_report.md`](docs/final_report.md).
 
 ---
 
@@ -140,6 +140,7 @@ Function 8:  0.144000-0.060000-0.210000-0.050000-0.414000-0.510000-0.216000-0.91
 | Model card | [`MODEL_CARD.md`](MODEL_CARD.md) |
 | Main notebook | [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) |
 | Approach presentation (PDF text) | [`docs/approach_presentation.md`](docs/approach_presentation.md) |
+| Final research report | [`docs/final_report.md`](docs/final_report.md) |
 | Visual gallery | [`reports/analysis/README.md`](reports/analysis/README.md) |
 | Week 13 final queries | [`weeks/WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md) |
 | Project reflection | [`weeks/project_reflection.md`](weeks/project_reflection.md) |
