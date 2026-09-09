@@ -2,6 +2,8 @@
 
 Strategy, post-result reflections, and discussion-board posts.
 
+**For the full per-function document (structures, hyperparameters, week-by-week) — same level as README / DATASHEET:** [`../STRATEGY.md`](../STRATEGY.md).
+
 | Type | Files |
 |------|--------|
 | Weekly strategy / reflection / discussion | `WEEK*_STRATEGY.md`, `WEEK*_REFLECTION.md`, `WEEK*_DISCUSSION.md` |

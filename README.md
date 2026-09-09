@@ -10,6 +10,17 @@ Maximise **eight unknown black-box functions** (2D–8D) with **one query per fu
 | **Status** | Weeks 1–12 complete · Week 13 (final) queries locked · awaiting portal results |
 | **Repository** | https://github.com/Neuroxa-Labs/Bayesian_Optimisation |
 
+### Main menu
+
+| Page | What it is |
+|------|------------|
+| [`README.md`](README.md) | Project home (this page) |
+| [`STRATEGY.md`](STRATEGY.md) | **Per-function structures, hyperparameters & weekly progress** |
+| [`docs/final_report.pdf`](docs/final_report.pdf) | Final research report (PDF) |
+| [`docs/project_faq.pdf`](docs/project_faq.pdf) | Project FAQ (PDF) |
+| [`weeks/`](weeks/) | Weekly portal strategies & reflections |
+| [`reports/analysis/README.md`](reports/analysis/README.md) | Figures / gallery |
+
 ---
 
 ## For a general audience
@@ -27,8 +38,11 @@ We ran a careful series of experiments on eight hidden scoring problems — from
 
 Late policy (Weeks 10–13): stay inside proven basins, move only sensitive axes, and hard-return after a failed neighbour step (especially F2 / F6).
 
+**Full per-function strategy document (structures, hyperparameters, week-by-week):** [`STRATEGY.md`](STRATEGY.md).
+
 Executable pipeline: [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb).  
-Method write-up: [`docs/TECHNICAL_JUSTIFICATION.md`](docs/TECHNICAL_JUSTIFICATION.md) · presentation text: [`docs/approach_presentation.md`](docs/approach_presentation.md) · **final report:** [`docs/final_report.md`](docs/final_report.md).
+Method write-up: [`docs/TECHNICAL_JUSTIFICATION.md`](docs/TECHNICAL_JUSTIFICATION.md) · presentation text: [`docs/approach_presentation.md`](docs/approach_presentation.md).  
+**Final report (PDF):** [`docs/final_report.pdf`](docs/final_report.pdf) · markdown: [`docs/final_report.md`](docs/final_report.md) · **Project FAQ (PDF):** [`docs/project_faq.pdf`](docs/project_faq.pdf).
 
 ---
 
@@ -136,11 +150,14 @@ Function 8:  0.144000-0.060000-0.210000-0.050000-0.414000-0.510000-0.216000-0.91
 
 | What | Where |
 |------|--------|
+| Strategy hub (structures, hyperparameters, weekly progress) | [`STRATEGY.md`](STRATEGY.md) |
 | Datasheet | [`DATASHEET.md`](DATASHEET.md) |
 | Model card | [`MODEL_CARD.md`](MODEL_CARD.md) |
 | Main notebook | [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) |
 | Approach presentation (PDF text) | [`docs/approach_presentation.md`](docs/approach_presentation.md) |
-| Final research report | [`docs/final_report.md`](docs/final_report.md) |
+| Final research report (PDF) | [`docs/final_report.pdf`](docs/final_report.pdf) |
+| Final research report (Markdown) | [`docs/final_report.md`](docs/final_report.md) |
+| Project FAQ (PDF) | [`docs/project_faq.pdf`](docs/project_faq.pdf) |
 | Visual gallery | [`reports/analysis/README.md`](reports/analysis/README.md) |
 | Week 13 final queries | [`weeks/WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md) |
 | Project reflection | [`weeks/project_reflection.md`](weeks/project_reflection.md) |
@@ -155,9 +172,10 @@ Function 8:  0.144000-0.060000-0.210000-0.050000-0.414000-0.510000-0.216000-0.91
 ```text
 Bayesian_Optimisation/
 ├── README.md                 # This page
+├── STRATEGY.md               # Per-function structures, hyperparameters, weekly progress (like DATASHEET)
 ├── DATASHEET.md              # Dataset transparency
 ├── MODEL_CARD.md             # Method transparency
-├── docs/                     # Presentation text, course index, technical notes
+├── docs/                     # Final report + FAQ PDFs, presentation text, course index
 ├── weeks/                    # Weekly strategy, reflections, discussions
 ├── reports/analysis/         # Current gallery (Markdown + PNG; GitHub-friendly)
 ├── reports/progress/         # Progress dashboard through Week 12 (HTML + PNG)
@@ -171,12 +189,13 @@ Bayesian_Optimisation/
 ## How to reproduce
 
 ```bash
-pip install numpy scikit-learn scipy matplotlib
+pip install numpy scikit-learn scipy matplotlib fpdf2
 python scripts/make_cluster_gallery.py
 python scripts/make_function_analysis.py
 python scripts/make_explanations.py
 python scripts/make_progress_through_week12.py
 python scripts/make_archive_week_snapshots.py
+python scripts/make_docs_pdfs.py
 ```
 
 Open [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) from the repository root (it expects `data/` beside `notebooks/`).

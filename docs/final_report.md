@@ -204,7 +204,10 @@ Function 8:  0.144000-0.060000-0.210000-0.050000-0.414000-0.510000-0.216000-0.91
 
 | Artefact | Path |
 |----------|------|
+| Strategy hub (parameters + policies) | [`../STRATEGY.md`](../STRATEGY.md) |
 | Approach presentation text | [`approach_presentation.md`](approach_presentation.md) |
+| This report as PDF | [`final_report.pdf`](final_report.pdf) |
+| Project FAQ (PDF) | [`project_faq.pdf`](project_faq.pdf) |
 | Project reflection | [`../weeks/project_reflection.md`](../weeks/project_reflection.md) |
 | Successful strategies (+ Matt peer) | [`../weeks/successful_strategies_reflection.md`](../weeks/successful_strategies_reflection.md) |
 | Visual gallery | [`../reports/analysis/README.md`](../reports/analysis/README.md) |
