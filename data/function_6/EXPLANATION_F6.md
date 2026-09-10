@@ -12,13 +12,13 @@
 This is a **black box**: we never see the formula, only input → output. Bayesian optimisation
 (GP + acquisition) is designed for exactly that setting.
 
-## 2. Data so far (20 seed points + 12 weekly queries = 32 observations)
+## 2. Data so far (20 seed points + 13 weekly queries = 33 observations)
 
 | # | x1 | x2 | x3 | x4 | x5 | y | note |
 |---|---|---|---|---|---|---|---|
 | 30 | 0.4410 | 0.2490 | 0.5910 | 0.7290 | 0.1310 | -0.1360 | BEST |
 | 32 | 0.4400 | 0.2500 | 0.5900 | 0.7280 | 0.1320 | -0.2054 |  |
-| 26 | 0.4400 | 0.2500 | 0.5900 | 0.7300 | 0.1300 | -0.2404 |  |
+| 33 | 0.4412 | 0.2492 | 0.5908 | 0.7287 | 0.1312 | -0.2070 |  |
 | 19 | 0.9218 | 0.9319 | 0.4149 | 0.5951 | 0.7356 | -2.1558 |  |
 | 9 | 0.1257 | 0.8627 | 0.0285 | 0.2466 | 0.7512 | -2.5712 | WORST |
 
@@ -30,7 +30,7 @@ This is a **black box**: we never see the formula, only input → output. Bayesi
 - `x2`: length-scale = 0.0100 → **very sensitive** — small changes move y a lot
 - `x3`: length-scale = 0.0100 → **very sensitive** — small changes move y a lot
 - `x4`: length-scale = 0.0100 → **very sensitive** — small changes move y a lot
-- `x5`: length-scale = 0.0327 → **very sensitive** — small changes move y a lot
+- `x5`: length-scale = 0.0404 → **very sensitive** — small changes move y a lot
 
 ## 4. Acquisition / late policy: **EI**
 
@@ -108,11 +108,17 @@ A sharp interior basin. Week 10 set the incumbent; a small off-centroid step col
 - **Received:** y = -0.2054
 - **Outcome:** did **not** improve over the previous best (-0.1360).
 
-## 17. The lesson
+## 17. Week 13 — what we sent and what happened
+
+- **Sent:** x = [0.4412, 0.2492, 0.5908, 0.7287, 0.1312]
+- **Received:** y = -0.2070
+- **Outcome:** did **not** improve over the previous best (-0.1360).
+
+## 18. The lesson
 
 Nearby is not enough on a sharp basin. After a failed neighbour, return hard to the proven mode.
 
-## 18. Summary
+## 19. Summary
 
 | | Value |
 |---|---|
@@ -132,6 +138,7 @@ Nearby is not enough on a sharp basin. After a failed neighbour, return hard to 
 | Week 10 result | -0.1360 (improved) |
 | Week 11 result | -0.3722 (no improvement) |
 | Week 12 result | -0.2054 (no improvement) |
-| Current best (through Week 12) | -0.1360 |
+| Week 13 result | -0.2070 (no improvement) |
+| Current best (through Week 13) | -0.1360 |
 
-*See `analysis_F6.png` in this folder for the 9-panel visual analysis (regenerated through Week 12).*
+*See `analysis_F6.png` in this folder for the 9-panel visual analysis (regenerated through Week 13).*

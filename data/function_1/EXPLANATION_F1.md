@@ -12,7 +12,7 @@
 This is a **black box**: we never see the formula, only input → output. Bayesian optimisation
 (GP + acquisition) is designed for exactly that setting.
 
-## 2. Data so far (10 seed points + 12 weekly queries = 22 observations)
+## 2. Data so far (10 seed points + 13 weekly queries = 23 observations)
 
 | # | x1 | x2 | y | note |
 |---|---|---|---|---|
@@ -26,8 +26,8 @@ This is a **black box**: we never see the formula, only input → output. Bayesi
 
 ## 3. What the GP learned (ARD length scales)
 
-- `x1`: length-scale = 0.0123 → **very sensitive** — small changes move y a lot
-- `x2`: length-scale = 0.0772 → **very sensitive** — small changes move y a lot
+- `x1`: length-scale = 0.0134 → **very sensitive** — small changes move y a lot
+- `x2`: length-scale = 0.0791 → **very sensitive** — small changes move y a lot
 
 ## 4. Acquisition / late policy: **EI**
 
@@ -105,11 +105,17 @@ Almost everywhere reads ~0. After a long null phase near (0.73, 0.73), a peer-su
 - **Received:** y = -0.0051
 - **Outcome:** did **not** improve over the previous best (7.711e-16).
 
-## 17. The lesson
+## 17. Week 13 — what we sent and what happened
+
+- **Sent:** x = [0.6350, 0.6880]
+- **Received:** y = -0.0046
+- **Outcome:** did **not** improve over the previous best (7.711e-16).
+
+## 18. The lesson
 
 A zero is elimination, not proof the source is elsewhere. Once a real signal cluster appears, exploit it; do not keep polishing a null basin.
 
-## 18. Summary
+## 19. Summary
 
 | | Value |
 |---|---|
@@ -129,6 +135,7 @@ A zero is elimination, not proof the source is elsewhere. Once a real signal clu
 | Week 10 result | -0.0081 (no improvement) |
 | Week 11 result | -0.0062 (no improvement) |
 | Week 12 result | -0.0051 (no improvement) |
-| Current best (through Week 12) | 7.711e-16 |
+| Week 13 result | -0.0046 (no improvement) |
+| Current best (through Week 13) | 7.711e-16 |
 
-*See `analysis_F1.png` in this folder for the 9-panel visual analysis (regenerated through Week 12).*
+*See `analysis_F1.png` in this folder for the 9-panel visual analysis (regenerated through Week 13).*

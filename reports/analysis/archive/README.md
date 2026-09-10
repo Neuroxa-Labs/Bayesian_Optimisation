@@ -1,6 +1,6 @@
 # Weekly analysis archive
 
-Per-function diagnostic snapshots regenerated from `data/function_*/` through **Week 12**.
+Per-function diagnostic snapshots regenerated from `data/function_*/` through **Week 13**.
 Each file uses only the history available **at that week** (no future leakage).
 
 | Pattern | Meaning |
@@ -11,14 +11,14 @@ Each file uses only the history available **at that week** (no future leakage).
 
 | Fn | Weeks present |
 |----|---------------|
-| F1 Radiation | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 |
-| F2 Noisy ML | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 |
-| F3 Drug / adverse | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 |
-| F4 Warehouse | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 |
-| F5 Chem. yield | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 |
-| F6 Cake recipe | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 |
-| F7 HP tuning | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 |
-| F8 8-param ML | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 |
+| F1 Radiation | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 |
+| F2 Noisy ML | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 |
+| F3 Drug / adverse | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 |
+| F4 Warehouse | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 |
+| F5 Chem. yield | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 |
+| F6 Cake recipe | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 |
+| F7 HP tuning | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 |
+| F8 8-param ML | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 |
 
 **Current (Week-12) gallery** (cluster hulls + best-so-far): [`../README.md`](../README.md).
 

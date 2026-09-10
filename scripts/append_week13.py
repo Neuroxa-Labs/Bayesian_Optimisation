@@ -22,14 +22,14 @@ WK13_X = {
 
 # Paste portal outputs here when available (None = skip append for that function)
 WK13_Y = {
-    1: None,
-    2: None,
-    3: None,
-    4: None,
-    5: None,
-    6: None,
-    7: None,
-    8: None,
+    1: -0.004566258226210505,
+    2: 0.3722333823537249,
+    3: -0.011366303625769934,
+    4: 0.6793888376745945,
+    5: 3812.753295308405,
+    6: -0.20699964327351827,
+    7: 1.8778414816247018,
+    8: 9.8736691,
 }
 
 for fn in range(1, 9):
@@ -45,7 +45,8 @@ for fn in range(1, 9):
     y = float(y)
     hit = False
     for i in range(len(Y)):
-        if np.allclose(X[i], x, atol=1e-8):
+        # Exact six-decimal portal match only (avoid rtol wiping nearby incumbents)
+        if all(f"{float(X[i, j]):.6f}" == f"{float(x[j]):.6f}" for j in range(len(x))):
             Y[i] = y
             hit = True
             how = "updated"

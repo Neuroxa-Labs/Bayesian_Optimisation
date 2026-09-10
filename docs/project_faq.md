@@ -24,7 +24,7 @@ No. The goal is sample-efficient sequential decisions that find high-performing 
 
 ### A4. How many observations do we have?
 
-Each function starts with an initial design (seed points in `data/function_*/`). Weekly portal points are appended. After Week 12, typical totals are roughly 22–52 points depending on dimension and seed size (see the final report table). Function 3 currently has 11 weekly rows in `data/` (no fabricated Week-12 point).
+Each function starts with an initial design (seed points in `data/function_*/`). Weekly portal points are appended. After Week 13, typical totals are roughly 23–53 points depending on dimension and seed size (see the final report table).
 
 ---
 
@@ -52,32 +52,32 @@ Near-pure exploitation of proven regions: shrink trust regions, move only ARD-se
 
 ---
 
-## C. Results (after Week 12)
+## C. Results (after Week 13)
 
 ### C1. What are the best-so-far values?
 
 | Fn | Best \(y\) | Status note |
 |----|------------|-------------|
-| F1 | 7.711×10⁻¹⁶ | Unresolved absolute peak; late signal lobe |
-| F2 | 0.776645 | Strong sharp ridge |
-| F3 | −0.011366 | Safe local band |
-| F4 | 0.678600 | Strong late climb (W12) |
-| F5 | 3800.74 | Clearest ridge success |
+| F1 | 7.711×10⁻¹⁶ | Unresolved; late lobe to −0.00457 |
+| F2 | 0.776645 | Strong sharp ridge (W13 miss) |
+| F3 | −0.011366 | Safe local band held |
+| F4 | 0.679389 | Strong late climb (W13) |
+| F5 | 3812.75 | Clearest ridge success |
 | F6 | −0.136 | W10 basin; fragile |
-| F7 | 1.872233 | Strong late climb (W12) |
-| F8 | 9.872928 | Strong late climb (W12) |
+| F7 | 1.877841 | Strong late climb (W13) |
+| F8 | 9.873669 | Strong late climb (W13) |
 
 ### C2. Did late weeks still improve?
 
-Yes. Improve counts: W8 3/8 · W9 4/8 · W10 **5/8** · W11 4/8 · W12 4/8 (F4, F5, F7, F8).
+Yes. Improve counts: W8 3/8 · W9 4/8 · W10 **5/8** · W11 4/8 · W12 4/8 · W13 4/8 (F4, F5, F7, F8).
 
 ### C3. Is F1 “solved”?
 
 Not in this repository. Seed max remains the official best. Peers who found a large positive peak (e.g. ~0.5–2) demonstrate that a true spike exists; our Weeks 10–12 lobe is the first usable local basin we observed.
 
-### C4. When will Week 13 results appear?
+### C4. What happened in Week 13?
 
-Week 13 queries are locked in `weeks/WEEK13_STRATEGY.md`. Portal \(y\) values are pending; append with `scripts/append_week13.py` and update the final report table when they arrive.
+**4/8 improved** (F4, F5, F7, F8). F5 reached **3812.75**. F2/F6 missed historical basins; F1 lobe continued; F3 held. See [`weeks/WEEK13_REFLECTION.md`](../weeks/WEEK13_REFLECTION.md).
 
 ---
 
@@ -141,4 +141,4 @@ GP multi-restart fits and candidate searches can retain stochasticity. Treat wee
 
 ---
 
-*Version: v1 (pre–Week-13 portal results). Update C1 / C4 when Week 13 \(y\) values arrive.*
+*Version: v2 (post–Week-13 portal results).*

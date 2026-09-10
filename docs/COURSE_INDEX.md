@@ -12,6 +12,7 @@ Portfolio-facing filenames are descriptive. This page maps **PCMLAI Stage 2 acti
 | Final research report (PDF) | [`final_report.pdf`](final_report.pdf) |
 | Project FAQ (Markdown / PDF) | [`project_faq.md`](project_faq.md) · [`project_faq.pdf`](project_faq.pdf) |
 | Final-round / Week 13 portal queries | [`../weeks/WEEK13_STRATEGY.md`](../weeks/WEEK13_STRATEGY.md) |
+| Final-round / Week 13 results | [`../weeks/WEEK13_REFLECTION.md`](../weeks/WEEK13_REFLECTION.md) |
 | Final-round RL discussion | [`../weeks/final_round_rl_reflection.md`](../weeks/final_round_rl_reflection.md) |
 | End-of-project reflection | [`../weeks/project_reflection.md`](../weeks/project_reflection.md) |
 | Successful strategies discussion | [`../weeks/successful_strategies_reflection.md`](../weeks/successful_strategies_reflection.md) |

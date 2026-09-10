@@ -188,7 +188,7 @@ def make_dashboard_image(latest: int):
              color="#1a1a2e", transform=ax0.transAxes, va="top")
     ax0.text(
         0.0, 0.35,
-        f"Imperial College PCMLAI  ·  through Week {latest}  ·  Week 13 queries locked  ·  "
+        f"Imperial College PCMLAI  ·  through Week {latest}  ·  Weeks 1–{latest} complete  ·  "
         "GP (Matérn + ARD) + EI/UCB  ·  Neuroxa-Labs/Bayesian_Optimisation",
         fontsize=9, color="#636e72", transform=ax0.transAxes, va="top",
     )
@@ -215,7 +215,7 @@ def make_dashboard_image(latest: int):
     # bests table
     ax2 = fig.add_subplot(gs[2])
     ax2.axis("off")
-    headers = ["Fn", "Task", "Seed", "W8", "W9", "W10", "W11", "W12"]
+    headers = ["Fn", "Task", "Seed", "W8", "W9", "W10", "W11", "W12", "W13"]
     rows = []
     for fn in range(1, 9):
         _, Y = load_fn(fn)
@@ -225,7 +225,7 @@ def make_dashboard_image(latest: int):
             return float(Y[:end].max())
         rows.append([
             f"F{fn}", NAME[fn],
-            fmt(b(0)), fmt(b(8)), fmt(b(9)), fmt(b(10)), fmt(b(11)), fmt(b(12)),
+            fmt(b(0)), fmt(b(8)), fmt(b(9)), fmt(b(10)), fmt(b(11)), fmt(b(12)), fmt(b(13)),
         ])
     table = ax2.table(cellText=rows, colLabels=headers, loc="upper center", cellLoc="center")
     table.auto_set_font_size(False)
@@ -357,7 +357,7 @@ img{{width:100%;border-radius:6px;border:1px solid #e0e0e0;margin-top:8px;}}
   <p class="note" style="margin:0;">
     Data-driven rebuild through <strong>Week {latest}</strong>.
     Current bests: {" · ".join(best_bits)}.
-    Week 13 final queries are locked (portal <code>y</code> pending).
+    Capstone weekly rounds complete through Week {latest}.
     Markdown gallery (renders on GitHub): <a href="../analysis/README.md">reports/analysis/README.md</a>.
   </p>
 </div>

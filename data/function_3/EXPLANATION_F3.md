@@ -12,13 +12,13 @@
 This is a **black box**: we never see the formula, only input → output. Bayesian optimisation
 (GP + acquisition) is designed for exactly that setting.
 
-## 2. Data so far (15 seed points + 11 weekly queries = 26 observations)
+## 2. Data so far (15 seed points + 12 weekly queries = 27 observations)
 
 | # | x1 | x2 | x3 | y | note |
 |---|---|---|---|---|---|
-| 20 | 0.4926 | 0.6916 | 0.4010 | -0.0114 | BEST |
+| 27 | 0.4926 | 0.6916 | 0.4010 | -0.0114 | BEST |
+| 20 | 0.4926 | 0.6916 | 0.4010 | -0.0114 |  |
 | 21 | 0.4850 | 0.6850 | 0.4010 | -0.0145 |  |
-| 24 | 0.4930 | 0.6920 | 0.4010 | -0.0190 |  |
 | 16 | 0.4926 | 0.0200 | 0.6482 | -0.1685 |  |
 | 7 | 0.1518 | 0.4400 | 0.9909 | -0.3989 | WORST |
 
@@ -28,7 +28,7 @@ This is a **black box**: we never see the formula, only input → output. Bayesi
 
 - `x1`: length-scale = 0.0100 → **very sensitive** — small changes move y a lot
 - `x2`: length-scale = 0.0100 → **very sensitive** — small changes move y a lot
-- `x3`: length-scale = 0.1497 → **very sensitive** — small changes move y a lot
+- `x3`: length-scale = 0.1604 → **very sensitive** — small changes move y a lot
 
 ## 4. Acquisition / late policy: **EI**
 
@@ -100,11 +100,17 @@ x3 is sensitive; keep it locked in a safe band and take local steps around the -
 - **Received:** y = -0.0194
 - **Outcome:** did **not** improve over the previous best (-0.0114).
 
-## 16. The lesson
+## 16. Week 12 — what we sent and what happened
+
+- **Sent:** x = [0.4926, 0.6916, 0.4010]
+- **Received:** y = -0.0114
+- **Outcome:** **IMPROVED** over the previous best (-0.0114).
+
+## 17. The lesson
 
 Small length-scale dimensions need small steps. Boundary jumps early on taught that lesson.
 
-## 17. Summary
+## 18. Summary
 
 | | Value |
 |---|---|
@@ -123,6 +129,7 @@ Small length-scale dimensions need small steps. Boundary jumps early on taught t
 | Week 9 result | -0.0190 (no improvement) |
 | Week 10 result | -0.0267 (no improvement) |
 | Week 11 result | -0.0194 (no improvement) |
-| Current best (through Week 11) | -0.0114 |
+| Week 12 result | -0.0114 (improved) |
+| Current best (through Week 12) | -0.0114 |
 
-*See `analysis_F3.png` in this folder for the 9-panel visual analysis (regenerated through Week 11).*
+*See `analysis_F3.png` in this folder for the 9-panel visual analysis (regenerated through Week 12).*

@@ -18,6 +18,6 @@ Strategy, post-result reflections, and discussion-board posts.
 | **Week 10** | **Done (5/8)** — [WEEK10_REFLECTION.md](WEEK10_REFLECTION.md) |
 | **Week 11** | **Done (4/8)** — [WEEK11_REFLECTION.md](WEEK11_REFLECTION.md) |
 | **Week 12** | **Done (4/8)** — [WEEK12_REFLECTION.md](WEEK12_REFLECTION.md) |
-| **Week 13 (final)** | **Queries locked** — [WEEK13_STRATEGY.md](WEEK13_STRATEGY.md) · awaiting `y` |
+| **Week 13 (final)** | **Done (4/8)** — [WEEK13_REFLECTION.md](WEEK13_REFLECTION.md) · [WEEK13_STRATEGY.md](WEEK13_STRATEGY.md) |
 
 Course ↔ file map: [`../docs/COURSE_INDEX.md`](../docs/COURSE_INDEX.md).

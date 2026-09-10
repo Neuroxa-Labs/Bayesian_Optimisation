@@ -12,7 +12,7 @@ My strongest results came from a small set of disciplined habits, not from stack
 
 1. **Trust-region local exploitation once a basin was validated.** From Week 8 onward, almost every new best on F4, F5, F7 and F8 came from tiny offsets inside a neighbourhood that had already returned high y. Global EI/UCB into empty corners looked clever early, but late in the budget it burned queries. Compressing the search radius made the GP useful as a *local ranker* of nearby candidates rather than as a global oracle.
 
-2. **Move only sensitive axes (ARD / “principal direction” thinking).** F5 is the clearest example: locking the high x₂–x₄ face and climbing x₁ (0.38→0.44) produced a sustained yield run to ≈3801 by Week 12. Freezing flat dimensions stopped me from spending the weekly shot on orthogonal noise — the same intuition PCA gives, implemented through GP length scales.
+2. **Move only sensitive axes (ARD / “principal direction” thinking).** F5 is the clearest example: locking the high x₂–x₄ face and climbing x₁ (0.38→0.45) produced a sustained yield run to ≈3813 by Week 13. Freezing flat dimensions stopped me from spending the weekly shot on orthogonal noise — the same intuition PCA gives, implemented through GP length scales.
 
 3. **Per-function policy instead of one recipe for all eight.** WhiteKernel + caution on F2’s noisy ridge; log-y on F5; hard x₃ lock on F3; a **trust gate** on F1 that refused exploitation while every label was ~0, then switched to the (0.64, 0.68) signal lobe once a non-null reading appeared. Treating radiation detection as “find signal first, maximise later” changed my decisions more than any acquisition tweak.
 

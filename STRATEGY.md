@@ -6,7 +6,7 @@ Imperial College London · PCMLAI Stage 2 · Black-Box Bayesian Optimisation
 | | |
 |--|--|
 | **Author** | Erkan Keskin · Neuroxa-Labs |
-| **Status** | Weeks 1–12 complete · Week 13 queries locked · portal \(y\) pending |
+| **Status** | Weeks 1–13 complete · final round **4/8 improved** (F4, F5, F7, F8) |
 | **Code source of truth** | [`notebooks/BBO_Capstone_Optimized.ipynb`](notebooks/BBO_Capstone_Optimized.ipynb) — `FUNCTIONS`, `STRATEGY`, `GP_CONFIG` |
 | **Weekly detail files** | [`weeks/WEEK*_STRATEGY.md`](weeks/) (portal strings + that week’s rationale) |
 | **Evidence pack** | [`docs/final_report.md`](docs/final_report.md) · [`docs/final_report.pdf`](docs/final_report.pdf) |
@@ -115,11 +115,11 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 | F1 | 2 | 10 | sparse_peak | Trust gate · coverage · late lobe micro | 7.711×10⁻¹⁶ |
 | F2 | 2 | 10 | noisy | WhiteKernel · EI · hard-return | 0.776645 |
 | F3 | 3 | 15 | negative | UCB→EI · \(x_3\) lock ≈0.401 | −0.011366 |
-| F4 | 4 | 30 | multimodal | UCB→local EI · trust-region micro | 0.678600 |
-| F5 | 4 | 20 | unimodal | log-\(y\) · high-face lock · \(x_1\) climb | 3800.74 |
+| F4 | 4 | 30 | multimodal | UCB→local EI · trust-region micro | **0.679389** |
+| F5 | 4 | 20 | unimodal | log-\(y\) · high-face lock · \(x_1\) climb | **3812.75** |
 | F6 | 5 | 20 | negative | EI · interior · hard-return to W10 | −0.136 |
-| F7 | 6 | 30 | high_dim | EI · boundary soft · ARD micro | 1.872233 |
-| F8 | 8 | 40 | high_dim | UCB · boundary · ARD micro | 9.872928 |
+| F7 | 6 | 30 | high_dim | EI · boundary soft · ARD micro | **1.877841** |
+| F8 | 8 | 40 | high_dim | UCB · boundary · ARD micro | **9.873669** |
 
 ---
 
@@ -153,7 +153,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 | 10 | Pivot to peer-informed lobe **~0.64 / 0.68** | First measurable: ≈ −0.008 |
 | 11 | Tight exploit in confirmed lobe | ≈ −0.006 |
 | 12 | Signal-lobe micro-step | ≈ −0.005 |
-| 13 | Locked: `0.635000-0.688000` | Portal \(y\) pending |
+| 13 | `0.635000-0.688000` → **y=−0.004566** | Lobe continued (official best still seed) |
 
 **Incumbent (official max):** \(y = 7.711\times10^{-16}\) at `[0.731024, 0.733000]` (seed) — never beaten. Late lobe is the first **usable basin**, not the absolute max.
 
@@ -190,7 +190,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 | 10 | Toward historical 0.777 | Partial |
 | 11 | Neighbour toward centroid | Miss ≈ 0.548 |
 | 12 | **Hard-return** tighter to `[0.7179, 0.02]` | Protect |
-| 13 | Locked: `0.717870-0.020000` | Portal \(y\) pending |
+| 13 | `0.717870-0.020000` → **y=0.372** | Miss — best remains 0.776645 |
 
 **Incumbent:** \(y = 0.776645\) (Week 5) — held; never reclaimed after misses.
 
@@ -226,7 +226,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 | 6 | Hold lock; refine \(x_1,x_2\) | **Best −0.011** |
 | 7–9 | Protect W6; safe-band micro only | Hold |
 | 10–12 | Exact-neighbour of −0.011; \(x_3\) locked | Hold |
-| 13 | Locked: `0.492580-0.691590-0.401000` | Portal \(y\) pending |
+| 13 | `0.492580-0.691590-0.401000` → **y=−0.011366** | Held / reaffirmed |
 
 **Incumbent:** \(y = -0.011366\) at `[0.492581, 0.691593, 0.401000]` (≈ Week 6).
 
@@ -263,9 +263,9 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 | 10 | Trust-region micro | ≈ **0.667** |
 | 11 | Local cluster micro | ≈ **0.675** |
 | 12 | Micro from W11 | ≈ **0.679** |
-| 13 | Locked: `0.405000-0.412000-0.354000-0.414000` | Portal \(y\) pending |
+| 13 | `0.405000-0.412000-0.354000-0.414000` → **y=0.679389** | **New best** |
 
-**Incumbent:** \(y = 0.678600\) (Week 12).
+**Incumbent:** \(y = 0.679389\) (Week 13).
 
 **Detail:** [`EXPLANATION_F4.md`](data/function_4/EXPLANATION_F4.md) · [`analysis_F4.png`](data/function_4/analysis_F4.png)
 
@@ -302,9 +302,9 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 | 10 | \(x_1=0.42\) | ≈ **3779** |
 | 11 | \(x_1=0.43\) | ≈ **3790** |
 | 12 | \(x_1=0.44\) | ≈ **3801** |
-| 13 | Locked: `0.450000-0.980000-0.980000-0.980000` | Portal \(y\) pending |
+| 13 | `0.450000-0.980000-0.980000-0.980000` → **y=3812.75** | **New best** |
 
-**Incumbent:** \(y = 3800.74\) at `[0.44, 0.98, 0.98, 0.98]` — clearest sustained success (seed ~1089 → ~3801).
+**Incumbent:** \(y = 3812.75\) at `[0.45, 0.98, 0.98, 0.98]` — clearest sustained success (seed ~1089 → ~3813).
 
 **Detail:** [`EXPLANATION_F5.md`](data/function_5/EXPLANATION_F5.md) · [`analysis_F5.png`](data/function_5/analysis_F5.png)
 
@@ -337,7 +337,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 | 10 | Micro toward improved centroid | **Best −0.136** |
 | 11 | “Next to” W10 centroid | Collapse ≈ **−0.372** |
 | 12 | **Hard-return** toward W10 | Partial ≈ −0.205 |
-| 13 | Locked: `0.441200-0.249200-0.590800-0.728700-0.131200` | Portal \(y\) pending |
+| 13 | `0.441200-0.249200-0.590800-0.728700-0.131200` → **y=−0.207** | Miss — best remains −0.136 |
 
 **Incumbent:** \(y = -0.136\) (Week 10) at `[0.441, 0.249, 0.591, 0.729, 0.131]`.
 
@@ -372,9 +372,9 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 | 10 | Trust-region micro | ≈ **1.863** |
 | 11 | Micro in cluster (ARD lens) | ≈ **1.866** |
 | 12 | Micro from W11 | ≈ **1.872** |
-| 13 | Locked: `0.074000-0.424000-0.299000-0.158000-0.346000-0.672000` | Portal \(y\) pending |
+| 13 | `0.074000-0.424000-0.299000-0.158000-0.346000-0.672000` → **y=1.877841** | **New best** |
 
-**Incumbent:** \(y = 1.872233\) (Week 12).
+**Incumbent:** \(y = 1.877841\) (Week 13).
 
 **Detail:** [`EXPLANATION_F7.md`](data/function_7/EXPLANATION_F7.md) · [`analysis_F7.png`](data/function_7/analysis_F7.png)
 
@@ -407,9 +407,9 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 | 10 | Light exploit micro | ≈ **9.871** |
 | 11 | Plateau micro | ≈ **9.872** |
 | 12 | Micro from W11 | ≈ **9.873** |
-| 13 | Locked: `0.144000-0.060000-0.210000-0.050000-0.414000-0.510000-0.216000-0.917000` | Portal \(y\) pending |
+| 13 | `0.144000-0.060000-0.210000-0.050000-0.414000-0.510000-0.216000-0.917000` → **y=9.873669** | **New best** |
 
-**Incumbent:** \(y = 9.872928\) (Week 12) — slow ~0.001 ticks late.
+**Incumbent:** \(y = 9.873669\) (Week 13) — slow late ticks continued.
 
 **Detail:** [`EXPLANATION_F8.md`](data/function_8/EXPLANATION_F8.md) · [`analysis_F8.png`](data/function_8/analysis_F8.png)
 
@@ -424,7 +424,7 @@ Shared idea: fit a Matern GP on observed (x, y), score candidates with an acquis
 | Trust-region micro | F4, F7, F8 | Tiny offsets from latest incumbent |
 | Ridge continue | F5 | High face locked; \(x_1\) 0.44 → 0.45 |
 
-**Late improve counts:** W8 3/8 · W9 4/8 · W10 **5/8** · W11 4/8 · W12 4/8 (F4, F5, F7, F8).
+**Late improve counts:** W8 3/8 · W9 4/8 · W10 **5/8** · W11 4/8 · W12 4/8 · W13 4/8 (F4, F5, F7, F8).
 
 Full Week-13 block + rationale: [`weeks/WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md).
 
@@ -438,7 +438,7 @@ Full Week-13 block + rationale: [`weeks/WEEK13_STRATEGY.md`](weeks/WEEK13_STRATE
 | 10 | [`WEEK10_STRATEGY.md`](weeks/WEEK10_STRATEGY.md) | [`WEEK10_REFLECTION.md`](weeks/WEEK10_REFLECTION.md) — **5/8** |
 | 11 | [`WEEK11_STRATEGY.md`](weeks/WEEK11_STRATEGY.md) | [`WEEK11_REFLECTION.md`](weeks/WEEK11_REFLECTION.md) — 4/8 |
 | 12 | [`WEEK12_STRATEGY.md`](weeks/WEEK12_STRATEGY.md) | [`WEEK12_REFLECTION.md`](weeks/WEEK12_REFLECTION.md) — 4/8 |
-| 13 | [`WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md) | portal \(y\) pending |
+| 13 | [`WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md) | [`WEEK13_REFLECTION.md`](weeks/WEEK13_REFLECTION.md) — **4/8** |
 
 Folder guide: [`weeks/README.md`](weeks/README.md).
 
@@ -454,4 +454,4 @@ Folder guide: [`weeks/README.md`](weeks/README.md).
 | [`MODEL_CARD.md`](MODEL_CARD.md) | Method transparency |
 | [`docs/COURSE_INDEX.md`](docs/COURSE_INDEX.md) | Course activity map |
 
-*Version: v6 — AF formulas removed; section 2 keeps choices and observed effects only.*
+*Version: v7 — Week 13 portal results integrated (4/8 improved).*

@@ -196,9 +196,9 @@ def build_final_report():
             "Final research report (evidence pack)",
             "Author: Erkan Keskin",
             "https://github.com/Neuroxa-Labs/Bayesian_Optimisation",
-            "Status: Weeks 1-12 complete · Week 13 queries locked · portal y pending",
+            "Status: Weeks 1-13 complete · final round 4/8 improved (F4, F5, F7, F8)",
             "Primary method: GP (Matern + ARD) · EI / UCB · trust-region exploit",
-            "Report version: v1 (pre-Week-13 results)",
+            "Report version: v2 (post-Week-13 results)",
         ],
     )
 
@@ -212,20 +212,20 @@ def build_final_report():
         "sample-efficient sequential decisions."
     )
 
-    pdf.h1("2. Overall summary (after Week 12)")
+    pdf.h1("2. Overall summary (after Week 13)")
     rows = [
-        "F1 Radiation 2D  | best 7.711e-16 | seed incumbent; late signal lobe unresolved",
-        "F2 Noisy ML 2D   | best 0.776645  | strong sharp ridge",
-        "F3 Drug/adverse 3D | best -0.011366 | safe local band (x3 lock)",
-        "F4 Warehouse 4D  | best 0.678600  | strong late climb (Week 12)",
-        "F5 Chem. yield 4D| best 3800.74   | ridge optimum (x1 climb)",
-        "F6 Cake 5D       | best -0.136    | Week-10 basin; fragile",
-        "F7 HP tuning 6D  | best 1.872233  | strong late climb (Week 12)",
-        "F8 8-param ML 8D | best 9.872928  | strong late climb (Week 12)",
+        "F1 Radiation 2D  | best 7.711e-16 | seed incumbent; late lobe to -0.00457",
+        "F2 Noisy ML 2D   | best 0.776645  | strong sharp ridge (W13 miss)",
+        "F3 Drug/adverse 3D | best -0.011366 | safe local band held through W13",
+        "F4 Warehouse 4D  | best 0.679389  | strong late climb (Week 13)",
+        "F5 Chem. yield 4D| best 3812.75   | ridge optimum (x1=0.45)",
+        "F6 Cake 5D       | best -0.136    | Week-10 basin; W13 short",
+        "F7 HP tuning 6D  | best 1.877841  | strong late climb (Week 13)",
+        "F8 8-param ML 8D | best 9.873669  | strong late climb (Week 13)",
     ]
     for r in rows:
         pdf.bullet(r)
-    pdf.body("Late improve counts: W8 3/8 · W9 4/8 · W10 5/8 · W11 4/8 · W12 4/8 (F4, F5, F7, F8).")
+    pdf.body("Late improve counts: W8 3/8 · W9 4/8 · W10 5/8 · W11 4/8 · W12 4/8 · W13 4/8 (F4, F5, F7, F8).")
 
     pdf.add_image(
         REPORTS / "results_by_week.png",
@@ -278,11 +278,11 @@ def build_final_report():
         "F1 7.711e-16 — Seed (late lobe still below seed max)",
         "F2 0.776645 — Week 5 GP/EI on noisy ridge",
         "F3 -0.011366 — Week 6 local exploit + x3 discipline",
-        "F4 0.678600 — Week 12 trust-region micro-step",
-        "F5 3800.74 — Week 12 ridge climb (x1=0.44)",
+        "F4 0.679389 — Week 13 trust-region micro-step",
+        "F5 3812.75 — Week 13 ridge climb (x1=0.45)",
         "F6 -0.136 — Week 10 local basin hit",
-        "F7 1.872233 — Week 12 trust-region micro-step",
-        "F8 9.872928 — Week 12 trust-region micro-step",
+        "F7 1.877841 — Week 13 trust-region micro-step",
+        "F8 9.873669 — Week 13 trust-region micro-step",
     ]:
         pdf.bullet(b)
     pdf.body(
@@ -316,29 +316,29 @@ def build_final_report():
         ),
         (
             "F4 — Warehouse (4D)",
-            "Incumbent y=0.678600 (Week 12). After a basin is proven, micro-steps beat global jumps.",
+            "Incumbent y=0.679389 (Week 13). After a basin is proven, micro-steps beat global jumps.",
             DATA / "function_4" / "analysis_F4.png",
         ),
         (
             "F5 — Chemical yield (4D)",
-            "Incumbent y=3800.74 at [0.44, 0.98, 0.98, 0.98]. Clearest success: lock high face, "
-            "climb x1 (seed ~1089 -> ~3801).",
+            "Incumbent y=3812.75 at [0.45, 0.98, 0.98, 0.98]. Clearest success: lock high face, "
+            "climb x1 (seed ~1089 -> ~3813).",
             DATA / "function_5" / "analysis_F5.png",
         ),
         (
             "F6 — Cake recipe (5D)",
             "Incumbent y=-0.136 (Week 10). Week 11 collapse after a small off-centroid step "
-            "-> hard-return rule.",
+            "-> hard-return rule. Week 13 still short of the W10 peak.",
             DATA / "function_6" / "analysis_F6.png",
         ),
         (
             "F7 — Hyperparameter tuning (6D)",
-            "Incumbent y=1.872233 (Week 12). Move ARD-sensitive axes only; accept slow compound gains.",
+            "Incumbent y=1.877841 (Week 13). Move ARD-sensitive axes only; accept slow compound gains.",
             DATA / "function_7" / "analysis_F7.png",
         ),
         (
             "F8 — Eight-parameter ML (8D)",
-            "Incumbent y=9.872928 (Week 12). Trust-region ticks + boundary penalty; "
+            "Incumbent y=9.873669 (Week 13). Trust-region ticks + boundary penalty; "
             "do not chase edge sigma artefacts.",
             DATA / "function_8" / "analysis_F8.png",
         ),
@@ -358,9 +358,10 @@ def build_final_report():
         w=178,
     )
 
-    pdf.h1("6. Week 13 / final round (queries locked)")
+    pdf.h1("6. Week 13 / final round (complete)")
     pdf.body(
         "Near-pure exploitation and recoveries. Full rationale: weeks/WEEK13_STRATEGY.md. "
+        "Results reflection: weeks/WEEK13_REFLECTION.md. "
         "RL framing: weeks/final_round_rl_reflection.md."
     )
     pdf.mono_block(
@@ -383,8 +384,8 @@ def build_final_report():
     ]:
         pdf.bullet(b)
     pdf.body(
-        "Portal y for Week 13: pending — summary table will be updated when results arrive "
-        "(scripts/append_week13.py)."
+        "Portal y for Week 13: recorded — 4/8 improved (F4, F5, F7, F8). "
+        "F5 reached 3812.75; F2/F6 missed historical basins; F1 lobe continued; F3 held."
     )
 
     pdf.h1("7. Limitations")
@@ -485,7 +486,7 @@ def build_faq():
             "Author: Erkan Keskin · Neuroxa-Labs",
             "https://github.com/Neuroxa-Labs/Bayesian_Optimisation",
             "Companion to docs/final_report.pdf",
-            "Version: v1 (pre-Week-13 portal results)",
+            "Version: v2 (post-Week-13 portal results)",
         ],
     )
     pdf.add_page()

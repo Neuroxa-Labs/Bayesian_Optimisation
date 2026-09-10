@@ -12,24 +12,24 @@
 This is a **black box**: we never see the formula, only input → output. Bayesian optimisation
 (GP + acquisition) is designed for exactly that setting.
 
-## 2. Data so far (30 seed points + 12 weekly queries = 42 observations)
+## 2. Data so far (30 seed points + 13 weekly queries = 43 observations)
 
 | # | x1 | x2 | x3 | x4 | y | note |
 |---|---|---|---|---|---|---|
-| 42 | 0.4040 | 0.4130 | 0.3550 | 0.4130 | 0.6786 | BEST |
+| 43 | 0.4050 | 0.4120 | 0.3540 | 0.4140 | 0.6794 | BEST |
+| 42 | 0.4040 | 0.4130 | 0.3550 | 0.4130 | 0.6786 |  |
 | 41 | 0.4030 | 0.4140 | 0.3560 | 0.4120 | 0.6752 |  |
-| 40 | 0.4020 | 0.4160 | 0.3580 | 0.4100 | 0.6670 |  |
 | 21 | 0.6835 | 0.9028 | 0.3354 | 0.9995 | -29.4271 |  |
 | 26 | 0.9484 | 0.8945 | 0.8516 | 0.5522 | -32.6257 | WORST |
 
-- **Best so far:** y = 0.6786 at x = [0.4040, 0.4130, 0.3550, 0.4130]
+- **Best so far:** y = 0.6794 at x = [0.4050, 0.4120, 0.3540, 0.4140]
 
 ## 3. What the GP learned (ARD length scales)
 
-- `x1`: length-scale = 1.2622 → moderate influence
-- `x2`: length-scale = 1.1899 → moderate influence
-- `x3`: length-scale = 0.9177 → moderate influence
-- `x4`: length-scale = 1.1153 → moderate influence
+- `x1`: length-scale = 1.2700 → moderate influence
+- `x2`: length-scale = 1.1851 → moderate influence
+- `x3`: length-scale = 0.8991 → moderate influence
+- `x4`: length-scale = 1.1126 → moderate influence
 
 ## 4. Acquisition / late policy: **UCB (k=1.5)**
 
@@ -107,11 +107,17 @@ After early exploration mapped a useful basin, late weeks use tight trust-region
 - **Received:** y = 0.6786
 - **Outcome:** **IMPROVED** over the previous best (0.6752).
 
-## 17. The lesson
+## 17. Week 13 — what we sent and what happened
+
+- **Sent:** x = [0.4050, 0.4120, 0.3540, 0.4140]
+- **Received:** y = 0.6794
+- **Outcome:** **IMPROVED** over the previous best (0.6786).
+
+## 18. The lesson
 
 Multimodal spaces need breadth first, then local climb once a basin proves real.
 
-## 18. Summary
+## 19. Summary
 
 | | Value |
 |---|---|
@@ -131,6 +137,7 @@ Multimodal spaces need breadth first, then local climb once a basin proves real.
 | Week 10 result | 0.6670 (improved) |
 | Week 11 result | 0.6752 (improved) |
 | Week 12 result | 0.6786 (improved) |
-| Current best (through Week 12) | 0.6786 |
+| Week 13 result | 0.6794 (improved) |
+| Current best (through Week 13) | 0.6794 |
 
-*See `analysis_F4.png` in this folder for the 9-panel visual analysis (regenerated through Week 12).*
+*See `analysis_F4.png` in this folder for the 9-panel visual analysis (regenerated through Week 13).*

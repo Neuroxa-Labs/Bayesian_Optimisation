@@ -39,8 +39,21 @@ Function 8:  0.144000-0.060000-0.210000-0.050000-0.414000-0.510000-0.216000-0.91
 | F7 | Micro from W12 **1.872** |
 | F8 | Micro from W12 **9.873** |
 
+## Results (portal y)
+
+| Fn | y | vs prior best |
+|----|---|---------------|
+| F1 | −0.004566 | Lobe improved; official best still seed ~0 |
+| F2 | 0.372233 | Miss (best remains 0.776645) |
+| F3 | −0.011366 | Held / reaffirmed |
+| F4 | **0.679389** | New best |
+| F5 | **3812.75** | New best |
+| F6 | −0.207000 | Miss (best remains −0.136) |
+| F7 | **1.877841** | New best |
+| F8 | **9.873669** | New best |
+
 ## Status
 
-**Queries locked for Week 13 / final round.** Portal `y` not yet recorded — reflection will follow when results arrive.
+**Complete — 4/8 improved** (F4, F5, F7, F8). See [`WEEK13_REFLECTION.md`](WEEK13_REFLECTION.md).
 
 RL discussion: [`final_round_rl_reflection.md`](final_round_rl_reflection.md).

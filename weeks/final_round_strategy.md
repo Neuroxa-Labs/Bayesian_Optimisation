@@ -1,5 +1,7 @@
 # Final-round strategy — Week 13 portal queries
 
+*Complete — **4/8 improved** (F4, F5, F7, F8). Full reflection: [`WEEK13_REFLECTION.md`](WEEK13_REFLECTION.md). Canonical strategy: [`WEEK13_STRATEGY.md`](WEEK13_STRATEGY.md).*
+
 *Portfolio alias for the last weekly submission. Canonical weekly file: [`WEEK13_STRATEGY.md`](WEEK13_STRATEGY.md).*
 
 After Week 12 (4/8 improved: F4, F5, F7, F8). Near-pure exploitation + recoveries.

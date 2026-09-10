@@ -12,27 +12,27 @@
 This is a **black box**: we never see the formula, only input → output. Bayesian optimisation
 (GP + acquisition) is designed for exactly that setting.
 
-## 2. Data so far (40 seed points + 12 weekly queries = 52 observations)
+## 2. Data so far (40 seed points + 13 weekly queries = 53 observations)
 
 | # | x1 | x2 | x3 | x4 | x5 | x6 | x7 | x8 | y | note |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 52 | 0.1430 | 0.0610 | 0.2110 | 0.0490 | 0.4130 | 0.5110 | 0.2170 | 0.9160 | 9.8729 | BEST |
+| 53 | 0.1440 | 0.0600 | 0.2100 | 0.0500 | 0.4140 | 0.5100 | 0.2160 | 0.9170 | 9.8737 | BEST |
+| 52 | 0.1430 | 0.0610 | 0.2110 | 0.0490 | 0.4130 | 0.5110 | 0.2170 | 0.9160 | 9.8729 |  |
 | 51 | 0.1420 | 0.0620 | 0.2120 | 0.0480 | 0.4120 | 0.5120 | 0.2180 | 0.9150 | 9.8722 |  |
-| 50 | 0.1400 | 0.0640 | 0.2140 | 0.0460 | 0.4100 | 0.5100 | 0.2200 | 0.9100 | 9.8710 |  |
 | 22 | 0.8989 | 0.5236 | 0.8768 | 0.2187 | 0.9003 | 0.2828 | 0.9111 | 0.4724 | 5.8411 |  |
 | 10 | 0.9849 | 0.6995 | 0.9989 | 0.1801 | 0.5801 | 0.2311 | 0.4908 | 0.3137 | 5.5922 | WORST |
 
-- **Best so far:** y = 9.8729 at x = [0.1430, 0.0610, 0.2110, 0.0490, 0.4130, 0.5110, 0.2170, 0.9160]
+- **Best so far:** y = 9.8737 at x = [0.1440, 0.0600, 0.2100, 0.0500, 0.4140, 0.5100, 0.2160, 0.9170]
 
 ## 3. What the GP learned (ARD length scales)
 
-- `x1`: length-scale = 3.6839 → moderate influence
-- `x2`: length-scale = 5.7468 → **degenerate** — little effect (GP effectively locks it)
-- `x3`: length-scale = 2.7315 → moderate influence
-- `x4`: length-scale = 9.4291 → **degenerate** — little effect (GP effectively locks it)
+- `x1`: length-scale = 3.6888 → moderate influence
+- `x2`: length-scale = 5.7728 → **degenerate** — little effect (GP effectively locks it)
+- `x3`: length-scale = 2.7386 → moderate influence
+- `x4`: length-scale = 9.3717 → **degenerate** — little effect (GP effectively locks it)
 - `x5`: length-scale = 10.0000 → **degenerate** — little effect (GP effectively locks it)
-- `x6`: length-scale = 6.7362 → **degenerate** — little effect (GP effectively locks it)
-- `x7`: length-scale = 3.8359 → moderate influence
+- `x6`: length-scale = 6.7575 → **degenerate** — little effect (GP effectively locks it)
+- `x7`: length-scale = 3.8415 → moderate influence
 - `x8`: length-scale = 10.0000 → **degenerate** — little effect (GP effectively locks it)
 
 ## 4. Acquisition / late policy: **UCB (k=1.5)**
@@ -111,11 +111,17 @@ Expect slow late gains. Trust-region steps on ARD-sensitive dims with a boundary
 - **Received:** y = 9.8729
 - **Outcome:** **IMPROVED** over the previous best (9.8722).
 
-## 17. The lesson
+## 17. Week 13 — what we sent and what happened
+
+- **Sent:** x = [0.1440, 0.0600, 0.2100, 0.0500, 0.4140, 0.5100, 0.2160, 0.9170]
+- **Received:** y = 9.8737
+- **Outcome:** **IMPROVED** over the previous best (9.8729).
+
+## 18. The lesson
 
 In 8-D, steady micro-improvements are success; do not chase edge uncertainty artefacts.
 
-## 18. Summary
+## 19. Summary
 
 | | Value |
 |---|---|
@@ -135,6 +141,7 @@ In 8-D, steady micro-improvements are success; do not chase edge uncertainty art
 | Week 10 result | 9.8710 (improved) |
 | Week 11 result | 9.8722 (improved) |
 | Week 12 result | 9.8729 (improved) |
-| Current best (through Week 12) | 9.8729 |
+| Week 13 result | 9.8737 (improved) |
+| Current best (through Week 13) | 9.8737 |
 
-*See `analysis_F8.png` in this folder for the 9-panel visual analysis (regenerated through Week 12).*
+*See `analysis_F8.png` in this folder for the 9-panel visual analysis (regenerated through Week 13).*

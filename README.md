@@ -7,7 +7,7 @@ Maximise **eight unknown black-box functions** (2D–8D) with **one query per fu
 |--|--|
 | **Method** | Gaussian Process (Matérn + ARD) · EI / UCB · trust-region exploit |
 | **Extras** | WhiteKernel on F2 · log-y on F5 · F1 trust gate · per-function locks |
-| **Status** | Weeks 1–12 complete · Week 13 (final) queries locked · awaiting portal results |
+| **Status** | Weeks 1–13 complete · final round **4/8 improved** (F4, F5, F7, F8) |
 | **Repository** | https://github.com/Neuroxa-Labs/Bayesian_Optimisation |
 
 ### Main menu
@@ -59,7 +59,7 @@ Each function is an unknown scoring map: propose settings \(x\), receive a score
 ### F1 — Radiation source (2 knobs)
 
 **Story.** Find a hidden radiation source on a map. Most places read almost zero; only a tiny region “lights up.”  
-**What we found.** The official best is still a near-zero seed reading (**7.711×10⁻¹⁶**). Weeks 10–12 finally hit a real signal area near \((0.64,\ 0.68)\) with readings **−0.00807 → −0.00623 → −0.00512** — still below the seed max, but the first usable basin to refine in the final round.
+**What we found.** The official best is still a near-zero seed reading (**7.711×10⁻¹⁶**). Weeks 10–12 finally hit a real signal area near \((0.64,\ 0.68)\) with readings **−0.00807 → −0.00623 → −0.00512 → −0.00457** (Week 13) — still below the seed max, but a real late lobe.
 
 ### F2 — Noisy machine-learning score (2 knobs)
 
@@ -74,12 +74,12 @@ Each function is an unknown scoring map: propose settings \(x\), receive a score
 ### F4 — Warehouse layout (4 knobs)
 
 **Story.** Arrange warehouse factors to raise efficiency. Many local traps early on.  
-**What we found.** Climbed from a poor start to **0.6786** by Week 12 with small local steps inside a proven basin.
+**What we found.** Climbed from a poor start to **0.6794** by Week 13 with small local steps inside a proven basin.
 
 ### F5 — Chemical yield (4 knobs)
 
 **Story.** Maximise reaction yield. One strong “ridge” appears once the right face of the box is found.  
-**What we found.** Biggest success story: seed ~1089 → **3800.74** by locking high \(x_2\)–\(x_4\) and climbing \(x_1\) (≈0.44).
+**What we found.** Biggest success story: seed ~1089 → **3812.75** by locking high \(x_2\)–\(x_4\) and climbing \(x_1\) (0.44 → 0.45).
 
 ### F6 — Cake recipe (5 knobs)
 
@@ -89,18 +89,18 @@ Each function is an unknown scoring map: propose settings \(x\), receive a score
 ### F7 — Hyperparameter tuning (6 knobs)
 
 **Story.** Six ML training knobs; \(y\) is a validation score.  
-**What we found.** Slow, steady local gains to **1.872** by Week 12 — move sensitive axes, leave flat ones alone.
+**What we found.** Slow, steady local gains to **1.878** by Week 13 — move sensitive axes, leave flat ones alone.
 
 ### F8 — Eight-parameter ML model (8 knobs)
 
 **Story.** Largest search space; expect slow progress.  
-**What we found.** Incremental ticks to **9.8729** by Week 12 under a tight trust region.
+**What we found.** Incremental ticks to **9.8737** by Week 13 under a tight trust region.
 
 More detail per function: `data/function_*/EXPLANATION_F*.md` and `analysis_F*.png`.
 
 ---
 
-## Impact — best-so-far through Week 12
+## Impact — best-so-far through Week 13
 
 Blue step = incumbent; grey points = each evaluation; red dashed line = first weekly BO query (after the seed set).
 
@@ -125,13 +125,26 @@ Full visual pack: [`reports/analysis/README.md`](reports/analysis/README.md).
 
 Incumbent = best \(y\) seen so far. Compact chart below (small type) so **task**, **dimension**, and **Weeks 8–12** all fit. **Bold** cells = improved versus the previous column.
 
-![Best-so-far by week (Seed, W8–W12)](reports/analysis/results_by_week.png)
+![Best-so-far by week (Seed, W8–W13)](reports/analysis/results_by_week.png)
 
-**Queries that beat the previous best:** W8 3/8 · W9 4/8 · W10 **5/8** · W11 4/8 · W12 4/8 (F4, F5, F7, F8).
+**Queries that beat the previous best:** W8 3/8 · W9 4/8 · W10 **5/8** · W11 4/8 · W12 4/8 · W13 4/8 (F4, F5, F7, F8).
 
 **How to read this.** Seed = after the free starting data. W8–W12 = after those weekly rounds. F5’s jump and F4/F7/F8’s late climb are the clearest gains; F1/F2/F6 show how fragile sparse peaks and sharp basins can be. F1’s absolute best remains **7.711×10⁻¹⁶**; Weeks 10–12 still opened a measurable lobe near (0.64, 0.68) with readings −0.00807 → −0.00623 → −0.00512.
 
-**Week 13 portal block** (final round — see [`WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md)):
+**Week 13 final results** (4/8 improved — see [`WEEK13_REFLECTION.md`](weeks/WEEK13_REFLECTION.md)):
+
+| Fn | y | Note |
+|----|---|------|
+| F1 | −0.004566 | Lobe continued |
+| F2 | 0.372233 | Miss (best 0.777) |
+| F3 | −0.011366 | Held |
+| F4 | **0.679389** | New best |
+| F5 | **3812.75** | New best |
+| F6 | −0.207000 | Miss (best −0.136) |
+| F7 | **1.877841** | New best |
+| F8 | **9.873669** | New best |
+
+Portal inputs (for audit — [`WEEK13_STRATEGY.md`](weeks/WEEK13_STRATEGY.md)):
 
 ```
 Function 1:  0.635000-0.688000
@@ -178,7 +191,7 @@ Bayesian_Optimisation/
 ├── docs/                     # Final report + FAQ PDFs, presentation text, course index
 ├── weeks/                    # Weekly strategy, reflections, discussions
 ├── reports/analysis/         # Current gallery (Markdown + PNG; GitHub-friendly)
-├── reports/progress/         # Progress dashboard through Week 12 (HTML + PNG)
+├── reports/progress/         # Progress dashboard through Week 13 (HTML + PNG)
 ├── notebooks/                # GP + acquisition pipeline
 ├── scripts/                  # Append results, regenerate figures
 └── data/function_1…8/        # Evaluation history (.npy) + analysis + notes
@@ -194,6 +207,7 @@ python scripts/make_cluster_gallery.py
 python scripts/make_function_analysis.py
 python scripts/make_explanations.py
 python scripts/make_progress_through_week12.py
+python scripts/make_results_by_week.py
 python scripts/make_archive_week_snapshots.py
 python scripts/make_docs_pdfs.py
 ```

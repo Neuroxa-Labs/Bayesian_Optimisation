@@ -12,26 +12,26 @@
 This is a **black box**: we never see the formula, only input → output. Bayesian optimisation
 (GP + acquisition) is designed for exactly that setting.
 
-## 2. Data so far (30 seed points + 12 weekly queries = 42 observations)
+## 2. Data so far (30 seed points + 13 weekly queries = 43 observations)
 
 | # | x1 | x2 | x3 | x4 | x5 | x6 | y | note |
 |---|---|---|---|---|---|---|---|---|
-| 42 | 0.0730 | 0.4250 | 0.3000 | 0.1570 | 0.3450 | 0.6710 | 1.8722 | BEST |
+| 43 | 0.0740 | 0.4240 | 0.2990 | 0.1580 | 0.3460 | 0.6720 | 1.8778 | BEST |
+| 42 | 0.0730 | 0.4250 | 0.3000 | 0.1570 | 0.3450 | 0.6710 | 1.8722 |  |
 | 41 | 0.0720 | 0.4260 | 0.3010 | 0.1560 | 0.3440 | 0.6700 | 1.8665 |  |
-| 40 | 0.0700 | 0.4280 | 0.3030 | 0.1580 | 0.3460 | 0.6720 | 1.8630 |  |
 | 28 | 0.8469 | 0.1424 | 0.0607 | 0.7563 | 0.5524 | 0.0813 | 0.0031 |  |
 | 20 | 0.8799 | 0.3980 | 0.0036 | 0.9570 | 0.2645 | 0.1149 | 0.0027 | WORST |
 
-- **Best so far:** y = 1.8722 at x = [0.0730, 0.4250, 0.3000, 0.1570, 0.3450, 0.6710]
+- **Best so far:** y = 1.8778 at x = [0.0740, 0.4240, 0.2990, 0.1580, 0.3460, 0.6720]
 
 ## 3. What the GP learned (ARD length scales)
 
-- `x1`: length-scale = 0.5913 → moderate influence
-- `x2`: length-scale = 0.2606 → **very sensitive** — small changes move y a lot
-- `x3`: length-scale = 10.0000 → **degenerate** — little effect (GP effectively locks it)
-- `x4`: length-scale = 0.5041 → moderate influence
-- `x5`: length-scale = 0.2899 → **very sensitive** — small changes move y a lot
-- `x6`: length-scale = 0.4612 → **very sensitive** — small changes move y a lot
+- `x1`: length-scale = 0.5591 → moderate influence
+- `x2`: length-scale = 0.3192 → **very sensitive** — small changes move y a lot
+- `x3`: length-scale = 1.5590 → moderate influence
+- `x4`: length-scale = 0.4235 → **very sensitive** — small changes move y a lot
+- `x5`: length-scale = 0.2868 → **very sensitive** — small changes move y a lot
+- `x6`: length-scale = 0.4598 → **very sensitive** — small changes move y a lot
 
 ## 4. Acquisition / late policy: **EI**
 
@@ -109,11 +109,17 @@ Local EI around the late peak; move ARD-sensitive axes and leave flat ones alone
 - **Received:** y = 1.8722
 - **Outcome:** **IMPROVED** over the previous best (1.8665).
 
-## 17. The lesson
+## 17. Week 13 — what we sent and what happened
+
+- **Sent:** x = [0.0740, 0.4240, 0.2990, 0.1580, 0.3460, 0.6720]
+- **Received:** y = 1.8778
+- **Outcome:** **IMPROVED** over the previous best (1.8722).
+
+## 18. The lesson
 
 In 6-D, patience and small local gains accumulate better than global jumps late in the budget.
 
-## 18. Summary
+## 19. Summary
 
 | | Value |
 |---|---|
@@ -133,6 +139,7 @@ In 6-D, patience and small local gains accumulate better than global jumps late 
 | Week 10 result | 1.8630 (improved) |
 | Week 11 result | 1.8665 (improved) |
 | Week 12 result | 1.8722 (improved) |
-| Current best (through Week 12) | 1.8722 |
+| Week 13 result | 1.8778 (improved) |
+| Current best (through Week 13) | 1.8778 |
 
-*See `analysis_F7.png` in this folder for the 9-panel visual analysis (regenerated through Week 12).*
+*See `analysis_F7.png` in this folder for the 9-panel visual analysis (regenerated through Week 13).*
