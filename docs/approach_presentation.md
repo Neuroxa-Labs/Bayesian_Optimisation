@@ -1,6 +1,6 @@
 # Approach presentation — fill-in text
 
-*Portfolio write-up of the BBO method (also used for the course presentation component). First person. Updated after Week 12 results (4/8 improved: F4, F5, F7, F8).*
+*Portfolio write-up of the BBO method (also used for the course presentation component). First person. Updated after Week 13 results (4/8 improved: F4, F5, F7, F8).*
 
 ---
 

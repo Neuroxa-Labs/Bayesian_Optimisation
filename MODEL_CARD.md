@@ -71,20 +71,20 @@
 - Whether the weekly query **improves** the incumbent.
 - Qualitative diagnostics: length scales, boundary drift, trust-gate pass/fail.
 
-**Summary after Week 12 (best observed ≈)**
+**Summary after Week 13 (best observed ≈)**
 
 | Fn | Best \(y\) (approx.) | Comment |
 |----|----------------------|---------|
-| F1 | \(\sim 0\) (signal lobe open) | Non-null lobe ~0.64/0.68 validated W10–W12 |
-| F2 | **0.777** | Sharp/noisy ridge; late returns often ~0.54 |
-| F3 | **−0.011** | Safe \(x_3\) band |
-| F4 | **0.679** | Trust-region climb through W12 |
-| F5 | **3801** | Ridge climb \(x_1\): 0.38→0.44 |
-| F6 | **−0.136** | W10 incumbent; W11 collapse then partial W12 return |
-| F7 | **1.872** | Local peak; W12 gain |
-| F8 | **9.873** | Slow late improvements |
+| F1 | \(\sim 0\) (lobe −0.00457) | Non-null lobe ~0.64/0.68 through W13; seed max still official best |
+| F2 | **0.777** | Sharp/noisy ridge; W13 hard-return missed |
+| F3 | **−0.011** | Safe \(x_3\) band held through final round |
+| F4 | **0.679** | Trust-region climb through W13 |
+| F5 | **3813** | Ridge climb \(x_1\): 0.38→0.45 |
+| F6 | **−0.136** | W10 incumbent; W13 still short of centroid |
+| F7 | **1.878** | Local peak; W13 gain |
+| F8 | **9.874** | Slow late ticks through W13 |
 
-Week 10: 5/8 improved. Weeks 11–12: 4/8 improved (F4, F5, F7, F8). Progress is **uneven** — consistent with diminishing returns, sharp ridges, and occasional discontinuous jumps.
+Week 10: 5/8 improved. Weeks 11–13: 4/8 improved each (F4, F5, F7, F8). Progress is **uneven** — consistent with diminishing returns, sharp ridges, and occasional discontinuous jumps.
 
 **Fairness metrics.** Not applicable (no demographic groups). “Fairness” here means not wasting budget on hallucinated corners and not over-claiming F1.
 
